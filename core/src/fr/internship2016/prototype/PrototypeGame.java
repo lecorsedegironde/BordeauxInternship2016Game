@@ -6,13 +6,22 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Vector3;
 
 public class PrototypeGame extends ApplicationAdapter {
+
+    public static final float GRAVITY = -0.5f;
+    public static final float GROUND = 10;
+
     private static final int WIDTH_PLAYER = 25;
     private static final int HEIGHT_PLAYER = 100;
+    private static final float VELOCITY_X_PLAYER = 6.0f;
+    private static final float VELOCITY_Y_PLAYER = 12.0f;
+
+
     private static final int LEFT = Input.Keys.Q;
     private static final int RIGHT = Input.Keys.D;
+    private static final int JUMP = Input.Keys.Z;
+
     private ShapeRenderer renderer;
     private OrthographicCamera camera;
     private Player player;
@@ -23,7 +32,7 @@ public class PrototypeGame extends ApplicationAdapter {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
         renderer = new ShapeRenderer();
-        player = new Player(10, 10, WIDTH_PLAYER, HEIGHT_PLAYER);
+        player = new Player(10, 10, WIDTH_PLAYER, HEIGHT_PLAYER, VELOCITY_X_PLAYER, VELOCITY_Y_PLAYER);
     }
 
     @Override
@@ -38,13 +47,20 @@ public class PrototypeGame extends ApplicationAdapter {
         renderer.end();
 
         //Movement
-        float dist = Player.PLAYER_SPEED * Gdx.graphics.getDeltaTime();
         if (Gdx.input.isKeyPressed(LEFT)) {
-            player.moveLeft(dist);
+            player.moveLeft();
+        } else if (Gdx.input.isKeyPressed(RIGHT)) {
+            player.moveRight();
+        } else {
+            player.stopMovement();
         }
 
-        if (Gdx.input.isKeyPressed(RIGHT)) {
-            player.moveRight(dist);
+        //Jump
+        if (Gdx.input.isKeyPressed(JUMP)) {
+            player.jump();
         }
+
+        //Update player
+        player.update();
     }
 }
