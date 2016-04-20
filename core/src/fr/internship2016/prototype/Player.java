@@ -1,61 +1,65 @@
 package fr.internship2016.prototype;
 
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Rectangle;
 
 /**
  * Created by Bastien on 20/04/16.
- *
+ * <p>
  * This class concerns the player and all his attributes
  */
-public class Player  {
+public class Player {
 
-    private int x;
-    private int y;
-    private int w;
-    private int h;
+    public static final int PLAYER_SPEED = 100;
+
+    private Rectangle playerRect;
 
     public Player(int x, int y, int width, int height) {
 
-        this.x = x;
-        this.y = y;
-        this.w = width;
-        this.h = height;
+        this.playerRect = new Rectangle();
+
+        playerRect.x = x;
+        playerRect.y = y;
+        playerRect.width = width;
+        playerRect.height = height;
     }
 
-    public Texture getTexture() {
-
-        return null;
+    public void moveRight(float dist) {
+        playerRect.x += dist;
     }
 
-    public int getX() {
-        return x;
+    public void moveLeft(float dist) {
+        playerRect.x -= dist;
     }
 
-    public void setX(int x) {
-        this.x = x;
+    public float getX() {
+        return playerRect.x;
     }
 
-    public int getY() {
-        return y;
+    public void setX(float x) {
+        playerRect.x = x;
     }
 
-    public void setY(int y) {
-        this.y = y;
+    public float getY() {
+        return playerRect.y;
     }
 
-    public int getW() {
-        return w;
+    public void setY(float y) {
+        playerRect.y = y;
     }
 
-    public void setW(int w) {
-        this.w = w;
+    public float getW() {
+        return playerRect.width;
     }
 
-    public int getH() {
-        return h;
+    public void setW(float w) {
+        playerRect.width = w;
     }
 
-    public void setH(int h) {
-        this.h = h;
+    public float getH() {
+        return playerRect.height;
+    }
+
+    public void setH(float h) {
+        playerRect.height = h;
     }
 }
