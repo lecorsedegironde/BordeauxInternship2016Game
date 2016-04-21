@@ -9,34 +9,34 @@ import fr.internship2016.prototype.utils.Constants;
  */
 public class PlayerUserData extends UserData {
 
-    private Vector2 walkingRightLinearImpulse;
-    private Vector2 walkingLeftLinearImpulse;
+    private Vector2 walkingRightVelocity;
+    private Vector2 walkingLeftVelocity;
     private Vector2 jumpingLinearImpulse;
 
     public PlayerUserData() {
         super();
 
-        walkingRightLinearImpulse = Constants.PLAYER_WALKING_RIGHT_LINEAR_IMPULSE;
-        walkingLeftLinearImpulse = Constants.PLAYER_WALKING_LEFT_LINEAR_IMPULSE;
+        walkingRightVelocity = Constants.PLAYER_WALKING_RIGHT_VELOCITY;
+        walkingLeftVelocity = Constants.PLAYER_WALKING_LEFT_VELOCITY;
         jumpingLinearImpulse = Constants.PLAYER_JUMPING_LINEAR_IMPULSE;
 
         userDataType = UserDataType.PLAYER;
     }
 
-    public Vector2 getWalkingRightLinearImpulse() {
-        return walkingRightLinearImpulse;
+    public Vector2 getWalkingRightVelocity() {
+        return walkingRightVelocity;
     }
 
-    public void setWalkingRightLinearImpulse(Vector2 walkingRightLinearImpulse) {
-        this.walkingRightLinearImpulse = walkingRightLinearImpulse;
+    public void setWalkingRightVelocity(Vector2 walkingRightVelocity) {
+        this.walkingRightVelocity = walkingRightVelocity;
     }
 
-    public Vector2 getWalkingLeftLinearImpulse() {
-        return walkingLeftLinearImpulse;
+    public Vector2 getWalkingLeftVelocity() {
+        return walkingLeftVelocity;
     }
 
-    public void setWalkingLeftLinearImpulse(Vector2 walkingLeftLinearImpulse) {
-        this.walkingLeftLinearImpulse = walkingLeftLinearImpulse;
+    public void setWalkingLeftVelocity(Vector2 walkingLeftVelocity) {
+        this.walkingLeftVelocity = walkingLeftVelocity;
     }
 
     public Vector2 getJumpingLinearImpulse() {

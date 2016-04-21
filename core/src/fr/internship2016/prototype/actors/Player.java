@@ -27,15 +27,13 @@ public class Player extends GameActor {
 
     public void walkRight() {
         if (body.getLinearVelocity().x < Constants.PLAYER_MAX_VELOCITY) {
-            body.applyLinearImpulse(((PlayerUserData) getUserData()).getWalkingRightLinearImpulse(),
-                    body.getWorldCenter(), true);
+            body.setLinearVelocity(((PlayerUserData) getUserData()).getWalkingRightVelocity());
         }
     }
 
     public void walkLeft() {
         if (body.getLinearVelocity().x > -Constants.PLAYER_MAX_VELOCITY) {
-            body.applyLinearImpulse(((PlayerUserData) getUserData()).getWalkingLeftLinearImpulse(),
-                    body.getWorldCenter(), true);
+            body.setLinearVelocity(((PlayerUserData) getUserData()).getWalkingLeftVelocity());
         }
     }
 
@@ -51,13 +49,13 @@ public class Player extends GameActor {
             body.applyLinearImpulse(((PlayerUserData) getUserData()).getJumpingLinearImpulse(),
                     body.getWorldCenter(), true);
             jumping = true;
-            jump = false;
         }
 
     }
 
     public void landed() {
         jumping = false;
+        jump = false;
     }
 
     public boolean isJump() {

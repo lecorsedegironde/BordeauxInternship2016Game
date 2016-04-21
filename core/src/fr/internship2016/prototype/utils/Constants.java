@@ -29,6 +29,6 @@ public class Constants {
     public static float PLAYER_DENSITY = 0.5f;
     public static float PLAYER_MAX_VELOCITY = 5f;
     public static final Vector2 PLAYER_JUMPING_LINEAR_IMPULSE = new Vector2(0, 13f);
-    public static final Vector2 PLAYER_WALKING_RIGHT_LINEAR_IMPULSE = new Vector2(5f, 0f);
-    public static final Vector2 PLAYER_WALKING_LEFT_LINEAR_IMPULSE = new Vector2(-5f, 0f);
+    public static final Vector2 PLAYER_WALKING_RIGHT_VELOCITY = new Vector2(5f, 0f);
+    public static final Vector2 PLAYER_WALKING_LEFT_VELOCITY = new Vector2(-5f, 0f);
 }
