@@ -89,8 +89,6 @@ public class GameStage extends Stage implements ContactListener {
             player.stopMovement();
         if (player.isJump())
             player.jump();
-
-
     }
 
     @Override

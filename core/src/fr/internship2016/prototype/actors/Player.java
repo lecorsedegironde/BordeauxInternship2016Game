@@ -38,7 +38,7 @@ public class Player extends GameActor {
     }
 
     public void stopMovement() {
-        if (body.getLinearVelocity().y == 0f) {
+        if (!jumping) {
             body.setLinearVelocity(0f, 0f);
         }
     }
