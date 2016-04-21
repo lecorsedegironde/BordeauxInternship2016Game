@@ -81,7 +81,16 @@ public class GameStage extends Stage implements ContactListener {
             accumulator -= TIME_STEP;
         }
 
-        //TODO: Implement interpolation
+        if (player.isWalkLeft())
+            player.walkLeft();
+        if (player.isWalkRight())
+            player.walkRight();
+        if (!player.isWalkRight() && !player.isWalkLeft())
+            player.stopMovement();
+        if (player.isJump())
+            player.jump();
+
+
     }
 
     @Override
@@ -93,13 +102,17 @@ public class GameStage extends Stage implements ContactListener {
     @Override
     public boolean keyDown(int keyCode) {
 
-        if (keyCode == RIGHT)
-            player.walkRight();
-        else if (keyCode == LEFT)
-            player.walkLeft();
+        if (keyCode == RIGHT) {
+            player.setWalkRight(true);
+            player.setWalkLeft(false);
+        }
+        else if (keyCode == LEFT) {
+            player.setWalkLeft(true);
+            player.setWalkRight(false);
+        }
 
         if (keyCode == JUMP)
-            player.jump();
+            player.setJump(true);
 
         return true;
     }
@@ -107,8 +120,10 @@ public class GameStage extends Stage implements ContactListener {
     @Override
     public boolean keyUp(int keyCode) {
 
-        if (keyCode == RIGHT || keyCode == LEFT)
-            player.stopMovement();
+        if (keyCode == RIGHT)
+            player.setWalkRight(false);
+        if (keyCode == LEFT)
+            player.setWalkLeft(false);
 
         return true;
     }

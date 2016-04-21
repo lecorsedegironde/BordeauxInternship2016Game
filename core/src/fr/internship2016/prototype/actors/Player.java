@@ -10,6 +10,10 @@ import fr.internship2016.prototype.utils.Constants;
  */
 public class Player extends GameActor {
 
+    private boolean walkRight;
+    private boolean walkLeft;
+    private boolean jump;
+
     private boolean jumping;
 
     public Player(Body body) {
@@ -36,7 +40,9 @@ public class Player extends GameActor {
     }
 
     public void stopMovement() {
-        body.setLinearVelocity(0f, 0f);
+        if (body.getLinearVelocity().y == 0f) {
+            body.setLinearVelocity(0f, 0f);
+        }
     }
 
     public void jump() {
@@ -45,6 +51,7 @@ public class Player extends GameActor {
             body.applyLinearImpulse(((PlayerUserData) getUserData()).getJumpingLinearImpulse(),
                     body.getWorldCenter(), true);
             jumping = true;
+            jump = false;
         }
 
     }
@@ -53,4 +60,27 @@ public class Player extends GameActor {
         jumping = false;
     }
 
+    public boolean isJump() {
+        return jump;
+    }
+
+    public void setJump(boolean jump) {
+        this.jump = jump;
+    }
+
+    public boolean isWalkRight() {
+        return walkRight;
+    }
+
+    public void setWalkRight(boolean walkRight) {
+        this.walkRight = walkRight;
+    }
+
+    public boolean isWalkLeft() {
+        return walkLeft;
+    }
+
+    public void setWalkLeft(boolean walkLeft) {
+        this.walkLeft = walkLeft;
+    }
 }
