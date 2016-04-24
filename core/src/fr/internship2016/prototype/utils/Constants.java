@@ -1,34 +1,32 @@
 package fr.internship2016.prototype.utils;
 
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.Input;
 
 /**
- * Created by bastien on 21/04/16.
+ * Created by bastien on 23/04/16.
+ * Constants
  */
 public class Constants {
 
+    //Screen
     public static final int SCREEN_WIDTH = 800;
     public static final int SCREEN_HEIGHT = 480;
 
-    public static final Vector2 WORLD_GRAVITY = new Vector2(0, -10);
+    //World constants : Meters
+    public static final float WORLD_WIDTH = 100;
+    public static final float WORLD_HEIGHT = 10;
+    public static final float GROUND_HEIGHT = 1;
+    public static final float WIDTH_PLAYER = 1f;
+    public static final float HEIGHT_PLAYER = 2f;
 
-    //Ground
-    public static final float GROUND_X = 0;
-    public static final float GROUND_Y = 0;
-    public static final float GROUND_WIDTH = 500f;
-    public static final float GROUND_HEIGHT = 2f;
-    public static final float GROUND_DENSITY = 0f;
+    //Forces
+    public static final float GRAVITY = -0.047f;
+    public static final float VELOCITY_X_PLAYER = 0.15f;
+    public static final float VELOCITY_Y_PLAYER = 0.45f;
 
-    //Player
-    //May be used to make the player fall faster
-    public static final float PLAYER_GRAVITY_SCALE = 3f;
-    public static final float PLAYER_X = 2;
-    public static final float PLAYER_Y = GROUND_Y + GROUND_HEIGHT;
-    public static final float PLAYER_WIDTH = 1f;
-    public static final float PLAYER_HEIGHT = 2f;
-    public static float PLAYER_DENSITY = 0.5f;
-    public static float PLAYER_MAX_VELOCITY = 5f;
-    public static final Vector2 PLAYER_JUMPING_LINEAR_IMPULSE = new Vector2(0, 13f);
-    public static final Vector2 PLAYER_WALKING_RIGHT_VELOCITY = new Vector2(5f, 0f);
-    public static final Vector2 PLAYER_WALKING_LEFT_VELOCITY = new Vector2(-5f, 0f);
+    //Controls
+    public static final int LEFT = Input.Keys.Q;
+    public static final int RIGHT = Input.Keys.D;
+    public static final int JUMP = Input.Keys.Z;
+
 }
