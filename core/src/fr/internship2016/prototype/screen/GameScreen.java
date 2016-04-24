@@ -54,7 +54,8 @@ public class GameScreen implements Screen {
         camera.update();
 
         //So test
-        player = new Player(0.5f, GROUND_HEIGHT, WIDTH_PLAYER, HEIGHT_PLAYER, VELOCITY_X_PLAYER, VELOCITY_Y_PLAYER);
+        player = new Player(0.5f, GROUND_HEIGHT, WIDTH_PLAYER, HEIGHT_PLAYER,
+                VELOCITY_X_PLAYER, VELOCITY_Y_PLAYER, true);
     }
 
     @Override
@@ -63,9 +64,6 @@ public class GameScreen implements Screen {
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        /*
-         * 2. We draw the Filled rectangle
-         */
         Vector2 playerPos = new Vector2(player.getX(), player.getY());
         viewport.project(playerPos);
 
@@ -88,11 +86,21 @@ public class GameScreen implements Screen {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(Color.BLUE);
         shapeRenderer.rect(player.getX(), player.getY(), player.getW(), player.getH());
+        if (player.hasWeapon()) {
+            shapeRenderer.setColor(Color.CYAN);
+            shapeRenderer.rect(player.getWeapon().getX(), player.getWeapon().getY(), player.getWeapon().getWidth(),
+                    player.getWeapon().getHeight());
+        }
         shapeRenderer.end();
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(Color.GREEN);
         shapeRenderer.rect(player.getX(), player.getY(), player.getW(), player.getH());
+        if (player.hasWeapon()) {
+            shapeRenderer.setColor(Color.TEAL);
+            shapeRenderer.rect(player.getWeapon().getX(), player.getWeapon().getY(), player.getWeapon().getWidth(),
+                    player.getWeapon().getHeight());
+        }
         //The ground
         shapeRenderer.setColor(Color.RED);
         shapeRenderer.line(0, GROUND_HEIGHT, WORLD_WIDTH, GROUND_HEIGHT);

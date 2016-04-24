@@ -12,15 +12,15 @@ import static fr.internship2016.prototype.utils.Constants.*;
  */
 public abstract class MovableElement {
 
-    private static float horizontalVelocity;
-    private static float verticalVelocity;
+    protected static float horizontalVelocity;
+    protected static float verticalVelocity;
 
-    private float velocityX = 0;
-    private float velocityY = 0;
+    protected float velocityX = 0;
+    protected float velocityY = 0;
 
-    private Rectangle elementRect;
+    protected Rectangle elementRect;
     //Is the element on the ground?
-    private boolean onGround;
+    protected boolean onGround;
 
     public MovableElement(float x, float y, float width, float height, float velocityX, float velocityY) {
 
@@ -43,7 +43,7 @@ public abstract class MovableElement {
         velocityY += GRAVITY;
 
         //On the ground
-        if (elementRect.y < GROUND_HEIGHT) {
+        if (elementRect.y <= GROUND_HEIGHT) {
             velocityY = 0.0f;
             onGround = true;
             elementRect.y = GROUND_HEIGHT;

@@ -19,6 +19,11 @@ public class Constants {
     public static final float WIDTH_PLAYER = 1f;
     public static final float HEIGHT_PLAYER = 2f;
 
+    //Weapons
+    public static final float SWORD_WIDTH = 0.1f;
+    public static final float SWORD_HEIGHT = 1.75f;
+    public static final float SWORD_ANGULAR_VELOCITY = 0.15f;
+
     //Forces
     public static final float GRAVITY = -0.047f;
     public static final float VELOCITY_X_PLAYER = 0.15f;
