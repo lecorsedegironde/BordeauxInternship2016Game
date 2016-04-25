@@ -26,7 +26,6 @@ public class Constants {
     //Weapons
     public static final float SWORD_WIDTH = 0.1f;
     public static final float SWORD_HEIGHT = 1.75f;
-    public static final float SWORD_ANGULAR_VELOCITY = 0.15f;
 
     //Forces
     public static final float GRAVITY = -0.047f;

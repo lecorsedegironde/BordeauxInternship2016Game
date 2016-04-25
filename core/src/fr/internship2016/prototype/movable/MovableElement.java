@@ -21,6 +21,8 @@ public abstract class MovableElement {
     protected Rectangle elementRect;
     //Is the element on the ground?
     protected boolean onGround;
+    protected boolean rightFacing;
+
 
     public MovableElement(float x, float y, float width, float height, float velocityX, float velocityY) {
 
@@ -61,10 +63,12 @@ public abstract class MovableElement {
 
     public void moveRight() {
         velocityX = horizontalVelocity;
+        rightFacing = true;
     }
 
     public void moveLeft() {
         velocityX = -horizontalVelocity;
+        rightFacing = false;
     }
 
     public void jump() {

@@ -98,7 +98,7 @@ public class GameScreen implements Screen {
         shapeRenderer.setColor(Color.GREEN);
         shapeRenderer.rect(player.getX(), player.getY(), player.getW(), player.getH());
         if (player.hasWeapon()) {
-            shapeRenderer.setColor(Color.TEAL);
+            shapeRenderer.setColor(Color.BLACK);
             shapeRenderer.polygon(player.getWeapon().getTransformedVertices());
         }
         //The ground

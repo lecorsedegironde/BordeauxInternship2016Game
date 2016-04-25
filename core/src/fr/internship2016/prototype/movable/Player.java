@@ -35,6 +35,7 @@ public class Player extends MovableElement {
     public Player(float x, float y, float width, float height, float velocityX, float velocityY, boolean createWeapon) {
         super(x, y, width, height, velocityX, velocityY);
         canStopMovement = true;
+        rightFacing = true;
         attack = false;
         attackOver = false;
 
@@ -48,29 +49,28 @@ public class Player extends MovableElement {
     @Override
     public void update() {
 
-        updateSwordDefaultPos();
 
-        weapon.setPosition(weapon.getX() + velocityX, weapon.getY() + velocityY);
 
         super.update();
-        Gdx.app.debug("PLAYER POS", "X : " + getX() + "Y : " + getY());
+        updateSwordDefaultPos();
+        weapon.setPosition(baseXWeapon, baseYWeapon);
+//        Gdx.app.debug("PLAYER POS", "x: " + getX() + " y: " + getY());
 
-        //On the ground
-        if (onGround) {
-            weapon.setPosition(weapon.getX(), baseYWeapon);
-        }
-
-        //Left and Right
-        if (elementRect.getX() <= 0 || elementRect.getX() >= WORLD_WIDTH - getW()) {
-            updateSwordDefaultPos();
-            weapon.setPosition(baseXWeapon, baseYWeapon);
-        }
 
         //Attack
         if (attack) {
+            int maxRotate, rotateAngle;
+            if (rightFacing) {
+                maxRotate = -90;
+                rotateAngle = -5;
+            } else {
+                maxRotate = 90;
+                rotateAngle = 5;
+            }
             if (!attackOver) {
-                if (weapon.getRotation() > -90) {
-                    weapon.rotate(-5);
+                if ((weapon.getRotation() > maxRotate && rightFacing)
+                        || (weapon.getRotation() < maxRotate && !rightFacing)) {
+                    weapon.rotate(rotateAngle);
                 } else {
                     attackOver = true;
                 }
@@ -78,7 +78,7 @@ public class Player extends MovableElement {
                 if (weapon.getRotation() == 0)
                     attack = false;
                 else
-                    weapon.rotate(5);
+                    weapon.rotate(-rotateAngle);
             }
         }
 
@@ -89,6 +89,20 @@ public class Player extends MovableElement {
         }
         if (TimeUtils.timeSinceMillis(invisibilityTime) > INVISIBILITY_REFILL) {
             canBeInvisible = true;
+        }
+    }
+
+    @Override
+    public void moveRight() {
+        if (!attack) {
+            super.moveRight();
+        }
+    }
+
+    @Override
+    public void moveLeft() {
+        if (!attack) {
+            super.moveLeft();
         }
     }
 
@@ -108,8 +122,7 @@ public class Player extends MovableElement {
         switch (w) {
             case SWORD:
                 updateSwordDefaultPos();
-                weapon = new Sword(baseXWeapon, baseYWeapon,
-                        SWORD_WIDTH, SWORD_HEIGHT, SWORD_ANGULAR_VELOCITY);
+                weapon = new Sword(baseXWeapon, baseYWeapon, SWORD_WIDTH, SWORD_HEIGHT);
                 break;
             default:
                 weapon = null;
@@ -118,8 +131,10 @@ public class Player extends MovableElement {
     }
 
     private void updateSwordDefaultPos() {
-        baseXWeapon = getX() + (getW() / 12f);
-        baseYWeapon = getY() + (getH() / 12f);
+        float divideFactor = 12f;
+        baseXWeapon = getX();
+        baseYWeapon = getY() + (getH() / divideFactor);
+//        Gdx.app.debug("SWORD_POS", "x: " + baseXWeapon + " y: " + baseYWeapon);
     }
 
     public boolean hasWeapon() {
