@@ -34,30 +34,22 @@ public class Player extends MovableElement {
 
         updateSwordDefaultPos();
 
-        elementRect.x += velocityX;
-        elementRect.y += velocityY;
         weapon.setX(weapon.getX() + velocityX);
         weapon.setY(weapon.getY() + velocityY);
-        velocityY += GRAVITY;
+
+        super.update();
 
         //On the ground
-        if (elementRect.y <= GROUND_HEIGHT) {
-            velocityY = 0.0f;
-            onGround = true;
-            elementRect.y = GROUND_HEIGHT;
+        if (onGround) {
             weapon.setY(baseYWeapon);
         }
 
         //Left and Right
         if (elementRect.getX() <= 0) {
-            stopMovement();
-            elementRect.setX(0);
             updateSwordDefaultPos();
             weapon.setX(baseXWeapon);
             weapon.setY(baseYWeapon);
         } else if (elementRect.getX() >= WORLD_WIDTH - getW()) {
-            stopMovement();
-            elementRect.setX(WORLD_WIDTH - getW());
             updateSwordDefaultPos();
             weapon.setX(baseXWeapon);
             weapon.setY(baseYWeapon);
