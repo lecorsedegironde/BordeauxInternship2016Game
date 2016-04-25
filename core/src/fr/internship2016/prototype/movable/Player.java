@@ -36,9 +36,9 @@ public class Player extends MovableElement {
 
         elementRect.x += velocityX;
         elementRect.y += velocityY;
-        velocityY += GRAVITY;
         weapon.setX(weapon.getX() + velocityX);
         weapon.setY(weapon.getY() + velocityY);
+        velocityY += GRAVITY;
 
         //On the ground
         if (elementRect.y <= GROUND_HEIGHT) {
@@ -52,11 +52,15 @@ public class Player extends MovableElement {
         if (elementRect.getX() <= 0) {
             stopMovement();
             elementRect.setX(0);
+            updateSwordDefaultPos();
             weapon.setX(baseXWeapon);
             weapon.setY(baseYWeapon);
-        } else if (elementRect.getX() >= WORLD_WIDTH) {
+        } else if (elementRect.getX() >= WORLD_WIDTH - getW()) {
             stopMovement();
-            elementRect.setX(WORLD_WIDTH - WIDTH_PLAYER);
+            elementRect.setX(WORLD_WIDTH - getW());
+            updateSwordDefaultPos();
+            weapon.setX(baseXWeapon);
+            weapon.setY(baseYWeapon);
         }
 
     }

@@ -53,19 +53,14 @@ public abstract class MovableElement {
         if (elementRect.getX() <= 0) {
             stopMovement();
             elementRect.setX(0);
-        } else if (elementRect.getX() >= WORLD_WIDTH) {
+        } else if (elementRect.getX() >= WORLD_WIDTH - getW()) {
             stopMovement();
-            elementRect.setX(WORLD_WIDTH - WIDTH_PLAYER);
+            elementRect.setX(WORLD_WIDTH - getW());
         }
     }
 
     public void moveRight() {
         velocityX = horizontalVelocity;
-
-        if (elementRect.getX() >= WORLD_WIDTH - WIDTH_PLAYER) {
-            stopMovement();
-            elementRect.setX(WORLD_WIDTH - WIDTH_PLAYER);
-        }
     }
 
     public void moveLeft() {

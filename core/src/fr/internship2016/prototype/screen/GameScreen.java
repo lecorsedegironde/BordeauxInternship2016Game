@@ -122,7 +122,7 @@ public class GameScreen implements Screen {
             player.setCanStopMovement(false);
         }
         if (Gdx.input.isKeyPressed(ATTACK) && player.hasWeapon()) {
-            player.attack();
+            //player.attack();
         }
 
         if (player.canStopMovement()) {
