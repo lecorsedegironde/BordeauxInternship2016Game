@@ -1,5 +1,6 @@
 package fr.internship2016.prototype.movable;
 
+import com.badlogic.gdx.utils.TimeUtils;
 import fr.internship2016.prototype.utils.WeaponStyles;
 import fr.internship2016.prototype.weapon.Sword;
 import fr.internship2016.prototype.weapon.Weapon;
@@ -21,9 +22,16 @@ public class Player extends MovableElement {
     private float baseXWeapon = 0f;
     private float baseYWeapon = 0f;
 
+    //TODO: Move in weapon
+    private boolean attack;
+    private boolean attackOver;
+    private long lastAttack;
+
     public Player(float x, float y, float width, float height, float velocityX, float velocityY, boolean createWeapon) {
         super(x, y, width, height, velocityX, velocityY);
         canStopMovement = true;
+        attack = false;
+        attackOver = false;
 
         if (createWeapon)
             setWeapon(WeaponStyles.SWORD);
@@ -34,27 +42,36 @@ public class Player extends MovableElement {
 
         updateSwordDefaultPos();
 
-        weapon.setX(weapon.getX() + velocityX);
-        weapon.setY(weapon.getY() + velocityY);
+        weapon.setPosition(weapon.getX() + velocityX, weapon.getY() + velocityY);
 
         super.update();
 
         //On the ground
         if (onGround) {
-            weapon.setY(baseYWeapon);
+            weapon.setPosition(weapon.getX(), baseYWeapon);
         }
 
         //Left and Right
-        if (elementRect.getX() <= 0) {
+        if (elementRect.getX() <= 0 || elementRect.getX() >= WORLD_WIDTH - getW()) {
             updateSwordDefaultPos();
-            weapon.setX(baseXWeapon);
-            weapon.setY(baseYWeapon);
-        } else if (elementRect.getX() >= WORLD_WIDTH - getW()) {
-            updateSwordDefaultPos();
-            weapon.setX(baseXWeapon);
-            weapon.setY(baseYWeapon);
+            weapon.setPosition(baseXWeapon, baseYWeapon);
         }
 
+        //Attack
+        if (attack) {
+            if (!attackOver) {
+                if (weapon.getRotation() > -90) {
+                    weapon.rotate(-5);
+                } else {
+                    attackOver = true;
+                }
+            } else {
+                if (weapon.getRotation() == 0)
+                    attack = false;
+                else
+                    weapon.rotate(5);
+            }
+        }
     }
 
     public boolean canStopMovement() {
@@ -83,20 +100,20 @@ public class Player extends MovableElement {
     }
 
     private void updateSwordDefaultPos() {
-        baseXWeapon = getX() + getW() / 1.5f;
-        baseYWeapon = getY() + getH() / 1.5f;
+        baseXWeapon = getX() + (getW() / 12f);
+        baseYWeapon = getY() + (getH() / 12f);
     }
 
     public boolean hasWeapon() {
-        return weapon != null ? true : false;
+        return weapon != null;
     }
 
     public void attack() {
-        float saveX = weapon.getX();
-        float saveW = weapon.getWidth();
-        weapon.setX(weapon.getY());
-        weapon.setY(saveX);
-        weapon.setWidth(weapon.getHeight());
-        weapon.setHeight(saveW);
+        long timeSinceAttack = TimeUtils.timeSinceMillis(lastAttack);
+        if (!attack && timeSinceAttack > 750) {
+            attack = true;
+            attackOver = false;
+            lastAttack = TimeUtils.millis();
+        }
     }
 }

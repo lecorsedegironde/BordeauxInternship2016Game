@@ -88,8 +88,7 @@ public class GameScreen implements Screen {
         shapeRenderer.rect(player.getX(), player.getY(), player.getW(), player.getH());
         if (player.hasWeapon()) {
             shapeRenderer.setColor(Color.CYAN);
-            shapeRenderer.rect(player.getWeapon().getX(), player.getWeapon().getY(), player.getWeapon().getWidth(),
-                    player.getWeapon().getHeight());
+//            shapeRenderer.polygon(player.getWeapon().getTransformedVertices());
         }
         shapeRenderer.end();
 
@@ -98,8 +97,7 @@ public class GameScreen implements Screen {
         shapeRenderer.rect(player.getX(), player.getY(), player.getW(), player.getH());
         if (player.hasWeapon()) {
             shapeRenderer.setColor(Color.TEAL);
-            shapeRenderer.rect(player.getWeapon().getX(), player.getWeapon().getY(), player.getWeapon().getWidth(),
-                    player.getWeapon().getHeight());
+            shapeRenderer.polygon(player.getWeapon().getTransformedVertices());
         }
         //The ground
         shapeRenderer.setColor(Color.RED);
@@ -122,7 +120,7 @@ public class GameScreen implements Screen {
             player.setCanStopMovement(false);
         }
         if (Gdx.input.isKeyPressed(ATTACK) && player.hasWeapon()) {
-            //player.attack();
+            player.attack();
         }
 
         if (player.canStopMovement()) {
