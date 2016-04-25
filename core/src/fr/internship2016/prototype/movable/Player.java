@@ -31,14 +31,34 @@ public class Player extends MovableElement {
 
     @Override
     public void update() {
+
+        updateSwordDefaultPos();
+
+        elementRect.x += velocityX;
+        elementRect.y += velocityY;
+        velocityY += GRAVITY;
         weapon.setX(weapon.getX() + velocityX);
         weapon.setY(weapon.getY() + velocityY);
-        super.update();
 
         //On the ground
-        if (onGround) {
+        if (elementRect.y <= GROUND_HEIGHT) {
+            velocityY = 0.0f;
+            onGround = true;
+            elementRect.y = GROUND_HEIGHT;
             weapon.setY(baseYWeapon);
         }
+
+        //Left and Right
+        if (elementRect.getX() <= 0) {
+            stopMovement();
+            elementRect.setX(0);
+            weapon.setX(baseXWeapon);
+            weapon.setY(baseYWeapon);
+        } else if (elementRect.getX() >= WORLD_WIDTH) {
+            stopMovement();
+            elementRect.setX(WORLD_WIDTH - WIDTH_PLAYER);
+        }
+
     }
 
     public boolean canStopMovement() {
@@ -56,8 +76,7 @@ public class Player extends MovableElement {
     public void setWeapon(WeaponStyles w) {
         switch (w) {
             case SWORD:
-                baseXWeapon = getX() + getW() / 1.5f;
-                baseYWeapon = getY() + getH() / 1.5f;
+                updateSwordDefaultPos();
                 weapon = new Sword(baseXWeapon, baseYWeapon,
                         SWORD_WIDTH, SWORD_HEIGHT, SWORD_ANGULAR_VELOCITY);
                 break;
@@ -67,7 +86,21 @@ public class Player extends MovableElement {
         }
     }
 
+    private void updateSwordDefaultPos() {
+        baseXWeapon = getX() + getW() / 1.5f;
+        baseYWeapon = getY() + getH() / 1.5f;
+    }
+
     public boolean hasWeapon() {
         return weapon != null ? true : false;
+    }
+
+    public void attack() {
+        float saveX = weapon.getX();
+        float saveW = weapon.getWidth();
+        weapon.setX(weapon.getY());
+        weapon.setY(saveX);
+        weapon.setWidth(weapon.getHeight());
+        weapon.setHeight(saveW);
     }
 }

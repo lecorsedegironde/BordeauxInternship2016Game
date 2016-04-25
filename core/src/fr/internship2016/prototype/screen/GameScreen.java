@@ -121,6 +121,9 @@ public class GameScreen implements Screen {
             player.jump();
             player.setCanStopMovement(false);
         }
+        if (Gdx.input.isKeyPressed(ATTACK) && player.hasWeapon()) {
+            player.attack();
+        }
 
         if (player.canStopMovement()) {
             player.stopMovement();

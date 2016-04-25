@@ -33,5 +33,6 @@ public class Constants {
     public static final int LEFT = Input.Keys.Q;
     public static final int RIGHT = Input.Keys.D;
     public static final int JUMP = Input.Keys.Z;
+    public static final int ATTACK = Input.Keys.SPACE;
 
 }
