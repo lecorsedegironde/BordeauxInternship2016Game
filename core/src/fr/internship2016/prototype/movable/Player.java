@@ -1,5 +1,6 @@
 package fr.internship2016.prototype.movable;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.TimeUtils;
 import fr.internship2016.prototype.utils.WeaponStyles;
 import fr.internship2016.prototype.weapon.Sword;
@@ -22,6 +23,10 @@ public class Player extends MovableElement {
     private float baseXWeapon = 0f;
     private float baseYWeapon = 0f;
 
+    private boolean invisible;
+    private boolean canBeInvisible;
+    private long invisibilityTime;
+
     //TODO: Move in weapon
     private boolean attack;
     private boolean attackOver;
@@ -35,6 +40,9 @@ public class Player extends MovableElement {
 
         if (createWeapon)
             setWeapon(WeaponStyles.SWORD);
+
+        invisible = false;
+        canBeInvisible = true;
     }
 
     @Override
@@ -45,6 +53,7 @@ public class Player extends MovableElement {
         weapon.setPosition(weapon.getX() + velocityX, weapon.getY() + velocityY);
 
         super.update();
+        Gdx.app.debug("PLAYER POS", "X : " + getX() + "Y : " + getY());
 
         //On the ground
         if (onGround) {
@@ -71,6 +80,15 @@ public class Player extends MovableElement {
                 else
                     weapon.rotate(5);
             }
+        }
+
+        //Invisibility
+        if (invisible && TimeUtils.timeSinceMillis(invisibilityTime) > INVISIBILITY_DURATION) {
+            invisible = false;
+            invisibilityTime = TimeUtils.millis();
+        }
+        if (TimeUtils.timeSinceMillis(invisibilityTime) > INVISIBILITY_REFILL) {
+            canBeInvisible = true;
         }
     }
 
@@ -115,5 +133,21 @@ public class Player extends MovableElement {
             attackOver = false;
             lastAttack = TimeUtils.millis();
         }
+    }
+
+    public boolean isInvisible() {
+        return invisible;
+    }
+
+    public void startInvisibility() {
+        if (!invisible && canBeInvisible) {
+            invisible = true;
+            canBeInvisible = false;
+            invisibilityTime = TimeUtils.millis();
+        }
+    }
+
+    public boolean canBeInvisible() {
+        return canBeInvisible;
     }
 }
