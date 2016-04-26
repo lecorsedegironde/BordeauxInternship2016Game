@@ -1,5 +1,7 @@
 package fr.internship2016.prototype.movable;
 
+import static fr.internship2016.prototype.utils.Constants.WORLD_WIDTH;
+
 /**
  * Created by pacaud on 16/04/25.
  */
@@ -13,6 +15,12 @@ public class Troll extends MovableElement {
     @Override
     public void update() {
         super.update();
+
+        if (elementRect.getX() <= 0) {
+            moveRight();
+        } else if (elementRect.getX() >= WORLD_WIDTH - getW()) {
+            moveLeft();
+        }
     }
 
 }

@@ -60,8 +60,9 @@ public class GameScreen implements Screen {
         player = new Player(0.5f, GROUND_HEIGHT, WIDTH_PLAYER, HEIGHT_PLAYER,
                 VELOCITY_X_PLAYER, VELOCITY_Y_PLAYER, true);
 
-        troll = new Troll(12f, GROUND_HEIGHT,WIDTH_TROLL,HEIGHT_TROLL,
-                VELOCITY_X_TROLL,VELOCITY_Y_TROLL);
+        troll = new Troll(12f, GROUND_HEIGHT, WIDTH_TROLL, HEIGHT_TROLL,
+                VELOCITY_X_TROLL, VELOCITY_Y_TROLL);
+        troll.moveLeft();
     }
 
     @Override
@@ -79,8 +80,10 @@ public class GameScreen implements Screen {
             camera.translate(-VELOCITY_X_PLAYER, 0);
         }
 
-        if (camera.position.x > WORLD_WIDTH - WORLD_WIDTH / 12f) camera.position.x = WORLD_WIDTH - WORLD_WIDTH / 12f;
-        else if (camera.position.x < WORLD_WIDTH / 12f) camera.position.x = WORLD_WIDTH / 12f;
+        if (camera.position.x > WORLD_WIDTH - WORLD_WIDTH / 12f)
+            camera.position.x = WORLD_WIDTH - WORLD_WIDTH / 12f;
+        else if (camera.position.x < WORLD_WIDTH / 12f)
+            camera.position.x = WORLD_WIDTH / 12f;
 
         camera.update();
         batch.setProjectionMatrix(camera.combined);
@@ -107,7 +110,6 @@ public class GameScreen implements Screen {
             shapeRenderer.setColor(Color.BLACK);
             shapeRenderer.polygon(player.getWeapon().getTransformedVertices());
         }
-
 
 
         //The ground
@@ -146,8 +148,6 @@ public class GameScreen implements Screen {
         if (player.canStopMovement()) {
             player.stopMovement();
         }
-
-        troll.moveLeft();
     }
 
 

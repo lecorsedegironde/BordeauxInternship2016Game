@@ -35,7 +35,7 @@ public class Constants {
     public static final float GRAVITY = -0.047f;
     public static final float VELOCITY_X_PLAYER = 0.15f;
     public static final float VELOCITY_Y_PLAYER = 0.45f;
-    public static final float VELOCITY_X_TROLL =0.05f;
+    public static final float VELOCITY_X_TROLL = 0.05f;
     public static final float VELOCITY_Y_TROLL = 0.0f;
 
     //Controls
