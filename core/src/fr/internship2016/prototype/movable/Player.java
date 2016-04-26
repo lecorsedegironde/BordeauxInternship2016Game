@@ -1,5 +1,7 @@
 package fr.internship2016.prototype.movable;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.TimeUtils;
 import fr.internship2016.prototype.utils.WeaponStyles;
 import fr.internship2016.prototype.weapon.Sword;
 import fr.internship2016.prototype.weapon.Weapon;
@@ -21,40 +23,87 @@ public class Player extends MovableElement {
     private float baseXWeapon = 0f;
     private float baseYWeapon = 0f;
 
+    private boolean invisible;
+    private boolean canBeInvisible;
+    private long invisibilityTime;
+
+    //TODO: Move in weapon
+    private boolean attack;
+    private boolean attackOver;
+    private long lastAttack;
+
     public Player(float x, float y, float width, float height, float velocityX, float velocityY, boolean createWeapon) {
         super(x, y, width, height, velocityX, velocityY);
         canStopMovement = true;
+        rightFacing = true;
+        attack = false;
+        attackOver = false;
 
         if (createWeapon)
             setWeapon(WeaponStyles.SWORD);
+
+        invisible = false;
+        canBeInvisible = true;
     }
 
     @Override
     public void update() {
 
-        updateSwordDefaultPos();
 
-        weapon.setX(weapon.getX() + velocityX);
-        weapon.setY(weapon.getY() + velocityY);
 
         super.update();
+        updateSwordDefaultPos();
+        weapon.setPosition(baseXWeapon, baseYWeapon);
+//        Gdx.app.debug("PLAYER POS", "x: " + getX() + " y: " + getY());
 
-        //On the ground
-        if (onGround) {
-            weapon.setY(baseYWeapon);
+
+        //Attack
+        if (attack) {
+            int maxRotate, rotateAngle;
+            if (rightFacing) {
+                maxRotate = -90;
+                rotateAngle = -5;
+            } else {
+                maxRotate = 90;
+                rotateAngle = 5;
+            }
+            if (!attackOver) {
+                if ((weapon.getRotation() > maxRotate && rightFacing)
+                        || (weapon.getRotation() < maxRotate && !rightFacing)) {
+                    weapon.rotate(rotateAngle);
+                } else {
+                    attackOver = true;
+                }
+            } else {
+                if (weapon.getRotation() == 0)
+                    attack = false;
+                else
+                    weapon.rotate(-rotateAngle);
+            }
         }
 
-        //Left and Right
-        if (elementRect.getX() <= 0) {
-            updateSwordDefaultPos();
-            weapon.setX(baseXWeapon);
-            weapon.setY(baseYWeapon);
-        } else if (elementRect.getX() >= WORLD_WIDTH - getW()) {
-            updateSwordDefaultPos();
-            weapon.setX(baseXWeapon);
-            weapon.setY(baseYWeapon);
+        //Invisibility
+        if (invisible && TimeUtils.timeSinceMillis(invisibilityTime) > INVISIBILITY_DURATION) {
+            invisible = false;
+            invisibilityTime = TimeUtils.millis();
         }
+        if (TimeUtils.timeSinceMillis(invisibilityTime) > INVISIBILITY_REFILL) {
+            canBeInvisible = true;
+        }
+    }
 
+    @Override
+    public void moveRight() {
+        if (!attack) {
+            super.moveRight();
+        }
+    }
+
+    @Override
+    public void moveLeft() {
+        if (!attack) {
+            super.moveLeft();
+        }
     }
 
     public boolean canStopMovement() {
@@ -73,8 +122,7 @@ public class Player extends MovableElement {
         switch (w) {
             case SWORD:
                 updateSwordDefaultPos();
-                weapon = new Sword(baseXWeapon, baseYWeapon,
-                        SWORD_WIDTH, SWORD_HEIGHT, SWORD_ANGULAR_VELOCITY);
+                weapon = new Sword(baseXWeapon, baseYWeapon, SWORD_WIDTH, SWORD_HEIGHT);
                 break;
             default:
                 weapon = null;
@@ -83,20 +131,38 @@ public class Player extends MovableElement {
     }
 
     private void updateSwordDefaultPos() {
-        baseXWeapon = getX() + getW() / 1.5f;
-        baseYWeapon = getY() + getH() / 1.5f;
+        float divideFactor = 12f;
+        baseXWeapon = getX();
+        baseYWeapon = getY() + (getH() / divideFactor);
+//        Gdx.app.debug("SWORD_POS", "x: " + baseXWeapon + " y: " + baseYWeapon);
     }
 
     public boolean hasWeapon() {
-        return weapon != null ? true : false;
+        return weapon != null;
     }
 
     public void attack() {
-        float saveX = weapon.getX();
-        float saveW = weapon.getWidth();
-        weapon.setX(weapon.getY());
-        weapon.setY(saveX);
-        weapon.setWidth(weapon.getHeight());
-        weapon.setHeight(saveW);
+        long timeSinceAttack = TimeUtils.timeSinceMillis(lastAttack);
+        if (!attack && timeSinceAttack > 750) {
+            attack = true;
+            attackOver = false;
+            lastAttack = TimeUtils.millis();
+        }
+    }
+
+    public boolean isInvisible() {
+        return invisible;
+    }
+
+    public void startInvisibility() {
+        if (!invisible && canBeInvisible) {
+            invisible = true;
+            canBeInvisible = false;
+            invisibilityTime = TimeUtils.millis();
+        }
+    }
+
+    public boolean canBeInvisible() {
+        return canBeInvisible;
     }
 }

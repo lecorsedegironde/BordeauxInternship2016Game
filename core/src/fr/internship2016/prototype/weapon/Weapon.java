@@ -1,6 +1,6 @@
 package fr.internship2016.prototype.weapon;
 
-import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Polygon;
 
 /**
  * Created by bastien on 24/04/16.
@@ -8,41 +8,53 @@ import com.badlogic.gdx.math.Rectangle;
  */
 public abstract class Weapon {
 
-    private Rectangle elementRect = new Rectangle();
+    private Polygon elementPolygon;
+    private float baseWidth, baseHeight;
+
 
     public Weapon(float x, float y, float width, float height) {
-        this.elementRect.setX(x);
-        this.elementRect.setY(y);
-        this.elementRect.setWidth(width);
-        this.elementRect.setHeight(height);
+        this.baseWidth = width;
+        this.baseHeight = height;
+        this.elementPolygon = new Polygon(new float[]{
+                x, y,
+                x + width, y,
+                x + width, y + height,
+                x, y + height
+        });
+
+        this.elementPolygon.setOrigin(x + width / 2, y);
+        this.elementPolygon.setPosition(x,y);
     }
 
     public float getX() {
-        return elementRect.getX();
+        return elementPolygon.getX();
     }
 
-    public void setX(float x) {
-        elementRect.setX(x);
-    }
     public float getY() {
-        return elementRect.getY();
+        return elementPolygon.getY();
     }
 
-    public void setY(float y) {
-        elementRect.setY(y);
+    public void setPosition(float x, float y) {
+        elementPolygon.setPosition(x, y);
     }
+
     public float getWidth() {
-        return elementRect.getWidth();
+        return baseWidth;
     }
 
-    public void setWidth(float width) {
-        elementRect.setWidth(width);
-    }
     public float getHeight() {
-        return elementRect.getHeight();
+        return baseHeight;
     }
 
-    public void setHeight(float height) {
-        elementRect.setHeight(height);
+    public void rotate(float degrees) {
+        elementPolygon.rotate(degrees);
+    }
+
+    public float getRotation() {
+        return elementPolygon.getRotation();
+    }
+
+    public float[] getTransformedVertices() {
+        return elementPolygon.getTransformedVertices();
     }
 }

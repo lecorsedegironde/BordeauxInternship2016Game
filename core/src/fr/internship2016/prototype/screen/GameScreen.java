@@ -90,12 +90,13 @@ public class GameScreen implements Screen {
 
         shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(Color.BLUE);
-        shapeRenderer.rect(player.getX(), player.getY(), player.getW(), player.getH());
-        if (player.hasWeapon()) {
-            shapeRenderer.setColor(Color.CYAN);
-            shapeRenderer.rect(player.getWeapon().getX(), player.getWeapon().getY(), player.getWeapon().getWidth(),
-                    player.getWeapon().getHeight());
+        if (!player.isInvisible()) {
+            if (player.canBeInvisible()) {
+                shapeRenderer.setColor(Color.BLUE);
+            } else {
+                shapeRenderer.setColor(Color.CYAN);
+            }
+            shapeRenderer.rect(player.getX(), player.getY(), player.getW(), player.getH());
         }
         shapeRenderer.end();
 
@@ -103,9 +104,8 @@ public class GameScreen implements Screen {
         shapeRenderer.setColor(Color.GREEN);
         shapeRenderer.rect(player.getX(), player.getY(), player.getW(), player.getH());
         if (player.hasWeapon()) {
-            shapeRenderer.setColor(Color.TEAL);
-            shapeRenderer.rect(player.getWeapon().getX(), player.getWeapon().getY(), player.getWeapon().getWidth(),
-                    player.getWeapon().getHeight());
+            shapeRenderer.setColor(Color.BLACK);
+            shapeRenderer.polygon(player.getWeapon().getTransformedVertices());
         }
 
 
@@ -138,9 +138,11 @@ public class GameScreen implements Screen {
             player.setCanStopMovement(false);
         }
         if (Gdx.input.isKeyPressed(ATTACK) && player.hasWeapon()) {
-            //player.attack();
+            player.attack();
         }
-
+        if (Gdx.input.isKeyPressed(INVISIBILITY)) {
+            player.startInvisibility();
+        }
         if (player.canStopMovement()) {
             player.stopMovement();
         }
