@@ -43,7 +43,7 @@ public class Player extends MovableElement {
     public void update() {
 
         super.update();
-        weapon.update(rightFacing);
+        weapon.update();
 
         //Invisibility
         if (invisible && TimeUtils.timeSinceMillis(invisibilityTime) > INVISIBILITY_DURATION) {

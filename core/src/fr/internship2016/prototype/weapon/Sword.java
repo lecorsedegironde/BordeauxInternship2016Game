@@ -13,14 +13,14 @@ public class Sword extends Weapon {
     }
 
     @Override
-    public void update(boolean rightFacing) {
+    public void update() {
         updateWeaponPos();
         setPosition(baseX, baseY);
 
         //Attack
         if (attack) {
             int maxRotate, rotateAngle;
-            if (rightFacing) {
+            if (owner.isRightFacing()) {
                 maxRotate = -90;
                 rotateAngle = -5;
             } else {
@@ -28,15 +28,17 @@ public class Sword extends Weapon {
                 rotateAngle = 5;
             }
             if (!attackOver) {
-                if ((getRotation() > maxRotate && rightFacing)
-                        || (getRotation() < maxRotate && !rightFacing)) {
+                if ((getRotation() > maxRotate && owner.isRightFacing())
+                        || (getRotation() < maxRotate && !owner.isRightFacing())) {
                     rotate(rotateAngle);
                 } else {
                     attackOver = true;
                 }
             } else {
-                if (getRotation() == 0)
+                if (getRotation() == 0) {
                     attack = false;
+                    hasHit = false;
+                }
                 else
                     rotate(-rotateAngle);
             }
@@ -45,8 +47,13 @@ public class Sword extends Weapon {
 
     @Override
     protected void updateWeaponPos() {
-        float divideFactor = 12f;
-        baseX = owner.getX();
+        float divideFactor = 1.5f;
+        float divide = owner.getW() / divideFactor;
+        if (!owner.isRightFacing()) {
+            divide /= 2f;
+            divide -= baseWidth;
+        }
+        baseX = owner.getX() + divide;
         baseY = owner.getY() + (owner.getH() / divideFactor);
     }
 

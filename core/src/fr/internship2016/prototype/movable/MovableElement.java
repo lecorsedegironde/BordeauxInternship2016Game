@@ -83,6 +83,10 @@ public abstract class MovableElement {
             velocityX = 0;
     }
 
+    public boolean isRightFacing() {
+        return rightFacing;
+    }
+
     public float getX() {
         return elementRect.x;
     }

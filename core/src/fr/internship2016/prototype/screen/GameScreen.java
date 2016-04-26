@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import fr.internship2016.prototype.movable.MovableElement;
 import fr.internship2016.prototype.movable.Player;
 import fr.internship2016.prototype.movable.Troll;
+import fr.internship2016.prototype.utils.CollisionDetector;
 
 import static fr.internship2016.prototype.utils.Constants.*;
 
@@ -79,9 +80,9 @@ public class GameScreen implements Screen {
         Vector2 playerPos = new Vector2(player.getX(), player.getY());
         viewport.project(playerPos);
 
-        if (playerPos.x > SCREEN_WIDTH * 0.75f) {
+        if (playerPos.x > Gdx.graphics.getWidth() * 0.75f) {
             camera.translate(VELOCITY_X_PLAYER, 0);
-        } else if (playerPos.x < SCREEN_WIDTH * 0.25f) {
+        } else if (playerPos.x < Gdx.graphics.getHeight() * 0.25f) {
             camera.translate(-VELOCITY_X_PLAYER, 0);
         }
 
@@ -91,6 +92,14 @@ public class GameScreen implements Screen {
             camera.position.x = WORLD_WIDTH / 12f;
 
         camera.update();
+
+        player.update();
+        player.setCanStopMovement(true);
+
+        for (MovableElement e : enemies) {
+            e.update();
+        }
+
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         sprite.draw(batch);
@@ -131,11 +140,24 @@ public class GameScreen implements Screen {
 
         shapeRenderer.end();
 
-        player.update();
-        player.setCanStopMovement(true);
-
+        //TODO: Review
         for (MovableElement e : enemies) {
-            e.update();
+            if (player.isAttacking()) {
+                if (e instanceof Troll
+                        && CollisionDetector.isCollision(player.getWeapon(), e) && !player.getWeapon().hasHit()) {
+                    ((Troll) e).hit();
+                    player.getWeapon().hit();
+                }
+            }
+        }
+
+        //Are enemies alive ?
+        for (MovableElement e : enemies) {
+            if (e instanceof Troll) {
+                if(((Troll) e).getNumberHitLeft() == 0) {
+                    enemies.removeValue(e, true);
+                }
+            }
         }
 
         if (Gdx.input.isKeyPressed(RIGHT)) {

@@ -19,6 +19,7 @@ public abstract class Weapon {
 
     //Attack
     protected boolean attack;
+    protected boolean hasHit;
     protected boolean attackOver;
     protected long lastAttack;
 
@@ -32,22 +33,20 @@ public abstract class Weapon {
         this.baseHeight = height;
         updateWeaponPos();
         this.elementPolygon = new Polygon(new float[]{
-                baseX, baseY,
-                baseX + baseWidth, baseY,
-                baseX + baseWidth, baseY + baseHeight,
-                baseX, baseY + baseHeight
+                0, 0,
+                baseWidth, 0,
+                baseWidth, baseHeight,
+                0, baseHeight
         });
-
-        this.elementPolygon.setOrigin(baseX + baseWidth / 2, baseY);
-        this.elementPolygon.setPosition(baseX,baseY);
-
+        this.elementPolygon.setOrigin(baseWidth / 2, 0.1f);
 
         //Attack part
         attack = false;
         attackOver = false;
+        hasHit = false;
     }
 
-    public abstract void update(boolean rightFacing);
+    public abstract void update();
 
     protected abstract void updateWeaponPos();
 
@@ -60,6 +59,7 @@ public abstract class Weapon {
         if (!attack && timeSinceAttack > Constants.SWORD_REFILL_TIME) {
             attack = true;
             attackOver = false;
+            hasHit = false;
             lastAttack = TimeUtils.millis();
         }
     }
@@ -98,5 +98,18 @@ public abstract class Weapon {
 
     public MovableElement getOwner() {
         return owner;
+    }
+
+    //For collision detection
+    public Polygon getElementPolygon() {
+        return elementPolygon;
+    }
+
+    public boolean hasHit() {
+        return hasHit;
+    }
+
+    public void hit() {
+        hasHit = true;
     }
 }
