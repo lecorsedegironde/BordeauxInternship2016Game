@@ -1,6 +1,9 @@
 package fr.internship2016.prototype.weapon;
 
 import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.utils.TimeUtils;
+import fr.internship2016.prototype.movable.MovableElement;
+import fr.internship2016.prototype.utils.Constants;
 
 /**
  * Created by bastien on 24/04/16.
@@ -8,22 +11,85 @@ import com.badlogic.gdx.math.Polygon;
  */
 public abstract class Weapon {
 
-    private Polygon elementPolygon;
-    private float baseWidth, baseHeight;
+    protected Polygon elementPolygon;
+    protected float baseX, baseY, baseWidth, baseHeight;
+
+    //Owner
+    protected MovableElement owner;
+
+    //Attack
+    protected boolean attack;
+    protected boolean attackOver;
+    protected long lastAttack;
 
 
-    public Weapon(float x, float y, float width, float height) {
+    public Weapon(MovableElement owner, float width, float height) {
+        //Owner
+        this.owner = owner;
+
+        //Positions
         this.baseWidth = width;
         this.baseHeight = height;
+        updateWeaponPos();
         this.elementPolygon = new Polygon(new float[]{
-                x, y,
-                x + width, y,
-                x + width, y + height,
-                x, y + height
+                baseX, baseY,
+                baseX + baseWidth, baseY,
+                baseX + baseWidth, baseY + baseHeight,
+                baseX, baseY + baseHeight
         });
 
-        this.elementPolygon.setOrigin(x + width / 2, y);
-        this.elementPolygon.setPosition(x,y);
+        this.elementPolygon.setOrigin(baseX + baseWidth / 2, baseY);
+        this.elementPolygon.setPosition(baseX,baseY);
+
+
+        //Attack part
+        attack = false;
+        attackOver = false;
+    }
+
+    public void update(boolean rightFacing) {
+        updateWeaponPos();
+        setPosition(baseX, baseY);
+
+        //Attack
+        if (attack) {
+            int maxRotate, rotateAngle;
+            if (rightFacing) {
+                maxRotate = -90;
+                rotateAngle = -5;
+            } else {
+                maxRotate = 90;
+                rotateAngle = 5;
+            }
+            if (!attackOver) {
+                if ((getRotation() > maxRotate && rightFacing)
+                        || (getRotation() < maxRotate && !rightFacing)) {
+                    rotate(rotateAngle);
+                } else {
+                    attackOver = true;
+                }
+            } else {
+                if (getRotation() == 0)
+                    attack = false;
+                else
+                    rotate(-rotateAngle);
+            }
+        }
+    }
+
+    protected abstract void updateWeaponPos();
+
+    public boolean isAttack() {
+        return attack;
+    }
+
+    public void attack() {
+        long timeSinceAttack = TimeUtils.timeSinceMillis(lastAttack);
+        if (!attack && timeSinceAttack > Constants.SWORD_REFILL_TIME) {
+            attack = true;
+            attackOver = false;
+            lastAttack = TimeUtils.millis();
+        }
     }
 
     public float getX() {
@@ -34,16 +100,16 @@ public abstract class Weapon {
         return elementPolygon.getY();
     }
 
-    public void setPosition(float x, float y) {
-        elementPolygon.setPosition(x, y);
-    }
-
     public float getWidth() {
         return baseWidth;
     }
 
     public float getHeight() {
         return baseHeight;
+    }
+
+    public void setPosition(float x, float y) {
+        elementPolygon.setPosition(x, y);
     }
 
     public void rotate(float degrees) {
@@ -56,5 +122,9 @@ public abstract class Weapon {
 
     public float[] getTransformedVertices() {
         return elementPolygon.getTransformedVertices();
+    }
+
+    public MovableElement getOwner() {
+        return owner;
     }
 }

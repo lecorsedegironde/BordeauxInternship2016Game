@@ -19,24 +19,18 @@ public class Player extends MovableElement {
     private Weapon weapon = null;
 
     private boolean canStopMovement;
-    private float baseXWeapon = 0f;
-    private float baseYWeapon = 0f;
 
     private boolean invisible;
     private boolean canBeInvisible;
     private long invisibilityTime;
 
     //TODO: Move in weapon
-    private boolean attack;
-    private boolean attackOver;
-    private long lastAttack;
+
 
     public Player(float x, float y, float width, float height, float velocityX, float velocityY, boolean createWeapon) {
         super(x, y, width, height, velocityX, velocityY);
         canStopMovement = true;
         rightFacing = true;
-        attack = false;
-        attackOver = false;
 
         if (createWeapon)
             setWeapon(WeaponStyles.SWORD);
@@ -48,38 +42,8 @@ public class Player extends MovableElement {
     @Override
     public void update() {
 
-
-
         super.update();
-        updateSwordDefaultPos();
-        weapon.setPosition(baseXWeapon, baseYWeapon);
-//        Gdx.app.debug("PLAYER POS", "x: " + getX() + " y: " + getY());
-
-
-        //Attack
-        if (attack) {
-            int maxRotate, rotateAngle;
-            if (rightFacing) {
-                maxRotate = -90;
-                rotateAngle = -5;
-            } else {
-                maxRotate = 90;
-                rotateAngle = 5;
-            }
-            if (!attackOver) {
-                if ((weapon.getRotation() > maxRotate && rightFacing)
-                        || (weapon.getRotation() < maxRotate && !rightFacing)) {
-                    weapon.rotate(rotateAngle);
-                } else {
-                    attackOver = true;
-                }
-            } else {
-                if (weapon.getRotation() == 0)
-                    attack = false;
-                else
-                    weapon.rotate(-rotateAngle);
-            }
-        }
+        weapon.update(rightFacing);
 
         //Invisibility
         if (invisible && TimeUtils.timeSinceMillis(invisibilityTime) > INVISIBILITY_DURATION) {
@@ -93,14 +57,14 @@ public class Player extends MovableElement {
 
     @Override
     public void moveRight() {
-        if (!attack) {
+        if (!weapon.isAttack()) {
             super.moveRight();
         }
     }
 
     @Override
     public void moveLeft() {
-        if (!attack) {
+        if (!weapon.isAttack()) {
             super.moveLeft();
         }
     }
@@ -120,8 +84,7 @@ public class Player extends MovableElement {
     public void setWeapon(WeaponStyles w) {
         switch (w) {
             case SWORD:
-                updateSwordDefaultPos();
-                weapon = new Sword(baseXWeapon, baseYWeapon, SWORD_WIDTH, SWORD_HEIGHT);
+                weapon = new Sword(this, SWORD_WIDTH, SWORD_HEIGHT);
                 break;
             default:
                 weapon = null;
@@ -129,24 +92,12 @@ public class Player extends MovableElement {
         }
     }
 
-    private void updateSwordDefaultPos() {
-        float divideFactor = 12f;
-        baseXWeapon = getX();
-        baseYWeapon = getY() + (getH() / divideFactor);
-//        Gdx.app.debug("SWORD_POS", "x: " + baseXWeapon + " y: " + baseYWeapon);
-    }
-
     public boolean hasWeapon() {
         return weapon != null;
     }
 
     public void attack() {
-        long timeSinceAttack = TimeUtils.timeSinceMillis(lastAttack);
-        if (!attack && timeSinceAttack > 750) {
-            attack = true;
-            attackOver = false;
-            lastAttack = TimeUtils.millis();
-        }
+        weapon.attack();
     }
 
     public boolean isInvisible() {
