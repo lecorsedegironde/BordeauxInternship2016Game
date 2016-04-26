@@ -47,35 +47,7 @@ public abstract class Weapon {
         attackOver = false;
     }
 
-    public void update(boolean rightFacing) {
-        updateWeaponPos();
-        setPosition(baseX, baseY);
-
-        //Attack
-        if (attack) {
-            int maxRotate, rotateAngle;
-            if (rightFacing) {
-                maxRotate = -90;
-                rotateAngle = -5;
-            } else {
-                maxRotate = 90;
-                rotateAngle = 5;
-            }
-            if (!attackOver) {
-                if ((getRotation() > maxRotate && rightFacing)
-                        || (getRotation() < maxRotate && !rightFacing)) {
-                    rotate(rotateAngle);
-                } else {
-                    attackOver = true;
-                }
-            } else {
-                if (getRotation() == 0)
-                    attack = false;
-                else
-                    rotate(-rotateAngle);
-            }
-        }
-    }
+    abstract void update(boolean rightFacing);
 
     protected abstract void updateWeaponPos();
 
