@@ -13,7 +13,7 @@ public class Sword extends Weapon {
     }
 
     @Override
-    void update(boolean rightFacing) {
+    public void update(boolean rightFacing) {
         updateWeaponPos();
         setPosition(baseX, baseY);
 

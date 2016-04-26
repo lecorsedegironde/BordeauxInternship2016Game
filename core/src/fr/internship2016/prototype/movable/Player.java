@@ -104,6 +104,10 @@ public class Player extends MovableElement {
         return invisible;
     }
 
+    public boolean isAttacking() {
+        return weapon.isAttack();
+    }
+
     public void startInvisibility() {
         if (!invisible && canBeInvisible) {
             invisible = true;

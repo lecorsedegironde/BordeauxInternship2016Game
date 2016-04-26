@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import fr.internship2016.prototype.movable.MovableElement;
@@ -36,7 +37,7 @@ public class GameScreen implements Screen {
     private Viewport viewport;
 
     private Player player;
-    private Troll troll;
+    private Array<MovableElement> enemies;
 
     public GameScreen() {
         batch = new SpriteBatch();
@@ -56,13 +57,17 @@ public class GameScreen implements Screen {
 
         camera.update();
 
-        //So test
+        //Player & enemies
         player = new Player(0.5f, GROUND_HEIGHT, WIDTH_PLAYER, HEIGHT_PLAYER,
                 VELOCITY_X_PLAYER, VELOCITY_Y_PLAYER, true);
 
-        troll = new Troll(12f, GROUND_HEIGHT, WIDTH_TROLL, HEIGHT_TROLL,
+        enemies = new Array<>();
+
+        Troll troll = new Troll(12f, GROUND_HEIGHT, WIDTH_TROLL, HEIGHT_TROLL,
                 VELOCITY_X_TROLL, VELOCITY_Y_TROLL);
         troll.moveLeft();
+
+        enemies.add(troll);
     }
 
     @Override
@@ -117,15 +122,21 @@ public class GameScreen implements Screen {
         shapeRenderer.line(0, GROUND_HEIGHT, WORLD_WIDTH, GROUND_HEIGHT);
         shapeRenderer.end();
 
-        //Troll
+        //Enemies
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(Color.RED);
-        shapeRenderer.rect(troll.getX(), troll.getY(), troll.getW(), troll.getH());
+        shapeRenderer.setColor(Color.SCARLET);
+        for (MovableElement e : enemies) {
+            shapeRenderer.rect(e.getX(), e.getY(), e.getW(), e.getH());
+        }
+
         shapeRenderer.end();
 
         player.update();
         player.setCanStopMovement(true);
-        troll.update();
+
+        for (MovableElement e : enemies) {
+            e.update();
+        }
 
         if (Gdx.input.isKeyPressed(RIGHT)) {
             player.moveRight();

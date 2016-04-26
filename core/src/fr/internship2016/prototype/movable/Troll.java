@@ -1,5 +1,6 @@
 package fr.internship2016.prototype.movable;
 
+import static fr.internship2016.prototype.utils.Constants.HIT_TROLL;
 import static fr.internship2016.prototype.utils.Constants.WORLD_WIDTH;
 
 /**
@@ -7,9 +8,11 @@ import static fr.internship2016.prototype.utils.Constants.WORLD_WIDTH;
  */
 public class Troll extends MovableElement {
 
+    private int numberHitLeft;
+
     public Troll(float x, float y, float width, float height, float velocityX, float velocityY) {
         super(x, y, width, height, velocityX, velocityY);
-
+        numberHitLeft = HIT_TROLL;
     }
 
     @Override
@@ -23,4 +26,11 @@ public class Troll extends MovableElement {
         }
     }
 
+    public void hit() {
+        numberHitLeft--;
+    }
+
+    public int getNumberHitLeft() {
+        return numberHitLeft;
+    }
 }

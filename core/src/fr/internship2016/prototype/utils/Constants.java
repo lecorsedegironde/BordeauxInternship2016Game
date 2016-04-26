@@ -26,6 +26,8 @@ public class Constants {
     //Troll
     public static final float WIDTH_TROLL = 2f;
     public static final float HEIGHT_TROLL = 3f;
+    public static final int HIT_TROLL = 3;
+
 
     //Weapons
     public static final float SWORD_WIDTH = 0.1f;

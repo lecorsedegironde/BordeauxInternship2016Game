@@ -47,7 +47,7 @@ public abstract class Weapon {
         attackOver = false;
     }
 
-    abstract void update(boolean rightFacing);
+    public abstract void update(boolean rightFacing);
 
     protected abstract void updateWeaponPos();
 
