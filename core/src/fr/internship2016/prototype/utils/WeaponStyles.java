@@ -5,5 +5,6 @@ package fr.internship2016.prototype.utils;
  * List of all weapons
  */
 public enum WeaponStyles {
-    SWORD
+    SWORD,
+    CLUB
 }

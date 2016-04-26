@@ -115,6 +115,11 @@ public class GameScreen implements Screen {
             }
             shapeRenderer.rect(player.getX(), player.getY(), player.getW(), player.getH());
         }
+        //Enemies
+        shapeRenderer.setColor(Color.SCARLET);
+        for (MovableElement e : enemies) {
+            shapeRenderer.rect(e.getX(), e.getY(), e.getW(), e.getH());
+        }
         shapeRenderer.end();
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
@@ -124,20 +129,17 @@ public class GameScreen implements Screen {
             shapeRenderer.setColor(Color.BLACK);
             shapeRenderer.polygon(player.getWeapon().getTransformedVertices());
         }
+        for (MovableElement e : enemies) {
+            if (e instanceof Troll) {
+                shapeRenderer.setColor(Color.BLACK);
+                shapeRenderer.polygon(((Troll) e).getWeapon().getTransformedVertices());
+            }
+        }
 
 
         //The ground
         shapeRenderer.setColor(Color.RED);
         shapeRenderer.line(0, GROUND_HEIGHT, WORLD_WIDTH, GROUND_HEIGHT);
-        shapeRenderer.end();
-
-        //Enemies
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(Color.SCARLET);
-        for (MovableElement e : enemies) {
-            shapeRenderer.rect(e.getX(), e.getY(), e.getW(), e.getH());
-        }
-
         shapeRenderer.end();
 
         //TODO: Review
@@ -151,10 +153,10 @@ public class GameScreen implements Screen {
             }
         }
 
-        //Are enemies alive ?
+        //Are enemies alive?
         for (MovableElement e : enemies) {
             if (e instanceof Troll) {
-                if(((Troll) e).getNumberHitLeft() == 0) {
+                if (((Troll) e).getNumberHitLeft() == 0) {
                     enemies.removeValue(e, true);
                 }
             }
