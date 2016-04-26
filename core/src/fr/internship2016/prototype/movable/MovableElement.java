@@ -12,8 +12,8 @@ import static fr.internship2016.prototype.utils.Constants.*;
  */
 public abstract class MovableElement {
 
-    protected static float horizontalVelocity;
-    protected static float verticalVelocity;
+    protected float horizontalVelocity;
+    protected float verticalVelocity;
 
     protected float velocityX = 0;
     protected float velocityY = 0;

@@ -18,6 +18,8 @@ public class Constants {
     public static final float GROUND_HEIGHT = 1;
     public static final float WIDTH_PLAYER = 1f;
     public static final float HEIGHT_PLAYER = 2f;
+    public static final float WIDTH_TROLL = 2f;
+    public static final float HEIGHT_TROLL = 3f;
 
     //Weapons
     public static final float SWORD_WIDTH = 0.1f;
@@ -28,6 +30,8 @@ public class Constants {
     public static final float GRAVITY = -0.047f;
     public static final float VELOCITY_X_PLAYER = 0.15f;
     public static final float VELOCITY_Y_PLAYER = 0.45f;
+    public static final float VELOCITY_X_TROLL =0.05f;
+    public static final float VELOCITY_Y_TROLL = 0.0f;
 
     //Controls
     public static final int LEFT = Input.Keys.Q;

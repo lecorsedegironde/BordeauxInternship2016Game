@@ -12,7 +12,9 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import fr.internship2016.prototype.movable.MovableElement;
 import fr.internship2016.prototype.movable.Player;
+import fr.internship2016.prototype.movable.Troll;
 
 import static fr.internship2016.prototype.utils.Constants.*;
 
@@ -34,6 +36,7 @@ public class GameScreen implements Screen {
     private Viewport viewport;
 
     private Player player;
+    private Troll troll;
 
     public GameScreen() {
         batch = new SpriteBatch();
@@ -56,6 +59,9 @@ public class GameScreen implements Screen {
         //So test
         player = new Player(0.5f, GROUND_HEIGHT, WIDTH_PLAYER, HEIGHT_PLAYER,
                 VELOCITY_X_PLAYER, VELOCITY_Y_PLAYER, true);
+
+        troll = new Troll(12f, GROUND_HEIGHT,WIDTH_TROLL,HEIGHT_TROLL,
+                VELOCITY_X_TROLL,VELOCITY_Y_TROLL);
     }
 
     @Override
@@ -101,13 +107,23 @@ public class GameScreen implements Screen {
             shapeRenderer.rect(player.getWeapon().getX(), player.getWeapon().getY(), player.getWeapon().getWidth(),
                     player.getWeapon().getHeight());
         }
+
+
+
         //The ground
         shapeRenderer.setColor(Color.RED);
         shapeRenderer.line(0, GROUND_HEIGHT, WORLD_WIDTH, GROUND_HEIGHT);
         shapeRenderer.end();
 
+        //Troll
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.setColor(Color.RED);
+        shapeRenderer.rect(troll.getX(), troll.getY(), troll.getW(), troll.getH());
+        shapeRenderer.end();
+
         player.update();
         player.setCanStopMovement(true);
+        troll.update();
 
         if (Gdx.input.isKeyPressed(RIGHT)) {
             player.moveRight();
@@ -128,6 +144,8 @@ public class GameScreen implements Screen {
         if (player.canStopMovement()) {
             player.stopMovement();
         }
+
+        troll.moveLeft();
     }
 
 
