@@ -1,5 +1,7 @@
 package fr.internship2016.prototype.movable;
 
+import com.badlogic.gdx.utils.TimeUtils;
+import fr.internship2016.prototype.utils.Constants;
 import fr.internship2016.prototype.utils.WeaponStyles;
 import fr.internship2016.prototype.weapon.Club;
 import fr.internship2016.prototype.weapon.Weapon;
@@ -65,5 +67,6 @@ public class Troll extends MovableElement {
         weapon.attack();
     }
 }
+
 
 

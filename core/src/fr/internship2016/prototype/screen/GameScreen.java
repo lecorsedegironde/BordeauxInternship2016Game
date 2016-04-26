@@ -17,6 +17,7 @@ import fr.internship2016.prototype.movable.MovableElement;
 import fr.internship2016.prototype.movable.Player;
 import fr.internship2016.prototype.movable.Troll;
 import fr.internship2016.prototype.utils.CollisionDetector;
+import fr.internship2016.prototype.utils.EnemiesIA;
 
 import static fr.internship2016.prototype.utils.Constants.*;
 
@@ -120,6 +121,7 @@ public class GameScreen implements Screen {
         for (MovableElement e : enemies) {
             shapeRenderer.rect(e.getX(), e.getY(), e.getW(), e.getH());
         }
+        shapeRenderer.setColor(Color.CORAL);
         shapeRenderer.end();
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
@@ -160,6 +162,13 @@ public class GameScreen implements Screen {
                     enemies.removeValue(e, true);
                 }
             }
+        }
+
+        //enemies IA
+        for (MovableElement e : enemies) {
+            if (e instanceof Troll)
+                EnemiesIA.goToPlayer(e, player);
+            EnemiesIA.enemyReaction(e, player);
         }
 
         if (Gdx.input.isKeyPressed(RIGHT)) {

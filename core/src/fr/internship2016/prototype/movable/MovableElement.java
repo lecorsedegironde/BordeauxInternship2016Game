@@ -1,6 +1,7 @@
 package fr.internship2016.prototype.movable;
 
 import com.badlogic.gdx.math.Rectangle;
+import fr.internship2016.prototype.weapon.Weapon;
 
 import static fr.internship2016.prototype.utils.Constants.*;
 
@@ -22,6 +23,7 @@ public abstract class MovableElement {
     //Is the element on the ground?
     protected boolean onGround;
     protected boolean rightFacing;
+    Weapon weapon;
 
 
     public MovableElement(float x, float y, float width, float height, float velocityX, float velocityY) {
@@ -37,6 +39,7 @@ public abstract class MovableElement {
 
         horizontalVelocity = velocityX;
         verticalVelocity = velocityY;
+        weapon = null;
     }
 
     public void update() {
@@ -81,6 +84,12 @@ public abstract class MovableElement {
     public void stopMovement() {
         if (onGround)
             velocityX = 0;
+    }
+
+    public void attack() {
+
+        weapon.attack();
+
     }
 
     public boolean isRightFacing() {
@@ -133,5 +142,9 @@ public abstract class MovableElement {
 
     public void setVelocityY(float velocityY) {
         this.velocityY = velocityY;
+    }
+
+    public Rectangle getRectangle() {
+        return elementRect;
     }
 }

@@ -33,9 +33,10 @@ public class Club extends Weapon {
                     attackOver = true;
                 }
             } else {
-                if (getRotation() == 0)
+                if (getRotation() == 0) {
                     attack = false;
-                else
+                    hasHit = false;
+                } else
                     rotate(-rotateAngle);
             }
 
@@ -54,4 +55,7 @@ public class Club extends Weapon {
         baseY = owner.getY() + (owner.getH() / divideFactor);
     }
 
-}
+
+    }
+
+
