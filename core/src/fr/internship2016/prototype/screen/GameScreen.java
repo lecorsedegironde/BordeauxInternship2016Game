@@ -16,6 +16,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import fr.internship2016.prototype.movable.MovableElement;
 import fr.internship2016.prototype.movable.Player;
 import fr.internship2016.prototype.movable.Troll;
+import fr.internship2016.prototype.movable.spells.FireSpell;
+import fr.internship2016.prototype.movable.spells.Spell;
 import fr.internship2016.prototype.utils.CollisionDetector;
 import fr.internship2016.prototype.utils.EnemiesIA;
 
@@ -40,6 +42,8 @@ public class GameScreen implements Screen {
 
     private Player player;
     private Array<MovableElement> enemies;
+    private Array<Spell> spells;
+    private Spell addSpell;
 
     public GameScreen() {
         batch = new SpriteBatch();
@@ -70,6 +74,8 @@ public class GameScreen implements Screen {
         troll.moveLeft();
 
         enemies.add(troll);
+
+        spells = new Array<>();
     }
 
     @Override
@@ -83,7 +89,7 @@ public class GameScreen implements Screen {
 
         if (playerPos.x > Gdx.graphics.getWidth() * 0.75f) {
             camera.translate(VELOCITY_X_PLAYER, 0);
-        } else if (playerPos.x < Gdx.graphics.getHeight() * 0.25f) {
+        } else if (playerPos.x < Gdx.graphics.getWidth() * 0.25f) {
             camera.translate(-VELOCITY_X_PLAYER, 0);
         }
 
@@ -99,6 +105,10 @@ public class GameScreen implements Screen {
 
         for (MovableElement e : enemies) {
             e.update();
+        }
+
+        for (Spell s : spells) {
+            s.update(viewport);
         }
 
         batch.setProjectionMatrix(camera.combined);
@@ -121,7 +131,14 @@ public class GameScreen implements Screen {
         for (MovableElement e : enemies) {
             shapeRenderer.rect(e.getX(), e.getY(), e.getW(), e.getH());
         }
-        shapeRenderer.setColor(Color.CORAL);
+        //Spells
+        for (Spell s : spells) {
+            if (s instanceof FireSpell) shapeRenderer.setColor(Color.MAGENTA);
+            else shapeRenderer.setColor(Color.GOLD);
+
+            shapeRenderer.rect(s.getX(), s.getY(), s.getW(), s.getH());
+        }
+
         shapeRenderer.end();
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
@@ -149,8 +166,16 @@ public class GameScreen implements Screen {
             if (player.isAttacking()) {
                 if (e instanceof Troll
                         && CollisionDetector.isCollision(player.getWeapon(), e) && !player.getWeapon().hasHit()) {
-                    ((Troll) e).hit();
+                    ((Troll) e).hitWeapon();
                     player.getWeapon().hit();
+                }
+            }
+            if (spells.size > 0) {
+                for (Spell s : spells) {
+                    if (CollisionDetector.isCollision(s, e) && e instanceof Troll) {
+                        ((Troll) e).hitSpell(s.getDmg());
+                        s.hasHit();
+                    }
                 }
             }
         }
@@ -158,10 +183,15 @@ public class GameScreen implements Screen {
         //Are enemies alive?
         for (MovableElement e : enemies) {
             if (e instanceof Troll) {
-                if (((Troll) e).getNumberHitLeft() == 0) {
+                if (((Troll) e).getNumberHitLeft() <= 0) {
                     enemies.removeValue(e, true);
                 }
             }
+        }
+
+        //Spell disappearing
+        for (Spell s : spells) {
+            if (s.isDisappear()) spells.removeValue(s, true);
         }
 
         //enemies IA
@@ -188,6 +218,12 @@ public class GameScreen implements Screen {
         }
         if (Gdx.input.isKeyPressed(INVISIBILITY)) {
             player.startInvisibility();
+        }
+        if (Gdx.input.isKeyPressed(FIRE_SPELL_1)) {
+            addSpell = player.fireSpell1();
+            if (addSpell != null) {
+                spells.add(addSpell);
+            }
         }
         if (player.canStopMovement()) {
             player.stopMovement();

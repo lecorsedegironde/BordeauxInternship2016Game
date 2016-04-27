@@ -1,6 +1,8 @@
 package fr.internship2016.prototype.movable;
 
 import com.badlogic.gdx.utils.TimeUtils;
+import fr.internship2016.prototype.movable.spells.FireSpell;
+import fr.internship2016.prototype.movable.spells.Spell;
 import fr.internship2016.prototype.utils.WeaponStyles;
 import fr.internship2016.prototype.weapon.Sword;
 import fr.internship2016.prototype.weapon.Weapon;
@@ -24,7 +26,7 @@ public class Player extends MovableElement {
     private boolean canBeInvisible;
     private long invisibilityTime;
 
-    //TODO: Move in weapon
+    private long lastFireS1;
 
 
     public Player(float x, float y, float width, float height, float velocityX, float velocityY, boolean createWeapon) {
@@ -98,6 +100,17 @@ public class Player extends MovableElement {
 
     public void attack() {
         weapon.attack();
+    }
+
+    //TODO: Add support for different type of spells
+    public Spell fireSpell1() {
+        if (TimeUtils.timeSinceMillis(lastFireS1) > SPELL_REFILL) {
+            //Maj pos spell
+            lastFireS1 = TimeUtils.millis();
+            return new FireSpell(this);
+        } else {
+            return null;
+        }
     }
 
     public boolean isInvisible() {

@@ -100,15 +100,12 @@ public abstract class MovableElement {
         return elementRect.x;
     }
 
-    public void setX(float x) {
-        elementRect.x = x;
-    }
-
     public float getY() {
         return elementRect.y;
     }
 
-    public void setY(float y) {
+    public void setPosition(float x, float y) {
+        elementRect.x = x;
         elementRect.y = y;
     }
 
@@ -116,15 +113,12 @@ public abstract class MovableElement {
         return elementRect.width;
     }
 
-    public void setW(float w) {
-        elementRect.width = w;
-    }
-
     public float getH() {
         return elementRect.height;
     }
 
-    public void setH(float h) {
+    public void setSize(float w, float h) {
+        elementRect.width = w;
         elementRect.height = h;
     }
 

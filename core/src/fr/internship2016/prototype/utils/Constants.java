@@ -28,6 +28,14 @@ public class Constants {
     public static final float HEIGHT_TROLL = 3f;
     public static final int HIT_TROLL = 3;
 
+    //Spell
+    public static final float SIDE_SPELL = 0.2f;
+    public static final float VELOCITY_X_SPELL_FIRE = 0.30f;
+    public static final float FALL_SPELL = -3f;
+    public static final int SPELL_REFILL = 250;
+
+    public static final double FIRE_SPELL_DMG = 0.25;
+
 
     //Weapons
     public static final float SWORD_WIDTH = 0.1f;
@@ -50,4 +58,5 @@ public class Constants {
     public static final int JUMP = Input.Keys.Z;
     public static final int ATTACK = Input.Keys.SPACE;
     public static final int INVISIBILITY = Input.Keys.SHIFT_LEFT;
+    public static final int FIRE_SPELL_1 = Input.Keys.C;
 }

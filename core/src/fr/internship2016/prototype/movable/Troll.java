@@ -1,22 +1,19 @@
 package fr.internship2016.prototype.movable;
 
-import com.badlogic.gdx.utils.TimeUtils;
-import fr.internship2016.prototype.utils.Constants;
 import fr.internship2016.prototype.utils.WeaponStyles;
 import fr.internship2016.prototype.weapon.Club;
 import fr.internship2016.prototype.weapon.Weapon;
 
 import static fr.internship2016.prototype.utils.Constants.*;
-import static fr.internship2016.prototype.utils.Constants.HIT_TROLL;
-import static fr.internship2016.prototype.utils.Constants.WORLD_WIDTH;
 
 /**
  * Created by pacaud on 16/04/25.
+ * Troll
  */
 public class Troll extends MovableElement {
     private Weapon weapon = null;
 
-    private int numberHitLeft;
+    private double numberHitLeft;
 
     public Troll(float x, float y, float width, float height, float velocityX, float velocityY) {
         super(x, y, width, height, velocityX, velocityY);
@@ -39,11 +36,15 @@ public class Troll extends MovableElement {
         }
     }
 
-    public void hit() {
+    public void hitWeapon() {
         numberHitLeft--;
     }
 
-    public int getNumberHitLeft() {
+    public void hitSpell(double dmg) {
+        numberHitLeft -= dmg;
+    }
+
+    public double getNumberHitLeft() {
         return numberHitLeft;
     }
 

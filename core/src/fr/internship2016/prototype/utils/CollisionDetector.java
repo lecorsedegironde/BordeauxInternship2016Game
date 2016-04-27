@@ -3,6 +3,7 @@ package fr.internship2016.prototype.utils;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 import fr.internship2016.prototype.movable.MovableElement;
+import fr.internship2016.prototype.movable.spells.Spell;
 import fr.internship2016.prototype.weapon.Weapon;
 
 /**
@@ -25,5 +26,9 @@ public class CollisionDetector {
             collision = true;
         }
         return collision;
+    }
+
+    public static boolean isCollision(Spell s, MovableElement e) {
+        return Intersector.overlaps(s.getRectangle(), e.getRectangle());
     }
 }
