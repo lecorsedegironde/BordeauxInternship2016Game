@@ -67,6 +67,10 @@ public class Troll extends MovableElement {
     public void attack() {
         weapon.attack();
     }
+
+    public void stopAttack() {
+        weapon.attackForceStop();
+    }
 }
 
 

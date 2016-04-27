@@ -42,7 +42,7 @@ public abstract class Weapon {
 
         //Attack part
         attack = false;
-        attackOver = false;
+        attackOver = true;
         hasHit = false;
     }
 
@@ -63,6 +63,8 @@ public abstract class Weapon {
             lastAttack = TimeUtils.millis();
         }
     }
+
+    public abstract void attackForceStop();
 
     public float getX() {
         return elementPolygon.getX();

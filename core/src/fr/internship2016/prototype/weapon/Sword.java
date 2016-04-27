@@ -57,5 +57,10 @@ public class Sword extends Weapon {
         baseY = owner.getY() + (owner.getH() / divideFactor);
     }
 
+    @Override
+    public void attackForceStop() {
+        //TODO Unimplemented method
+    }
+
 
 }

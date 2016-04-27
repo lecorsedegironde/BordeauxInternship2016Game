@@ -19,7 +19,7 @@ import fr.internship2016.prototype.movable.Troll;
 import fr.internship2016.prototype.movable.spells.FireSpell;
 import fr.internship2016.prototype.movable.spells.Spell;
 import fr.internship2016.prototype.utils.CollisionDetector;
-import fr.internship2016.prototype.utils.EnemiesIA;
+import fr.internship2016.prototype.utils.EnemiesAI;
 
 import static fr.internship2016.prototype.utils.Constants.*;
 
@@ -197,8 +197,8 @@ public class GameScreen implements Screen {
         //enemies IA
         for (MovableElement e : enemies) {
             if (e instanceof Troll)
-                EnemiesIA.goToPlayer(e, player);
-            EnemiesIA.enemyReaction(e, player);
+                EnemiesAI.goToPlayer(e, player);
+            EnemiesAI.enemyReaction(e, player);
         }
 
         if (Gdx.input.isKeyPressed(RIGHT)) {

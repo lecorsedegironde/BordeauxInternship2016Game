@@ -1,8 +1,6 @@
 package fr.internship2016.prototype.weapon;
 
-import com.badlogic.gdx.utils.TimeUtils;
 import fr.internship2016.prototype.movable.MovableElement;
-import fr.internship2016.prototype.utils.Constants;
 
 /**
  * Created by pacaud on 16/04/26.
@@ -19,10 +17,10 @@ public class Club extends Weapon {
         if (attack) {
             int maxRotate, rotateAngle;
             if (owner.isRightFacing()) {
-                maxRotate = -100;
+                maxRotate = -120;
                 rotateAngle = -5;
             } else {
-                maxRotate = 100;
+                maxRotate = 120;
                 rotateAngle = 5;
             }
             if (!attackOver) {
@@ -39,7 +37,6 @@ public class Club extends Weapon {
                 } else
                     rotate(-rotateAngle);
             }
-
         }
     }
 
@@ -55,7 +52,12 @@ public class Club extends Weapon {
         baseY = owner.getY() + (owner.getH() / divideFactor);
     }
 
-
+    @Override
+    public void attackForceStop() {
+        attack = false;
+        attackOver = true;
+        elementPolygon.setRotation(0);
     }
+}
 
 
