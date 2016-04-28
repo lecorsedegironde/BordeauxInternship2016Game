@@ -1,11 +1,10 @@
-package fr.internship2016.prototype.movable;
+package fr.internship2016.prototype.movable.armed;
 
 import com.badlogic.gdx.utils.TimeUtils;
 import fr.internship2016.prototype.movable.spells.FireSpell;
 import fr.internship2016.prototype.movable.spells.Spell;
-import fr.internship2016.prototype.utils.WeaponStyles;
-import fr.internship2016.prototype.weapon.Sword;
-import fr.internship2016.prototype.weapon.Weapon;
+import fr.internship2016.prototype.weapon.WeaponStyles;
+import fr.internship2016.prototype.weapon.rotate.Sword;
 
 import static fr.internship2016.prototype.utils.Constants.*;
 
@@ -15,11 +14,13 @@ import static fr.internship2016.prototype.utils.Constants.*;
  * This class concerns the player and all attributes related
  * </p>
  */
-public class Player extends MovableElement {
+public class Player extends ArmedElement {
 
-    //Player can have a weapon
-    private Weapon weapon = null;
+    //Player vital signs
+    private double lifePoints;
+    private double magicPoints;
 
+    //TODO Remove
     private boolean canStopMovement;
 
     private boolean invisible;
@@ -39,13 +40,17 @@ public class Player extends MovableElement {
 
         invisible = false;
         canBeInvisible = true;
+
+        lifePoints = DEFAULT_LIFE;
+        magicPoints = DEFAULT_MAGIC;
     }
 
     @Override
     public void update() {
 
         super.update();
-        weapon.update();
+
+        autoMagicPointRegain();
 
         //Invisibility
         if (invisible && TimeUtils.timeSinceMillis(invisibilityTime) > INVISIBILITY_DURATION) {
@@ -58,31 +63,16 @@ public class Player extends MovableElement {
     }
 
     @Override
-    public void moveRight() {
-        if (!weapon.isAttack()) {
-            super.moveRight();
-        }
+    public void hitWeapon() {
+        //TODO
     }
 
     @Override
-    public void moveLeft() {
-        if (!weapon.isAttack()) {
-            super.moveLeft();
-        }
+    public void hitSpell(double spellDmg) {
+        lifePoints -= spellDmg;
     }
 
-    public boolean canStopMovement() {
-        return canStopMovement;
-    }
-
-    public void setCanStopMovement(boolean canStopMovement) {
-        this.canStopMovement = canStopMovement;
-    }
-
-    public Weapon getWeapon() {
-        return weapon;
-    }
-
+    @Override
     public void setWeapon(WeaponStyles w) {
         switch (w) {
             case SWORD:
@@ -94,19 +84,20 @@ public class Player extends MovableElement {
         }
     }
 
-    public boolean hasWeapon() {
-        return weapon != null;
+    public boolean canStopMovement() {
+        return canStopMovement;
     }
 
-    public void attack() {
-        weapon.attack();
+    public void setCanStopMovement(boolean canStopMovement) {
+        this.canStopMovement = canStopMovement;
     }
 
     //TODO: Add support for different type of spells
     public Spell fireSpell1() {
-        if (TimeUtils.timeSinceMillis(lastFireS1) > SPELL_REFILL) {
+        if (TimeUtils.timeSinceMillis(lastFireS1) > SPELL_REFILL && magicPoints > SPELL_COST) {
             //Maj pos spell
             lastFireS1 = TimeUtils.millis();
+            magicPoints -= SPELL_COST;
             return new FireSpell(this);
         } else {
             return null;
@@ -115,10 +106,6 @@ public class Player extends MovableElement {
 
     public boolean isInvisible() {
         return invisible;
-    }
-
-    public boolean isAttacking() {
-        return weapon.isAttack();
     }
 
     public void startInvisibility() {
@@ -131,5 +118,47 @@ public class Player extends MovableElement {
 
     public boolean canBeInvisible() {
         return canBeInvisible;
+    }
+
+    public void gainLife(double life) {
+        if (life > 0) {
+            lifePoints += life;
+        }
+    }
+
+    public void looseLife(double life) {
+        if (life > 0) {
+            lifePoints -= life;
+        }
+    }
+
+    @Override
+    public double getLife() {
+        return lifePoints;
+    }
+
+    public void setLifePoints(double lifePoints) {
+        if (lifePoints > 0) {
+            this.lifePoints = lifePoints;
+        }
+    }
+
+    private void autoMagicPointRegain() {
+        if (magicPoints <= DEFAULT_MAGIC - MAGIC_REFILL) {
+            magicPoints += MAGIC_REFILL;
+        } else if (magicPoints > DEFAULT_MAGIC - MAGIC_REFILL
+                && magicPoints < DEFAULT_MAGIC) {
+            magicPoints = DEFAULT_MAGIC;
+        }
+    }
+
+    public double getMagicPoints() {
+        return magicPoints;
+    }
+
+    public void setMagicPoints(double magicPoints) {
+        if (magicPoints > 0) {
+            this.magicPoints = magicPoints;
+        }
     }
 }

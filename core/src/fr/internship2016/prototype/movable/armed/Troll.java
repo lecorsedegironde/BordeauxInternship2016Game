@@ -1,8 +1,7 @@
-package fr.internship2016.prototype.movable;
+package fr.internship2016.prototype.movable.armed;
 
-import fr.internship2016.prototype.utils.WeaponStyles;
-import fr.internship2016.prototype.weapon.Club;
-import fr.internship2016.prototype.weapon.Weapon;
+import fr.internship2016.prototype.weapon.WeaponStyles;
+import fr.internship2016.prototype.weapon.rotate.Club;
 
 import static fr.internship2016.prototype.utils.Constants.*;
 
@@ -10,15 +9,13 @@ import static fr.internship2016.prototype.utils.Constants.*;
  * Created by pacaud on 16/04/25.
  * Troll
  */
-public class Troll extends MovableElement {
-    private Weapon weapon = null;
+public class Troll extends ArmedElement {
 
     private double numberHitLeft;
 
     public Troll(float x, float y, float width, float height, float velocityX, float velocityY) {
         super(x, y, width, height, velocityX, velocityY);
         setWeapon(WeaponStyles.CLUB);
-        weapon = new Club(this, CLUB_WIDTH, CLUB_HEIGHT);
 
         rightFacing = false;
         numberHitLeft = HIT_TROLL;
@@ -27,7 +24,6 @@ public class Troll extends MovableElement {
     @Override
     public void update() {
         super.update();
-        weapon.update();
 
         if (elementRect.getX() <= 0) {
             moveRight();
@@ -36,24 +32,8 @@ public class Troll extends MovableElement {
         }
     }
 
-    public void hitWeapon() {
-        numberHitLeft--;
-    }
-
-    public void hitSpell(double dmg) {
-        numberHitLeft -= dmg;
-    }
-
-    public double getNumberHitLeft() {
-        return numberHitLeft;
-    }
-
-    public Weapon getWeapon() {
-        return weapon;
-    }
-
-
-    private void setWeapon(WeaponStyles w) {
+    @Override
+    public void setWeapon(WeaponStyles w) {
         switch (w) {
             case CLUB:
                 weapon = new Club(this, CLUB_WIDTH, CLUB_HEIGHT);
@@ -64,12 +44,19 @@ public class Troll extends MovableElement {
         }
     }
 
-    public void attack() {
-        weapon.attack();
+    @Override
+    public void hitWeapon() {
+        numberHitLeft--;
     }
 
-    public void stopAttack() {
-        weapon.attackForceStop();
+    @Override
+    public void hitSpell(double spellDmg) {
+        numberHitLeft -= spellDmg;
+    }
+
+    @Override
+    public double getLife() {
+        return numberHitLeft;
     }
 }
 

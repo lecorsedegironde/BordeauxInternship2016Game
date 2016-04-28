@@ -1,12 +1,18 @@
-package fr.internship2016.prototype.weapon;
+package fr.internship2016.prototype.weapon.rotate;
 
 import fr.internship2016.prototype.movable.MovableElement;
+import fr.internship2016.prototype.weapon.Weapon;
 
 /**
- * Created by pacaud on 16/04/26.
+ * Created by bastien on 28/04/16.
+ * All weapon that rotate
  */
-public class Club extends Weapon {
-    public Club(MovableElement owner, float width, float height) {
+public abstract class RotatingWeapon extends Weapon{
+
+    protected int maxRotateValue;
+    protected int rotateAngleValue;
+
+    public RotatingWeapon(MovableElement owner, float width, float height) {
         super(owner, width, height);
     }
 
@@ -14,14 +20,16 @@ public class Club extends Weapon {
     public void update() {
         updateWeaponPos();
         setPosition(baseX, baseY);
+
+        //Attack
         if (attack) {
             int maxRotate, rotateAngle;
             if (owner.isRightFacing()) {
-                maxRotate = -120;
-                rotateAngle = -5;
+                maxRotate = -maxRotateValue;
+                rotateAngle = -rotateAngleValue;
             } else {
-                maxRotate = 120;
-                rotateAngle = 5;
+                maxRotate = maxRotateValue;
+                rotateAngle = rotateAngleValue;
             }
             if (!attackOver) {
                 if ((getRotation() > maxRotate && owner.isRightFacing())
@@ -59,5 +67,3 @@ public class Club extends Weapon {
         elementPolygon.setRotation(0);
     }
 }
-
-

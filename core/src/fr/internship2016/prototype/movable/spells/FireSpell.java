@@ -2,9 +2,7 @@ package fr.internship2016.prototype.movable.spells;
 
 import fr.internship2016.prototype.movable.MovableElement;
 
-import static fr.internship2016.prototype.utils.Constants.FIRE_SPELL_DMG;
-import static fr.internship2016.prototype.utils.Constants.SIDE_SPELL;
-import static fr.internship2016.prototype.utils.Constants.VELOCITY_X_SPELL_FIRE;
+import static fr.internship2016.prototype.utils.Constants.*;
 
 /**
  * Created by bastien on 27/04/16.

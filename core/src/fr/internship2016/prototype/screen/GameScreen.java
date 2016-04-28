@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -13,9 +14,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import fr.internship2016.prototype.movable.MovableElement;
-import fr.internship2016.prototype.movable.Player;
-import fr.internship2016.prototype.movable.Troll;
+import fr.internship2016.prototype.movable.armed.ArmedElement;
+import fr.internship2016.prototype.movable.armed.Player;
+import fr.internship2016.prototype.movable.armed.Troll;
 import fr.internship2016.prototype.movable.spells.FireSpell;
 import fr.internship2016.prototype.movable.spells.Spell;
 import fr.internship2016.prototype.utils.CollisionDetector;
@@ -34,20 +35,24 @@ public class GameScreen implements Screen {
 
     //Renderer to render our shapes
 
-    //Tests
+    //Draw
     private SpriteBatch batch;
     private ShapeRenderer shapeRenderer;
     private Sprite sprite;
     private Viewport viewport;
+    private BitmapFont font;
 
     private Player player;
-    private Array<MovableElement> enemies;
+    private Array<ArmedElement> enemies;
     private Array<Spell> spells;
     private Spell addSpell;
 
     public GameScreen() {
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
+        font = new BitmapFont();
+
+        font.setColor(Color.GREEN);
 
         sprite = new Sprite(new Texture(Gdx.files.internal("laser.jpg")));
         sprite.setSize(WORLD_WIDTH, WORLD_HEIGHT);
@@ -55,12 +60,10 @@ public class GameScreen implements Screen {
         float aspectRatio = (float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth();
 
         camera = new OrthographicCamera();
-        camera.setToOrtho(false);
         viewport = new FillViewport(WORLD_WIDTH * aspectRatio, WORLD_HEIGHT, camera);
         viewport.apply();
 
-        camera.position.set(WORLD_WIDTH / 12f, WORLD_HEIGHT / 2f, 0);
-
+        camera.position.set(0, WORLD_HEIGHT / 2f, 0);
         camera.update();
 
         //Player & enemies
@@ -103,7 +106,7 @@ public class GameScreen implements Screen {
         player.update();
         player.setCanStopMovement(true);
 
-        for (MovableElement e : enemies) {
+        for (ArmedElement e : enemies) {
             e.update();
         }
 
@@ -114,6 +117,11 @@ public class GameScreen implements Screen {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         sprite.draw(batch);
+        batch.end();
+
+        batch.begin();
+        font.draw(batch, "Life: " + player.getLife(), 0, 15);
+        font.draw(batch, "Magic: " + player.getMagicPoints(), 0, 15);
         batch.end();
 
         shapeRenderer.setProjectionMatrix(camera.combined);
@@ -128,7 +136,7 @@ public class GameScreen implements Screen {
         }
         //Enemies
         shapeRenderer.setColor(Color.SCARLET);
-        for (MovableElement e : enemies) {
+        for (ArmedElement e : enemies) {
             shapeRenderer.rect(e.getX(), e.getY(), e.getW(), e.getH());
         }
         //Spells
@@ -148,13 +156,10 @@ public class GameScreen implements Screen {
             shapeRenderer.setColor(Color.BLACK);
             shapeRenderer.polygon(player.getWeapon().getTransformedVertices());
         }
-        for (MovableElement e : enemies) {
-            if (e instanceof Troll) {
-                shapeRenderer.setColor(Color.BLACK);
-                shapeRenderer.polygon(((Troll) e).getWeapon().getTransformedVertices());
-            }
+        for (ArmedElement e : enemies) {
+            shapeRenderer.setColor(Color.BLACK);
+            shapeRenderer.polygon(e.getWeapon().getTransformedVertices());
         }
-
 
         //The ground
         shapeRenderer.setColor(Color.RED);
@@ -162,18 +167,17 @@ public class GameScreen implements Screen {
         shapeRenderer.end();
 
         //TODO: Review
-        for (MovableElement e : enemies) {
+        for (ArmedElement e : enemies) {
             if (player.isAttacking()) {
-                if (e instanceof Troll
-                        && CollisionDetector.isCollision(player.getWeapon(), e) && !player.getWeapon().hasHit()) {
-                    ((Troll) e).hitWeapon();
+                if (CollisionDetector.isCollision(player.getWeapon(), e) && !player.getWeapon().hasHit()) {
+                    e.hitWeapon();
                     player.getWeapon().hit();
                 }
             }
             if (spells.size > 0) {
                 for (Spell s : spells) {
-                    if (CollisionDetector.isCollision(s, e) && e instanceof Troll) {
-                        ((Troll) e).hitSpell(s.getDmg());
+                    if (CollisionDetector.isCollision(s, e)) {
+                        e.hitSpell(s.getDmg());
                         s.hasHit();
                     }
                 }
@@ -181,11 +185,9 @@ public class GameScreen implements Screen {
         }
 
         //Are enemies alive?
-        for (MovableElement e : enemies) {
-            if (e instanceof Troll) {
-                if (((Troll) e).getNumberHitLeft() <= 0) {
-                    enemies.removeValue(e, true);
-                }
+        for (ArmedElement e : enemies) {
+            if (e.getLife() <= 0) {
+                enemies.removeValue(e, true);
             }
         }
 
@@ -195,9 +197,8 @@ public class GameScreen implements Screen {
         }
 
         //enemies IA
-        for (MovableElement e : enemies) {
-            if (e instanceof Troll)
-                EnemiesAI.goToPlayer(e, player);
+        for (ArmedElement e : enemies) {
+            EnemiesAI.goToPlayer(e, player);
             EnemiesAI.enemyReaction(e, player);
         }
 
@@ -261,5 +262,6 @@ public class GameScreen implements Screen {
         sprite.getTexture().dispose();
         batch.dispose();
         shapeRenderer.dispose();
+        font.dispose();
     }
 }
