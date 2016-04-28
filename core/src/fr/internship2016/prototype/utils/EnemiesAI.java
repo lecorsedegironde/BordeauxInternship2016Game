@@ -3,8 +3,9 @@ package fr.internship2016.prototype.utils;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import fr.internship2016.prototype.movable.MovableElement;
-import fr.internship2016.prototype.movable.Player;
-import fr.internship2016.prototype.movable.Troll;
+import fr.internship2016.prototype.movable.armed.ArmedElement;
+import fr.internship2016.prototype.movable.armed.Player;
+import fr.internship2016.prototype.movable.armed.Troll;
 
 import static fr.internship2016.prototype.utils.Constants.CLUB_HEIGHT;
 
@@ -16,7 +17,7 @@ public class EnemiesAI {
 
     public static Rectangle detectionRectangle;
 
-    public static void enemyReaction(MovableElement e, Player p) {
+    public static void enemyReaction(ArmedElement e, Player p) {
         if (e instanceof Troll) {
             detectionRectangle = new Rectangle();
             detectionRectangle.x = p.getX() - CLUB_HEIGHT;
@@ -25,7 +26,7 @@ public class EnemiesAI {
             detectionRectangle.height = p.getH();
             if (Intersector.overlaps(e.getRectangle(), detectionRectangle) && !p.isInvisible())
                 e.attack();
-            else ((Troll) e).stopAttack();
+            else e.stopAttack();
         }
     }
 

@@ -38,8 +38,7 @@ public class Sword extends Weapon {
                 if (getRotation() == 0) {
                     attack = false;
                     hasHit = false;
-                }
-                else
+                } else
                     rotate(-rotateAngle);
             }
         }

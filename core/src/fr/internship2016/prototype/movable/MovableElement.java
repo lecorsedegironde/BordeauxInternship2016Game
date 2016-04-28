@@ -1,9 +1,8 @@
 package fr.internship2016.prototype.movable;
 
 import com.badlogic.gdx.math.Rectangle;
-import fr.internship2016.prototype.weapon.Weapon;
 
-import static fr.internship2016.prototype.utils.Constants.*;
+import static fr.internship2016.prototype.utils.Constants.GROUND_HEIGHT;
 
 /**
  * Created by Bastien on 20/04/16.
@@ -23,8 +22,6 @@ public abstract class MovableElement {
     //Is the element on the ground?
     protected boolean onGround;
     protected boolean rightFacing;
-    Weapon weapon;
-
 
     public MovableElement(float x, float y, float width, float height, float velocityX, float velocityY) {
 
@@ -39,30 +36,9 @@ public abstract class MovableElement {
 
         horizontalVelocity = velocityX;
         verticalVelocity = velocityY;
-        weapon = null;
     }
 
-    public void update() {
-        elementRect.x += velocityX;
-        elementRect.y += velocityY;
-        velocityY += GRAVITY;
-
-        //On the ground
-        if (elementRect.y <= GROUND_HEIGHT) {
-            velocityY = 0.0f;
-            onGround = true;
-            elementRect.y = GROUND_HEIGHT;
-        }
-
-        //Left and Right
-        if (elementRect.getX() <= 0) {
-            stopMovement();
-            elementRect.setX(0);
-        } else if (elementRect.getX() >= WORLD_WIDTH - getW()) {
-            stopMovement();
-            elementRect.setX(WORLD_WIDTH - getW());
-        }
-    }
+    public abstract void update();
 
     public void moveRight() {
         velocityX = horizontalVelocity;
@@ -86,14 +62,8 @@ public abstract class MovableElement {
             velocityX = 0;
     }
 
-    public void attack() {
-
-        weapon.attack();
-
-    }
-
-    public boolean isRightFacing() {
-        return rightFacing;
+    public Rectangle getRectangle() {
+        return elementRect;
     }
 
     public float getX() {
@@ -138,7 +108,7 @@ public abstract class MovableElement {
         this.velocityY = velocityY;
     }
 
-    public Rectangle getRectangle() {
-        return elementRect;
+    public boolean isRightFacing() {
+        return rightFacing;
     }
 }
