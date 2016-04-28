@@ -46,9 +46,14 @@ public class Constants {
     public static final float SWORD_WIDTH = 0.1f;
     public static final float SWORD_HEIGHT = 1.75f;
     public static final float SWORD_REFILL_TIME = 750;
+    public static final int SWORD_MAX_ROTATE = 90;
+    public static final int SWORD_ROTATE_STEP = 5;
+
     public static final float CLUB_WIDTH = 0.2f;
     public static final float CLUB_HEIGHT = 2.5f;
     public static final float CLUB_REFILL_TIME = 1000;
+    public static final int CLUB_MAX_ROTATE = 120;
+    public static final int CLUB_ROTATE_STEP = 2;
 
     //Forces
     public static final float GRAVITY = -0.047f;

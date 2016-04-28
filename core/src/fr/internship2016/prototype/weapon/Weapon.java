@@ -11,6 +11,7 @@ import fr.internship2016.prototype.utils.Constants;
  */
 public abstract class Weapon {
 
+    //Base elements
     protected Polygon elementPolygon;
     protected float baseX, baseY, baseWidth, baseHeight;
 
@@ -66,6 +67,22 @@ public abstract class Weapon {
 
     public abstract void attackForceStop();
 
+    public boolean hasHit() {
+        return hasHit;
+    }
+
+    public void hit() {
+        hasHit = true;
+    }
+
+    protected void rotate(float degrees) {
+        elementPolygon.rotate(degrees);
+    }
+
+    protected float getRotation() {
+        return elementPolygon.getRotation();
+    }
+
     public float getX() {
         return elementPolygon.getX();
     }
@@ -74,24 +91,16 @@ public abstract class Weapon {
         return elementPolygon.getY();
     }
 
+    public void setPosition(float x, float y) {
+        elementPolygon.setPosition(x, y);
+    }
+
     public float getWidth() {
         return baseWidth;
     }
 
     public float getHeight() {
         return baseHeight;
-    }
-
-    public void setPosition(float x, float y) {
-        elementPolygon.setPosition(x, y);
-    }
-
-    public void rotate(float degrees) {
-        elementPolygon.rotate(degrees);
-    }
-
-    public float getRotation() {
-        return elementPolygon.getRotation();
     }
 
     public float[] getTransformedVertices() {
@@ -105,13 +114,5 @@ public abstract class Weapon {
     //For collision detection
     public Polygon getElementPolygon() {
         return elementPolygon;
-    }
-
-    public boolean hasHit() {
-        return hasHit;
-    }
-
-    public void hit() {
-        hasHit = true;
     }
 }

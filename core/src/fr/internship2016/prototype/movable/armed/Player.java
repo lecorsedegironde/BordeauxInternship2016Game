@@ -3,8 +3,8 @@ package fr.internship2016.prototype.movable.armed;
 import com.badlogic.gdx.utils.TimeUtils;
 import fr.internship2016.prototype.movable.spells.FireSpell;
 import fr.internship2016.prototype.movable.spells.Spell;
-import fr.internship2016.prototype.utils.WeaponStyles;
-import fr.internship2016.prototype.weapon.Sword;
+import fr.internship2016.prototype.weapon.WeaponStyles;
+import fr.internship2016.prototype.weapon.rotate.Sword;
 
 import static fr.internship2016.prototype.utils.Constants.*;
 

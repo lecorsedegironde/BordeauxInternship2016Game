@@ -1,7 +1,7 @@
 package fr.internship2016.prototype.movable.armed;
 
-import fr.internship2016.prototype.utils.WeaponStyles;
-import fr.internship2016.prototype.weapon.Club;
+import fr.internship2016.prototype.weapon.WeaponStyles;
+import fr.internship2016.prototype.weapon.rotate.Club;
 
 import static fr.internship2016.prototype.utils.Constants.*;
 
