@@ -71,7 +71,7 @@ public class GameScreen implements Screen {
         enemies = new Array<>();
         spells = new Array<>();
 
-        player = new Player(0.5f, GROUND_HEIGHT, WIDTH_PLAYER, HEIGHT_PLAYER,
+        player = new Player(PLAYER_START, GROUND_HEIGHT, WIDTH_PLAYER, HEIGHT_PLAYER,
                 VELOCITY_X_PLAYER, VELOCITY_Y_PLAYER, true);
 
         Troll troll = new Troll(12f, GROUND_HEIGHT, WIDTH_TROLL, HEIGHT_TROLL,
@@ -204,34 +204,56 @@ public class GameScreen implements Screen {
         shapeRenderer.end();
 
         //Inputs events
-        if (Gdx.input.isKeyPressed(RIGHT)) {
-            player.moveRight();
-            player.setCanStopMovement(false);
-        }
-        if (Gdx.input.isKeyPressed(LEFT)) {
-            player.moveLeft();
-            player.setCanStopMovement(false);
-        }
-        if (Gdx.input.isKeyPressed(JUMP)) {
-            player.jump();
-            player.setCanStopMovement(false);
-        }
-        if (Gdx.input.isKeyPressed(ATTACK) && player.hasWeapon()) {
-            player.attack();
-        }
-        if (Gdx.input.isKeyPressed(INVISIBILITY)) {
-            player.startInvisibility();
-        }
-        if (Gdx.input.isKeyPressed(FIRE_SPELL_1)) {
-            addSpell = player.fireSpell1();
-            if (addSpell != null) {
-                spells.add(addSpell);
+        if (Gdx.input.isKeyPressed(RESET)) {
+            restart();
+        } else  {
+
+            if (Gdx.input.isKeyPressed(RIGHT)) {
+                player.moveRight();
+                player.setCanStopMovement(false);
+            }
+            if (Gdx.input.isKeyPressed(LEFT)) {
+                player.moveLeft();
+                player.setCanStopMovement(false);
+            }
+            if (Gdx.input.isKeyPressed(JUMP)) {
+                player.jump();
+                player.setCanStopMovement(false);
+            }
+            if (Gdx.input.isKeyPressed(ATTACK) && player.hasWeapon()) {
+                player.attack();
+            }
+            if (Gdx.input.isKeyPressed(INVISIBILITY)) {
+                player.startInvisibility();
+            }
+            if (Gdx.input.isKeyPressed(FIRE_SPELL_1)) {
+                addSpell = player.fireSpell1();
+                if (addSpell != null) {
+                    spells.add(addSpell);
+                }
+            }
+            //Can the player be stopped?
+            if (player.canStopMovement()) {
+                player.stopMovement();
             }
         }
-        //Can the player be stopped?
-        if (player.canStopMovement()) {
-            player.stopMovement();
-        }
+    }
+
+    private void restart() {
+        //Clear arrays
+        spells.clear();
+        enemies.clear();
+
+        //Regenerate player
+        player = new Player(PLAYER_START, GROUND_HEIGHT, WIDTH_PLAYER, HEIGHT_PLAYER,
+                VELOCITY_X_PLAYER, VELOCITY_Y_PLAYER, true);
+
+        //Regenerate troll
+        Troll troll = new Troll(12f, GROUND_HEIGHT, WIDTH_TROLL, HEIGHT_TROLL,
+                VELOCITY_X_TROLL, VELOCITY_Y_TROLL);
+        troll.moveLeft();
+        enemies.add(troll);
+
     }
 
     @Override

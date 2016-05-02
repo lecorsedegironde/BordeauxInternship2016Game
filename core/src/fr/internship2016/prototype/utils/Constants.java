@@ -20,41 +20,42 @@ public class Constants {
     //Player
     public static final float WIDTH_PLAYER = 1f;
     public static final float HEIGHT_PLAYER = 2f;
+    public static final float PLAYER_START = 0.5f;
     public static final int INVISIBILITY_DURATION = 2000;
     public static final int INVISIBILITY_REFILL = 5000;
     public static final int DEFAULT_LIFE = 100;
     public static final int DEFAULT_MAGIC = 100;
+
+
     public static final double MAGIC_REFILL = 0.25;
-
-
     //Troll
     public static final float WIDTH_TROLL = 1.5f;
     public static final float HEIGHT_TROLL = 3f;
-    public static final int HIT_TROLL = 3;
 
+    public static final int HIT_TROLL = 3;
     //Spell
     public static final float SIDE_SPELL = 0.2f;
     public static final float VELOCITY_X_SPELL_FIRE = 0.30f;
     public static final float FALL_SPELL = -3f;
     public static final int SPELL_REFILL = 250;
+
     public static final int SPELL_COST = 30;
 
+
     public static final double FIRE_SPELL_DMG = 0.25;
-
-
     //Weapons
     public static final float SWORD_WIDTH = 0.1f;
     public static final float SWORD_HEIGHT = 1.75f;
     public static final float SWORD_REFILL_TIME = 750;
     public static final int SWORD_MAX_ROTATE = 90;
-    public static final int SWORD_ROTATE_STEP = 5;
 
+    public static final int SWORD_ROTATE_STEP = 5;
     public static final float CLUB_WIDTH = 0.2f;
     public static final float CLUB_HEIGHT = 2.5f;
     public static final float CLUB_REFILL_TIME = 1000;
     public static final int CLUB_MAX_ROTATE = 120;
-    public static final int CLUB_ROTATE_STEP = 2;
 
+    public static final int CLUB_ROTATE_STEP = 2;
     //Forces
     public static final float GRAVITY = -0.047f;
     public static final float VELOCITY_X_PLAYER = 0.15f;
@@ -63,6 +64,7 @@ public class Constants {
     public static final float VELOCITY_Y_TROLL = 0.0f;
 
     //Controls
+    public static final int RESET = Input.Keys.ESCAPE;
     public static final int LEFT = Input.Keys.Q;
     public static final int RIGHT = Input.Keys.D;
     public static final int JUMP = Input.Keys.Z;
