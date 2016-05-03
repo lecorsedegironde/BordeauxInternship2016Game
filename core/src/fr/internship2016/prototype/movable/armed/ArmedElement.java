@@ -1,8 +1,8 @@
 package fr.internship2016.prototype.movable.armed;
 
 import fr.internship2016.prototype.movable.MovableElement;
-import fr.internship2016.prototype.weapon.WeaponStyles;
 import fr.internship2016.prototype.weapon.Weapon;
+import fr.internship2016.prototype.weapon.WeaponStyles;
 
 import static fr.internship2016.prototype.utils.Constants.*;
 
@@ -25,6 +25,9 @@ public abstract class ArmedElement extends MovableElement {
         elementRect.y += velocityY;
         velocityY += GRAVITY;
 
+        setChanged();
+        notifyObservers();
+
         //On the ground
         if (elementRect.y <= GROUND_HEIGHT) {
             velocityY = 0.0f;
@@ -36,9 +39,13 @@ public abstract class ArmedElement extends MovableElement {
         if (elementRect.getX() <= 0) {
             stopMovement();
             elementRect.setX(0);
+            setChanged();
+            notifyObservers();
         } else if (elementRect.getX() >= WORLD_WIDTH - getW()) {
             stopMovement();
             elementRect.setX(WORLD_WIDTH - getW());
+            setChanged();
+            notifyObservers();
         }
 
         weapon.update();

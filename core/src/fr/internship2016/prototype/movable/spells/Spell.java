@@ -1,8 +1,5 @@
 package fr.internship2016.prototype.movable.spells;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import fr.internship2016.prototype.movable.MovableElement;
 
 import static fr.internship2016.prototype.utils.Constants.*;
@@ -13,14 +10,12 @@ import static fr.internship2016.prototype.utils.Constants.*;
  */
 public abstract class Spell extends MovableElement {
 
-    private Vector2 posSpell;
     private boolean disappear;
     private double dmg;
 
     public Spell(float x, float y, float width, float height, float velocityX, float velocityY, double dmg) {
         super(x, y, width, height, velocityX, velocityY);
         disappear = false;
-        posSpell = new Vector2();
         this.dmg = dmg;
     }
 
@@ -38,17 +33,12 @@ public abstract class Spell extends MovableElement {
         if (elementRect.getX() <= 0 || elementRect.getX() >= WORLD_WIDTH - getW()) {
             disappear = true;
         }
+        setChanged();
+        notifyObservers();
     }
 
-    public void update(Viewport v) {
-        update();
-
-        //On screen
-        posSpell.set(getX(), getY());
-        v.project(posSpell);
-        if (posSpell.x < 0 || posSpell.x > Gdx.graphics.getWidth()) {
-            disappear = true;
-        }
+    public void setDisappear() {
+        disappear = true;
     }
 
     public boolean isDisappear() {

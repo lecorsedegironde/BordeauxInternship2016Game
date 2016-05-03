@@ -2,6 +2,8 @@ package fr.internship2016.prototype.movable;
 
 import com.badlogic.gdx.math.Rectangle;
 
+import java.util.Observable;
+
 import static fr.internship2016.prototype.utils.Constants.GROUND_HEIGHT;
 
 /**
@@ -10,7 +12,7 @@ import static fr.internship2016.prototype.utils.Constants.GROUND_HEIGHT;
  * This class concerns the movable elements and all attributes related
  * </p>
  */
-public abstract class MovableElement {
+public abstract class MovableElement extends Observable {
 
     protected float horizontalVelocity;
     protected float verticalVelocity;
