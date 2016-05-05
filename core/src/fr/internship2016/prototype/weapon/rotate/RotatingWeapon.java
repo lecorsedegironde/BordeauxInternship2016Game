@@ -7,7 +7,7 @@ import fr.internship2016.prototype.weapon.Weapon;
  * Created by bastien on 28/04/16.
  * All weapon that rotate
  */
-public abstract class RotatingWeapon extends Weapon{
+public abstract class RotatingWeapon extends Weapon {
 
     protected int maxRotateValue;
     protected int rotateAngleValue;

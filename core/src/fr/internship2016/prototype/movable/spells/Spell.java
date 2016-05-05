@@ -17,7 +17,7 @@ public abstract class Spell extends MovableElement {
     private boolean disappear;
     private double dmg;
 
-    public Spell(float x, float y, float width, float height, float velocityX, float velocityY,double dmg) {
+    public Spell(float x, float y, float width, float height, float velocityX, float velocityY, double dmg) {
         super(x, y, width, height, velocityX, velocityY);
         disappear = false;
         posSpell = new Vector2();

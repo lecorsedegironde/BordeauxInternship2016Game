@@ -1,7 +1,6 @@
 package fr.internship2016.prototype.movable;
 
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 
 import static fr.internship2016.prototype.utils.Constants.GROUND_HEIGHT;
 

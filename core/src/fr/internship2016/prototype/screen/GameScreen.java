@@ -129,11 +129,7 @@ public class GameScreen implements Screen {
             if (player.isAttacking()) {
                 if (CollisionDetector.isCollision(player.getWeapon(), e) && !player.getWeapon().hasHit()) {
                     e.hitWeapon();
-                    if (player.isRightFacing()) {
-                        e.knockBackLeft();
-                    } else {
-                        e.knockBackRight();
-                    }
+                    e.knockBack(player.isRightFacing());
                     player.getWeapon().hit();
                 }
             }
