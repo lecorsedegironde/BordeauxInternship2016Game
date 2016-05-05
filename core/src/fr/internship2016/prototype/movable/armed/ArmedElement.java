@@ -1,8 +1,8 @@
 package fr.internship2016.prototype.movable.armed;
 
 import fr.internship2016.prototype.movable.MovableElement;
-import fr.internship2016.prototype.weapon.WeaponStyles;
 import fr.internship2016.prototype.weapon.Weapon;
+import fr.internship2016.prototype.weapon.WeaponStyles;
 
 import static fr.internship2016.prototype.utils.Constants.*;
 
@@ -59,6 +59,8 @@ public abstract class ArmedElement extends MovableElement {
     }
 
     public abstract double getLife();
+
+    public abstract void knockBack(boolean rightKnockBack);
 
     public abstract void hitWeapon();
 

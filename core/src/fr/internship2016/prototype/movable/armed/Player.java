@@ -161,4 +161,15 @@ public class Player extends ArmedElement {
             this.magicPoints = magicPoints;
         }
     }
+
+    @Override
+    public void knockBack(boolean rightKnockBack) {
+        if (rightKnockBack) {
+            velocityX = KNOCKBACK_X_PLAYER;
+            velocityY = KNOCKBACK_Y_PLAYER;
+        } else {
+            velocityX = -KNOCKBACK_X_PLAYER;
+            velocityY = KNOCKBACK_Y_PLAYER;
+        }
+    }
 }

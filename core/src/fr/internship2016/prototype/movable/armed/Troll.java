@@ -58,6 +58,19 @@ public class Troll extends ArmedElement {
     public double getLife() {
         return numberHitLeft;
     }
+
+    @Override
+    public void knockBack(boolean rightKnockBack) {
+        if (rightKnockBack) {
+            velocityX = KNOCKBACK_X_TROLL;
+            velocityY = KNOCKBACK_Y_TROLL;
+            stopAttack();
+        } else {
+            velocityX = -KNOCKBACK_X_TROLL;
+            velocityY = KNOCKBACK_Y_TROLL;
+            stopAttack();
+        }
+    }
 }
 
 

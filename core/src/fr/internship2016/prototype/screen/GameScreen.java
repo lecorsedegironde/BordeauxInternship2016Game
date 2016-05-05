@@ -129,6 +129,7 @@ public class GameScreen implements Screen {
             if (player.isAttacking()) {
                 if (CollisionDetector.isCollision(player.getWeapon(), e) && !player.getWeapon().hasHit()) {
                     e.hitWeapon();
+                    e.knockBack(player.isRightFacing());
                     player.getWeapon().hit();
                 }
             }
@@ -173,10 +174,9 @@ public class GameScreen implements Screen {
         }
         //Spells
         for (Spell s : spells) {
-            if (s instanceof FireSpell){
+            if (s instanceof FireSpell) {
                 shapeRenderer.setColor(Color.MAGENTA);
-            }
-            else{
+            } else {
                 shapeRenderer.setColor(Color.GOLD);
             }
             shapeRenderer.rect(s.getX(), s.getY(), s.getW(), s.getH());
@@ -206,7 +206,7 @@ public class GameScreen implements Screen {
         //Inputs events
         if (Gdx.input.isKeyPressed(RESET)) {
             restart();
-        } else  {
+        } else {
 
             if (Gdx.input.isKeyPressed(RIGHT)) {
                 player.moveRight();
