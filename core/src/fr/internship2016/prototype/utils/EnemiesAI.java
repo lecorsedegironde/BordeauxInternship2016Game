@@ -38,5 +38,11 @@ public class EnemiesAI {
                 e.moveLeft();
         }
     }
+
+    public static  void dontMove(MovableElement e)
+    {
+        e.setVelocityX(0);
+        e.setVelocityY(0);
+    }
 }
 

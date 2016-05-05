@@ -60,8 +60,13 @@ public class Constants {
     public static final float GRAVITY = -0.047f;
     public static final float VELOCITY_X_PLAYER = 0.15f;
     public static final float VELOCITY_Y_PLAYER = 0.45f;
+    public static final float KNOCKBACK_X_PLAYER = 0.3f;
+    public static final float KNOCKBACK_Y_PLAYER = 0.3f;
     public static final float VELOCITY_X_TROLL = 0.05f;
     public static final float VELOCITY_Y_TROLL = 0.0f;
+    public static final float KNOCKBACK_X_TROLL =0.5f;
+    public static final float KNOCKBACK_Y_TROLL =0.2f;
+
 
     //Controls
     public static final int RESET = Input.Keys.ESCAPE;

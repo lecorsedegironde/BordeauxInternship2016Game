@@ -60,6 +60,11 @@ public abstract class ArmedElement extends MovableElement {
 
     public abstract double getLife();
 
+    public abstract void knockBackLeft();
+
+    public abstract void knockBackRight();
+
+
     public abstract void hitWeapon();
 
     public abstract void hitSpell(double spellDmg);

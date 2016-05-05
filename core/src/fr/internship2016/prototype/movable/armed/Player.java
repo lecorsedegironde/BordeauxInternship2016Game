@@ -1,5 +1,6 @@
 package fr.internship2016.prototype.movable.armed;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.TimeUtils;
 import fr.internship2016.prototype.movable.spells.FireSpell;
 import fr.internship2016.prototype.movable.spells.Spell;
@@ -160,5 +161,16 @@ public class Player extends ArmedElement {
         if (magicPoints > 0) {
             this.magicPoints = magicPoints;
         }
+    }
+
+    @Override
+    public void knockBackLeft() {
+        velocityX=KNOCKBACK_X_PLAYER;
+        velocityY=KNOCKBACK_Y_PLAYER;
+    }
+
+    public void knockBackRight(){
+        velocityX=-KNOCKBACK_X_PLAYER;
+        velocityY=KNOCKBACK_Y_PLAYER;
     }
 }

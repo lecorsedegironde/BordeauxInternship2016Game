@@ -1,6 +1,7 @@
 package fr.internship2016.prototype.movable;
 
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 
 import static fr.internship2016.prototype.utils.Constants.GROUND_HEIGHT;
 
@@ -14,10 +15,8 @@ public abstract class MovableElement {
 
     protected float horizontalVelocity;
     protected float verticalVelocity;
-
     protected float velocityX = 0;
     protected float velocityY = 0;
-
     protected Rectangle elementRect;
     //Is the element on the ground?
     protected boolean onGround;
