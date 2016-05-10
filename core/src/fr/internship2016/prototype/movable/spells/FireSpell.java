@@ -1,5 +1,7 @@
 package fr.internship2016.prototype.movable.spells;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import fr.internship2016.prototype.movable.MovableElement;
 
 import static fr.internship2016.prototype.utils.Constants.*;
@@ -14,5 +16,12 @@ public class FireSpell extends Spell {
                 SIDE_SPELL, SIDE_SPELL, fireMe.isRightFacing() ? VELOCITY_X_SPELL_FIRE : -VELOCITY_X_SPELL_FIRE,
                 0f, FIRE_SPELL_DMG);
 
+    }
+
+    @Override
+    public void draw(ShapeRenderer s) {
+        s.set(ShapeRenderer.ShapeType.Filled);
+        s.setColor(Color.MAGENTA);
+        s.rect(getX(), getY(), getW(), getH());
     }
 }

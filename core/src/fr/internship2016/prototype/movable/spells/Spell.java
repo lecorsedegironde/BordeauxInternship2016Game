@@ -1,6 +1,8 @@
 package fr.internship2016.prototype.movable.spells;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import fr.internship2016.prototype.movable.MovableElement;
@@ -38,6 +40,13 @@ public abstract class Spell extends MovableElement {
         if (elementRect.getX() <= 0 || elementRect.getX() >= WORLD_WIDTH - getW()) {
             disappear = true;
         }
+    }
+
+    @Override
+    public void draw(ShapeRenderer s) {
+        s.set(ShapeRenderer.ShapeType.Filled);
+        s.setColor(Color.GOLD);
+        s.rect(getX(), getY(), getW(), getH());
     }
 
     public void update(Viewport v) {
