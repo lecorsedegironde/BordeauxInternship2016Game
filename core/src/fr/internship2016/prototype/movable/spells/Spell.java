@@ -41,6 +41,12 @@ public abstract class Spell extends MovableElement {
         disappear = true;
     }
 
+    @Override
+    public void draw(ShapeRenderer s) {
+        s.set(ShapeRenderer.ShapeType.Filled);
+        s.rect(getX(), getY(), getW(), getH());
+    }
+
     public boolean isDisappear() {
         return disappear;
     }
