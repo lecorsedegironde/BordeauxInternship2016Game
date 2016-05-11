@@ -13,8 +13,8 @@ public class Constants {
     public static final int SCREEN_HEIGHT = 480;
 
     //World constants : Meters
-    public static final float WORLD_WIDTH = 100;
-    public static final float WORLD_HEIGHT = 10;
+    public static final float WORLD_WIDTH = 100f;
+    public static final float WORLD_HEIGHT = 10f;
     public static final float GROUND_HEIGHT = 1;
 
     //Player
