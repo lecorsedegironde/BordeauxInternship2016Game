@@ -175,6 +175,7 @@ public class Player extends ArmedElement {
         }
     }
 
+    @Override
     public void draw(ShapeRenderer s) {
         s.set(ShapeRenderer.ShapeType.Filled);
         if (!isInvisible())

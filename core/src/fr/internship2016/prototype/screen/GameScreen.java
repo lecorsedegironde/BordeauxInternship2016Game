@@ -16,7 +16,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import fr.internship2016.prototype.movable.armed.ArmedElement;
 import fr.internship2016.prototype.movable.armed.Player;
 import fr.internship2016.prototype.movable.armed.Troll;
-import fr.internship2016.prototype.movable.spells.FireSpell;
 import fr.internship2016.prototype.movable.spells.Spell;
 import fr.internship2016.prototype.utils.CollisionDetector;
 import fr.internship2016.prototype.utils.EnemiesAI;
@@ -155,7 +154,7 @@ public class GameScreen implements Screen {
         sprite.draw(batch);
         batch.end();
 
-        //Draw bodies blocks (Filled)
+        //Draw elements
         shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.setAutoShapeType(true);
         shapeRenderer.begin();

@@ -20,8 +20,7 @@ public class FireSpell extends Spell {
 
     @Override
     public void draw(ShapeRenderer s) {
-        s.set(ShapeRenderer.ShapeType.Filled);
         s.setColor(Color.MAGENTA);
-        s.rect(getX(), getY(), getW(), getH());
+        super.draw(s);
     }
 }
