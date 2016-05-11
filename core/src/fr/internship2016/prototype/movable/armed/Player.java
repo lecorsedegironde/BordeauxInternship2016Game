@@ -1,5 +1,7 @@
 package fr.internship2016.prototype.movable.armed;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.TimeUtils;
 import fr.internship2016.prototype.movable.spells.FireSpell;
 import fr.internship2016.prototype.movable.spells.Spell;
@@ -159,6 +161,38 @@ public class Player extends ArmedElement {
     public void setMagicPoints(double magicPoints) {
         if (magicPoints > 0) {
             this.magicPoints = magicPoints;
+        }
+    }
+
+    @Override
+    public void knockBack(boolean rightKnockBack) {
+        if (rightKnockBack) {
+            velocityX = KNOCKBACK_X_PLAYER;
+            velocityY = KNOCKBACK_Y_PLAYER;
+        } else {
+            velocityX = -KNOCKBACK_X_PLAYER;
+            velocityY = KNOCKBACK_Y_PLAYER;
+        }
+    }
+
+    @Override
+    public void draw(ShapeRenderer s) {
+        s.set(ShapeRenderer.ShapeType.Filled);
+        if (!isInvisible())
+            if (canBeInvisible())
+                s.setColor(Color.BLUE);
+            else {
+                s.setColor(Color.CYAN);
+            }
+        s.rect(getX(), getY(), getW(), getH());
+
+        s.set(ShapeRenderer.ShapeType.Line);
+        s.setColor(Color.GREEN);
+        s.rect(getX(), getY(), getW(), getH());
+
+        if (hasWeapon()) {
+            s.setColor(Color.BLACK);
+            s.polygon(getWeapon().getTransformedVertices());
         }
     }
 }

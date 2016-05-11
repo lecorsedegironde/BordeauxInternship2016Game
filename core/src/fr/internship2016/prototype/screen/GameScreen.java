@@ -16,7 +16,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import fr.internship2016.prototype.movable.armed.ArmedElement;
 import fr.internship2016.prototype.movable.armed.Player;
 import fr.internship2016.prototype.movable.armed.Troll;
-import fr.internship2016.prototype.movable.spells.FireSpell;
 import fr.internship2016.prototype.movable.spells.Spell;
 import fr.internship2016.prototype.utils.CollisionDetector;
 import fr.internship2016.prototype.utils.EnemiesAI;
@@ -129,6 +128,7 @@ public class GameScreen implements Screen {
             if (player.isAttacking()) {
                 if (CollisionDetector.isCollision(player.getWeapon(), e) && !player.getWeapon().hasHit()) {
                     e.hitWeapon();
+                    e.knockBack(player.isRightFacing());
                     player.getWeapon().hit();
                 }
             }
@@ -154,59 +154,30 @@ public class GameScreen implements Screen {
         sprite.draw(batch);
         batch.end();
 
-        //Draw bodies blocks (Filled)
+        //Draw elements
         shapeRenderer.setProjectionMatrix(camera.combined);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.setAutoShapeType(true);
+        shapeRenderer.begin();
         //Player
-        if (!player.isInvisible()) {
-            if (player.canBeInvisible()) {
-                shapeRenderer.setColor(Color.BLUE);
-            } else {
-                shapeRenderer.setColor(Color.CYAN);
-            }
-            shapeRenderer.rect(player.getX(), player.getY(), player.getW(), player.getH());
-        }
+        player.draw(shapeRenderer);
         //Enemies
-        shapeRenderer.setColor(Color.SCARLET);
         for (ArmedElement e : enemies) {
-            shapeRenderer.rect(e.getX(), e.getY(), e.getW(), e.getH());
+            e.draw(shapeRenderer);
         }
         //Spells
         for (Spell s : spells) {
-            if (s instanceof FireSpell){
-                shapeRenderer.setColor(Color.MAGENTA);
-            }
-            else{
-                shapeRenderer.setColor(Color.GOLD);
-            }
-            shapeRenderer.rect(s.getX(), s.getY(), s.getW(), s.getH());
+            s.draw(shapeRenderer);
         }
-        shapeRenderer.end();
-
-        //Draw weapons and bodies contours
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        //Player
-        shapeRenderer.setColor(Color.GREEN);
-        shapeRenderer.rect(player.getX(), player.getY(), player.getW(), player.getH());
-        //Player weapon
-        if (player.hasWeapon()) {
-            shapeRenderer.setColor(Color.BLACK);
-            shapeRenderer.polygon(player.getWeapon().getTransformedVertices());
-        }
-        //Enemies weapon
-        for (ArmedElement e : enemies) {
-            shapeRenderer.setColor(Color.BLACK);
-            shapeRenderer.polygon(e.getWeapon().getTransformedVertices());
-        }
-        //Ground line
+        shapeRenderer.set(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(Color.RED);
         shapeRenderer.line(0, GROUND_HEIGHT, WORLD_WIDTH, GROUND_HEIGHT);
         shapeRenderer.end();
 
+
         //Inputs events
         if (Gdx.input.isKeyPressed(RESET)) {
             restart();
-        } else  {
+        } else {
 
             if (Gdx.input.isKeyPressed(RIGHT)) {
                 player.moveRight();
