@@ -1,5 +1,6 @@
 package fr.internship2016.prototype.movable;
 
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 
 import static fr.internship2016.prototype.utils.Constants.GROUND_HEIGHT;
@@ -37,6 +38,8 @@ public abstract class MovableElement {
     }
 
     public abstract void update();
+
+    public abstract void draw(ShapeRenderer s);
 
     public void moveRight() {
         velocityX = horizontalVelocity;

@@ -1,5 +1,7 @@
 package fr.internship2016.prototype.movable.armed;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import fr.internship2016.prototype.weapon.WeaponStyles;
 import fr.internship2016.prototype.weapon.rotate.Club;
 
@@ -70,6 +72,17 @@ public class Troll extends ArmedElement {
             velocityY = KNOCKBACK_Y_TROLL;
             stopAttack();
         }
+    }
+
+    @Override
+    public void draw(ShapeRenderer s) {
+        s.set(ShapeRenderer.ShapeType.Filled);
+        s.setColor(Color.SCARLET);
+        s.rect(getX(), getY(), getW(), getH());
+
+        s.set(ShapeRenderer.ShapeType.Line);
+        s.setColor(Color.BLACK);
+        s.polygon(getWeapon().getTransformedVertices());
     }
 }
 
