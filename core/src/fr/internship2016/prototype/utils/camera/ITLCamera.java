@@ -125,4 +125,8 @@ public class ITLCamera implements Observer {
     public Matrix4 getCameraCombined() {
         return viewport.getCamera().combined;
     }
+
+    public Viewport getViewport() {
+        return viewport;
+    }
 }

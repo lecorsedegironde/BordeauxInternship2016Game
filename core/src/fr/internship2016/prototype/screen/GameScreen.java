@@ -8,12 +8,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import fr.internship2016.prototype.movable.armed.ArmedElement;
 import fr.internship2016.prototype.movable.armed.Player;
 import fr.internship2016.prototype.movable.armed.Troll;
 import fr.internship2016.prototype.movable.spells.FireSpell;
 import fr.internship2016.prototype.movable.spells.Spell;
+import fr.internship2016.prototype.screen.ui.GameUI;
 import fr.internship2016.prototype.utils.CollisionDetector;
 import fr.internship2016.prototype.utils.EnemiesAI;
 import fr.internship2016.prototype.utils.camera.ITLCamera;
@@ -29,6 +31,8 @@ public class GameScreen implements Screen {
 
     //Camera
     private ITLCamera camera;
+    //UI
+    private final GameUI gameUI;
 
     //Draw
     private SpriteBatch batch;
@@ -54,6 +58,10 @@ public class GameScreen implements Screen {
 
         //Camera
         camera = new ITLCamera(0f, 0f, WORLD_WIDTH, 0.002, WORLD_WIDTH, WORLD_HEIGHT);
+
+        //UI
+        gameUI = new GameUI();
+        Gdx.input.setInputProcessor(gameUI.getStage());
 
         //Player, enemies & spells
         enemies = new Array<>();
@@ -121,6 +129,9 @@ public class GameScreen implements Screen {
 
         }
 
+        //Activate cam viewport
+        camera.getViewport().apply();
+
         //Draw background
         batch.setProjectionMatrix(camera.getCameraCombined());
         batch.begin();
@@ -174,6 +185,9 @@ public class GameScreen implements Screen {
         shapeRenderer.setColor(Color.RED);
         shapeRenderer.line(0, GROUND_HEIGHT, WORLD_WIDTH, GROUND_HEIGHT);
         shapeRenderer.end();
+
+        //Draw UI
+        gameUI.update(delta, player.getLife(), player.getMagicPoints());
 
         //Inputs events
         if (Gdx.input.isKeyPressed(RESET)) {
@@ -241,6 +255,7 @@ public class GameScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         camera.resize(height);
+        gameUI.resize(width, height);
     }
 
     @Override
@@ -260,5 +275,6 @@ public class GameScreen implements Screen {
         sprite.getTexture().dispose();
         batch.dispose();
         shapeRenderer.dispose();
+        gameUI.dispose();
     }
 }
