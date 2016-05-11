@@ -29,7 +29,7 @@ public class GameUI {
     public GameUI() {
         stage = new Stage(new ScreenViewport());
         skin = new Skin(Gdx.files.internal("uiskin.json"));
-        Table table = new Table();
+        table = new Table();
         table.debug();
         table.setFillParent(true);
 
