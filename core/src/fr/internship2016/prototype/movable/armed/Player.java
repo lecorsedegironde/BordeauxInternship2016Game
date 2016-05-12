@@ -2,12 +2,16 @@ package fr.internship2016.prototype.movable.armed;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import fr.internship2016.prototype.movable.spells.FireSpell;
 import fr.internship2016.prototype.movable.spells.Spell;
 import fr.internship2016.prototype.weapon.Spear;
+import fr.internship2016.prototype.weapon.Weapon;
 import fr.internship2016.prototype.weapon.WeaponStyles;
 import fr.internship2016.prototype.weapon.rotate.Sword;
+
+import java.util.ArrayList;
 
 import static fr.internship2016.prototype.utils.Constants.*;
 
@@ -32,14 +36,21 @@ public class Player extends ArmedElement {
 
     private long lastFireS1;
 
+    //Inventory
+    private Array<WeaponStyles> inventory;
+
 
     public Player(float x, float y, float width, float height, float velocityX, float velocityY, boolean createWeapon) {
         super(x, y, width, height, velocityX, velocityY);
         canStopMovement = true;
         rightFacing = true;
 
-        if (createWeapon)
+        inventory = new Array<>();
+        if (createWeapon) {
             setWeapon(WeaponStyles.SPEAR);
+            inventory.add(WeaponStyles.SWORD);
+            inventory.add(WeaponStyles.SPEAR);
+        }
 
         invisible = false;
         canBeInvisible = true;
@@ -122,10 +133,6 @@ public class Player extends ArmedElement {
         }
     }
 
-    public boolean canBeInvisible() {
-        return canBeInvisible;
-    }
-
     public void gainLife(double life) {
         if (life > 0) {
             lifePoints += life;
@@ -183,7 +190,7 @@ public class Player extends ArmedElement {
     public void draw(ShapeRenderer s) {
         s.set(ShapeRenderer.ShapeType.Filled);
         if (!isInvisible()) {
-            if (canBeInvisible()) {
+            if (canBeInvisible) {
                 s.setColor(Color.BLUE);
             } else {
                 s.setColor(Color.CYAN);
@@ -199,5 +206,17 @@ public class Player extends ArmedElement {
             s.setColor(Color.BLACK);
             s.polygon(getWeapon().getTransformedVertices());
         }
+    }
+
+    public Array<WeaponStyles> getInventory() {
+        return inventory;
+    }
+
+    public void addToInventory(WeaponStyles w) {
+        inventory.add(w);
+    }
+
+    public boolean isAvailable(WeaponStyles w) {
+        return inventory.contains(w, false);
     }
 }
