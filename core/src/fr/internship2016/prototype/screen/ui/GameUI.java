@@ -7,7 +7,10 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import fr.internship2016.prototype.movable.armed.Player;
+import fr.internship2016.prototype.weapon.WeaponStyles;
 
 /**
  * Created by bastien on 11/05/16.
@@ -29,7 +32,13 @@ public class GameUI {
     private final ProgressBar lifeBar;
     private final ProgressBar manaBar;
 
-    public GameUI() {
+    //Is the ui over the game, i.e. shall be the game paused?
+    private boolean uiOver;
+
+    //Related to inventory
+    private Player player;
+
+    public GameUI(Player player) {
         stage = new Stage(new ScreenViewport());
         skin = new Skin(Gdx.files.internal("uiskin.json"));
         table = new Table();
@@ -39,7 +48,7 @@ public class GameUI {
         inventoryButton = new TextButton("Inventory", skin, "default");
         inventoryButton.setWidth(150);
         inventoryButton.setHeight(200);
-        inventoryButton.addListener(new ClickListener(){
+        inventoryButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 openWindow();
@@ -67,15 +76,22 @@ public class GameUI {
         table.left().bottom();
 
         stage.addActor(table);
+
+        //Player inventory
+        this.player = player;
+
+        //Ui over
+        uiOver = false;
     }
 
-    public void update(float delta, double playerLP, double playerMP) {
+    public void update(float delta, Player player) {
         //Set stage viewport
         stage.getViewport().apply();
 
         //Update UI
-        lifeBar.setValue((float) playerLP);
-        manaBar.setValue((float) playerMP);
+        this.player = player;
+        lifeBar.setValue((float) player.getLife());
+        manaBar.setValue((float) player.getMagicPoints());
 
         //Draw UI
         stage.act(delta);
@@ -83,35 +99,47 @@ public class GameUI {
     }
 
     private void openWindow() {
+        uiOver = true;
+
         final Dialog dialog = new Dialog("Inventory", skin, "dialog");
-        final TextButton swordButton = new TextButton("Sword", skin, "default");
-        swordButton.setWidth(150);
-        swordButton.setHeight(75);
-        final TextButton spearButton = new TextButton("Spear", skin, "default");
-        spearButton.setWidth(150);
-        spearButton.setHeight(75);
+        final Table dialogTable = new Table();
+
+        dialogTable.setWidth(stage.getWidth());
+        dialogTable.align(Align.center | Align.bottom);
+        dialogTable.setPosition(0, Gdx.graphics.getHeight());
+
+
+        for (WeaponStyles w : player.getInventory()) {
+            TextButton tb = new TextButton(w.getName(), skin, "default");
+            tb.setWidth(150);
+            tb.setHeight(75);
+            tb.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    player.setWeapon(w);
+                }
+            });
+            dialogTable.add(tb);
+        }
+
         final TextButton closeButton = new TextButton("Close", skin, "default");
         closeButton.setWidth(150);
         closeButton.setHeight(75);
 
-        closeButton.addListener(new ClickListener(){
+        closeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 dialog.hide();
+                uiOver = false;
             }
         });
 
-        Table dialogTable = new Table();
-        dialogTable.setWidth(stage.getWidth());
-        dialogTable.align(Align.center | Align.bottom);
-        dialogTable.setPosition(0, Gdx.graphics.getHeight());
-        dialogTable.add(swordButton);
-        dialogTable.add(spearButton);
         dialogTable.row();
         dialogTable.add(closeButton);
         dialog.add(dialogTable);
         dialog.show(stage);
     }
+
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
     }
@@ -122,5 +150,9 @@ public class GameUI {
 
     public Stage getStage() {
         return stage;
+    }
+
+    public boolean isUiOver() {
+        return uiOver;
     }
 }
