@@ -2,8 +2,11 @@ package fr.internship2016.prototype.screen.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 /**
@@ -36,6 +39,12 @@ public class GameUI {
         inventoryButton = new TextButton("Inventory", skin, "default");
         inventoryButton.setWidth(150);
         inventoryButton.setHeight(200);
+        inventoryButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                openWindow();
+            }
+        });
 
         lifeBar = new ProgressBar(0, 100, 1, false, skin, "default-horizontal");
         lifeBar.setWidth(100);
@@ -73,6 +82,36 @@ public class GameUI {
         stage.draw();
     }
 
+    private void openWindow() {
+        final Dialog dialog = new Dialog("Inventory", skin, "dialog");
+        final TextButton swordButton = new TextButton("Sword", skin, "default");
+        swordButton.setWidth(150);
+        swordButton.setHeight(75);
+        final TextButton spearButton = new TextButton("Spear", skin, "default");
+        spearButton.setWidth(150);
+        spearButton.setHeight(75);
+        final TextButton closeButton = new TextButton("Close", skin, "default");
+        closeButton.setWidth(150);
+        closeButton.setHeight(75);
+
+        closeButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                dialog.hide();
+            }
+        });
+
+        Table dialogTable = new Table();
+        dialogTable.setWidth(stage.getWidth());
+        dialogTable.align(Align.center | Align.bottom);
+        dialogTable.setPosition(0, Gdx.graphics.getHeight());
+        dialogTable.add(swordButton);
+        dialogTable.add(spearButton);
+        dialogTable.row();
+        dialogTable.add(closeButton);
+        dialog.add(dialogTable);
+        dialog.show(stage);
+    }
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
     }
