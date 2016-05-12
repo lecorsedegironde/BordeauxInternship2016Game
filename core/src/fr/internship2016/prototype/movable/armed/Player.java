@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.TimeUtils;
 import fr.internship2016.prototype.movable.spells.FireSpell;
 import fr.internship2016.prototype.movable.spells.Spell;
+import fr.internship2016.prototype.weapon.Spear;
 import fr.internship2016.prototype.weapon.WeaponStyles;
 import fr.internship2016.prototype.weapon.rotate.Sword;
 
@@ -38,7 +39,7 @@ public class Player extends ArmedElement {
         rightFacing = true;
 
         if (createWeapon)
-            setWeapon(WeaponStyles.SWORD);
+            setWeapon(WeaponStyles.SPEAR);
 
         invisible = false;
         canBeInvisible = true;
@@ -79,6 +80,9 @@ public class Player extends ArmedElement {
         switch (w) {
             case SWORD:
                 weapon = new Sword(this, SWORD_WIDTH, SWORD_HEIGHT);
+                break;
+            case SPEAR:
+                weapon = new Spear(this, SPEAR_WIDTH, SPEAR_HEIGHT);
                 break;
             default:
                 weapon = null;
@@ -178,13 +182,14 @@ public class Player extends ArmedElement {
     @Override
     public void draw(ShapeRenderer s) {
         s.set(ShapeRenderer.ShapeType.Filled);
-        if (!isInvisible())
-            if (canBeInvisible())
+        if (!isInvisible()) {
+            if (canBeInvisible()) {
                 s.setColor(Color.BLUE);
-            else {
+            } else {
                 s.setColor(Color.CYAN);
             }
-        s.rect(getX(), getY(), getW(), getH());
+            s.rect(getX(), getY(), getW(), getH());
+        }
 
         s.set(ShapeRenderer.ShapeType.Line);
         s.setColor(Color.GREEN);

@@ -138,7 +138,7 @@ public class GameScreen implements Screen {
         batch.end();
 
         //Draw elements
-        shapeRenderer.setProjectionMatrix(camera.combined);
+        shapeRenderer.setProjectionMatrix(camera.getCameraCombined());
         shapeRenderer.setAutoShapeType(true);
         shapeRenderer.begin();
 
