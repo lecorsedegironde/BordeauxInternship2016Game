@@ -1,19 +1,17 @@
-package fr.internship2016.prototype.utils.camera;
+package fr.internship2016.prototype.screen.camera;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import fr.internship2016.prototype.movable.MovableElement;
-import fr.internship2016.prototype.movable.spells.Spell;
+import fr.internship2016.prototype.gameState.movable.MovableElement;
 
 import java.util.Observable;
 import java.util.Observer;
 
 /**
- * Created by bastien on 02/05/16.
- * Camera class
+ * Created by bastien on 13/05/16.
  */
 public class ITLCamera implements Observer {
 
@@ -53,7 +51,7 @@ public class ITLCamera implements Observer {
     @Override
     public void update(Observable observable, Object o) {
         //To avoid changing viewport during direction changes
-        boolean moveCam = true;
+        /*boolean moveCam = true;
         if (observable instanceof Spell) {
             //If the observable object is a spell, no need to move the cam
             moveCam = false;
@@ -108,7 +106,7 @@ public class ITLCamera implements Observer {
         }
 
         viewport.getCamera().position.set(currentPosition, worldHeight / 2f, 0);
-        viewport.getCamera().update();
+        viewport.getCamera().update();*/
     }
 
     public void resize(int height) {
