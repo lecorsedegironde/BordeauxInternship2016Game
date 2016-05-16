@@ -72,19 +72,28 @@ public class Engine implements Screen {
         Gdx.app.log("GAME", "Render GameState");
 
         //Process actions
+        //Prevent player from moving if there no key pressed
+        gameState.stopMovement();
         for (Action a : actions) {
             //TODO Complete function
+
             switch (a) {
                 case RIGHT:
                     gameState.moveRight();
+                    Gdx.app.log("GAME", "Move Right");
                     break;
                 case LEFT:
                     gameState.moveLeft();
+                    Gdx.app.log("GAME", "Move Left");
                     break;
                 case JUMP:
+                    gameState.jump();
+                    Gdx.app.log("GAME", "Jump");
+                    actions.removeValue(a, false);
                     break;
                 case INVISIBILITY:
                     gameState.invisibility();
+                    Gdx.app.log("GAME", "Invisibility");
                     break;
                 case ATTACK:
                     break;
@@ -99,12 +108,19 @@ public class Engine implements Screen {
                 case PAUSE:
                     pause = !pause;
                     Gdx.app.log("GAME", "Pause set on" + (pause ? "true":"false"));
+                    actions.removeValue(a, false);
                     break;
                 case RESET:
+                    gameState.reset();
+                    Gdx.app.log("GAME", "Reset");
+                    actions.removeValue(a, false);
                     break;
                 case QUIT:
+                    Gdx.app.exit();
+                    Gdx.app.log("APP", "Quit");
                     break;
                 case NO_ACTION:
+                    //Do nothing
                     break;
             }
         }

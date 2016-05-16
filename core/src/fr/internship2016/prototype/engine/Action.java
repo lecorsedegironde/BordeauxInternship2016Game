@@ -1,9 +1,5 @@
 package fr.internship2016.prototype.engine;
 
-import com.badlogic.gdx.Input;
-
-import static com.badlogic.gdx.utils.Align.left;
-
 /**
  * Created by bastien on 16/05/16.
  */

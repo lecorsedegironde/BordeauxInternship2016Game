@@ -5,7 +5,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import fr.internship2016.prototype.gameState.movable.MovableElement;
+import fr.internship2016.prototype.gameState.movable.BodyElement;
+import fr.internship2016.prototype.gameState.movable.Spell;
+import fr.internship2016.prototype.gameState.utils.Direction;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -51,7 +53,7 @@ public class ITLCamera implements Observer {
     @Override
     public void update(Observable observable, Object o) {
         //To avoid changing viewport during direction changes
-        /*boolean moveCam = true;
+        boolean moveCam = true;
         if (observable instanceof Spell) {
             //If the observable object is a spell, no need to move the cam
             moveCam = false;
@@ -60,10 +62,10 @@ public class ITLCamera implements Observer {
                 ((Spell) observable).setDisappear();
                 Gdx.app.debug("CAMERA", "Set spell " + observable.toString() + " on disappear");
             }
-        } else if (observable instanceof MovableElement) {
+        } else if (observable instanceof BodyElement) {
             //Get the observable element position
-            float observablePosition = ((MovableElement) observable).getX();
-            float moveCameraWidth = ((MovableElement) observable).getW() * 2;
+            float observablePosition = ((BodyElement) observable).getX();
+            float moveCameraWidth = ((BodyElement) observable).getW() * 2;
 
             //Determination if a camera movement is needed
             //width * 2 is needed because of observablePosition not centered on the body
@@ -74,16 +76,20 @@ public class ITLCamera implements Observer {
             }
 
             //Calculus of camera position in case of moving
-            {
+            if (moveCam) {
                 targetPosition = observablePosition;
-            }
 
-            if (((MovableElement) observable).isRightFacing()) {
-                //For space
-                targetPosition += moveCameraWidth * 2;
-                targetPosition -= widthViewport;
-            } else {
-                targetPosition -= moveCameraWidth;
+                if (((BodyElement) observable).getDirection() == Direction.RIGHT
+                        || (((BodyElement) observable).getDirection() == Direction.NONE)
+                        && ((BodyElement) observable).getFacing() == Direction.RIGHT) {
+                    //For space
+                    targetPosition += moveCameraWidth * 2;
+                    targetPosition -= widthViewport;
+                } else if (((BodyElement) observable).getDirection() == Direction.LEFT
+                        || (((BodyElement) observable).getDirection() == Direction.NONE)
+                        && ((BodyElement) observable).getFacing() == Direction.LEFT) {
+                    targetPosition -= moveCameraWidth;
+                }
             }
         }
 
@@ -106,7 +112,7 @@ public class ITLCamera implements Observer {
         }
 
         viewport.getCamera().position.set(currentPosition, worldHeight / 2f, 0);
-        viewport.getCamera().update();*/
+        viewport.getCamera().update();
     }
 
     public void resize(int height) {

@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.Array;
 import fr.internship2016.prototype.gameState.levels.Level;
 import fr.internship2016.prototype.gameState.movable.MovableElement;
 import fr.internship2016.prototype.gameState.movable.Player;
+import fr.internship2016.prototype.gameState.utils.Direction;
 
 /**
  * Created by bastien on 13/05/16.
@@ -58,8 +59,20 @@ public class GameState {
         player.moveLeft();
     }
 
+    public void stopMovement() {
+        player.stopMovement();
+    }
+
     public void invisibility() {
         player.startInvisibility();
+    }
+
+    public void jump() {
+        player.jump();
+    }
+
+    public void reset() {
+        player.reset();
     }
     //endregion
 }

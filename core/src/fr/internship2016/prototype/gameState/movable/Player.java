@@ -1,12 +1,10 @@
 package fr.internship2016.prototype.gameState.movable;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import fr.internship2016.prototype.gameState.levels.Level;
-import fr.internship2016.prototype.gameState.movable.interfaces.Armed;
-import fr.internship2016.prototype.gameState.movable.interfaces.Inventory;
-import fr.internship2016.prototype.gameState.movable.interfaces.Invisibility;
-import fr.internship2016.prototype.gameState.movable.interfaces.Spelled;
+import fr.internship2016.prototype.gameState.movable.interfaces.*;
 import fr.internship2016.prototype.gameState.utils.Direction;
 
 /**
@@ -65,7 +63,16 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
     @Override
     public void update(Level level) {
         //TODO Add management of different level ground height
+        //Do jumping first to prevent conflicts
+        if (jumping && onGround) {
+            translate(0, getY() + velocityY);
+        }
+
+        //Update using super
         super.update(level);
+
+        //Regain magic points if loosed
+        autoMagicPointRegain();
 
         //Invisibility
         if (invisible && TimeUtils.timeSinceMillis(invisibilityTime) > INVISIBILITY_DURATION) {
@@ -75,6 +82,27 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
         if (TimeUtils.timeSinceMillis(invisibilityTime) > INVISIBILITY_REFILL) {
             canBeInvisible = true;
         }
+
+        //Logs
+        Gdx.app.log("Player", "Position: (" + getX() + ", " + getY() + ")");
+        Gdx.app.log("Player", "Speed: (" + getVelocityX() + ", " + getVelocityY() + ")");
+        Gdx.app.log("Player", "Direction: " + direction);
+        Gdx.app.log("Player", "Facing: " + direction);
+        Gdx.app.log("Player", "Jump: " + jumping + " On ground: " + onGround);
+        Gdx.app.log("Player", "Invisibility: " + invisible);
+        Gdx.app.log("Player", "Can be invisible: " + canBeInvisible);
+        Gdx.app.log("Player", "Life: " + life + " Mana: " + mana);
+
+    }
+
+    public void reset() {
+        stopMovement();
+        setPosition(Player.PLAYER_START, 1f);
+        setFacing(Direction.RIGHT);
+        invisible = false;
+        canBeInvisible = true;
+        setChanged();
+        notifyObservers();
     }
 
     //region Movement
@@ -179,7 +207,7 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
     }
 //endregion
 
-    //region knock-back
+    //region Knock-back
     @Override
     public void knockBack() {
         //TODO

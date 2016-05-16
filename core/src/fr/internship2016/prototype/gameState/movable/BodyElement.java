@@ -3,6 +3,7 @@ package fr.internship2016.prototype.gameState.movable;
 import fr.internship2016.prototype.gameState.levels.Level;
 import fr.internship2016.prototype.gameState.movable.interfaces.Facing;
 import fr.internship2016.prototype.gameState.movable.interfaces.Hit;
+import fr.internship2016.prototype.gameState.movable.interfaces.Jump;
 import fr.internship2016.prototype.gameState.movable.interfaces.KnockBack;
 import fr.internship2016.prototype.gameState.utils.Direction;
 
@@ -10,10 +11,14 @@ import fr.internship2016.prototype.gameState.utils.Direction;
 /**
  * Created by bastien on 13/05/16.
  */
-public abstract class BodyElement extends MovableElement implements Facing, Hit, KnockBack {
+public abstract class BodyElement extends MovableElement implements Facing, Hit, KnockBack, Jump {
 
+    //Jump & ground management
     protected boolean onGround;
+    protected boolean jumping;
+
     protected Direction facing;
+
 
     public BodyElement(float x, float y, float width, float height, float velocityX,
                        float velocityY, float gravity) {
@@ -28,10 +33,16 @@ public abstract class BodyElement extends MovableElement implements Facing, Hit,
         switch (direction) {
             case RIGHT:
                 moveX = velocityX;
+                setFacing(Direction.RIGHT);
                 break;
             case LEFT:
                 moveX = -velocityX;
+                setFacing(Direction.LEFT);
                 break;
+        }
+
+        if (jumping && !onGround) {
+            moveY += velocityY;
         }
 
         if (!onGround) {
@@ -39,7 +50,6 @@ public abstract class BodyElement extends MovableElement implements Facing, Hit,
         }
 
         translate(moveX, moveY);
-
         //Check if Body is on the ground
         checkOnGround(level);
 
@@ -50,7 +60,8 @@ public abstract class BodyElement extends MovableElement implements Facing, Hit,
         notifyObservers();
     }
 
-    private void checkBounds(Level level) {
+    //region Movement
+    protected void checkBounds(Level level) {
         //Left and Right
         if (getX() <= 0) {
             stopMovement();
@@ -69,15 +80,18 @@ public abstract class BodyElement extends MovableElement implements Facing, Hit,
         direction = Direction.LEFT;
     }
 
-    private void stopMovement() {
+    public void stopMovement() {
         if (onGround) direction = Direction.NONE;
     }
+    //endregion
 
-    private void checkOnGround(Level level) {
+    //region Jump & Ground
+    protected void checkOnGround(Level level) {
         onGround = getY() <= level.getLevelGroundHeight();
 
         if (onGround) {
             setPosition(getX(), level.getLevelGroundHeight());
+            jumping = false;
         }
     }
 
@@ -85,6 +99,19 @@ public abstract class BodyElement extends MovableElement implements Facing, Hit,
         return onGround;
     }
 
+    public boolean isJumping() {
+        return jumping;
+    }
+
+    @Override
+    public void jump() {
+        if (onGround) {
+            jumping = true;
+        }
+    }
+    //endregion
+
+    //region Facing
     @Override
     public void setFacing(Direction d) {
         facing = d;
@@ -94,4 +121,5 @@ public abstract class BodyElement extends MovableElement implements Facing, Hit,
     public Direction getFacing() {
         return facing;
     }
+    //endregion
 }

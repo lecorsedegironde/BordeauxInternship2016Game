@@ -16,11 +16,14 @@ public class DebugDrawer {
     public static void drawMovable(ShapeRenderer shapeRenderer, MovableElement m) {
         if (m instanceof Player) {
             shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
-            if (((Player) m).isInvisible()) {
-                //TODO
+            if (!((Player) m).isInvisible()) {
+                if (((Player) m).canBeInvisible()) {
+                    shapeRenderer.setColor(Color.BLUE);
+                } else {
+                    shapeRenderer.setColor(Color.CYAN);
+                }
+                shapeRenderer.rect(m.getX(), m.getY(), m.getW(), m.getH());
             }
-            shapeRenderer.setColor(Color.BLUE);
-            shapeRenderer.rect(m.getX(), m.getY(), m.getW(), m.getH());
             shapeRenderer.set(ShapeRenderer.ShapeType.Line);
             shapeRenderer.setColor(Color.GREEN);
             shapeRenderer.rect(m.getX(), m.getY(), m.getW(), m.getH());
