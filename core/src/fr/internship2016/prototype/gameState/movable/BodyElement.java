@@ -16,6 +16,7 @@ public abstract class BodyElement extends MovableElement implements Facing, Hit,
     //Jump & ground management
     protected boolean onGround;
     protected boolean jumping;
+    protected float jumpingVelocity;
 
     protected Direction facing;
 
@@ -24,7 +25,7 @@ public abstract class BodyElement extends MovableElement implements Facing, Hit,
                        float velocityY, float gravity) {
         super(x, y, width, height, velocityX, velocityY, gravity);
         facing = (velocityX > 0) ? Direction.RIGHT : Direction.LEFT;
-
+        jumpingVelocity = 0f;
     }
 
     @Override
@@ -41,13 +42,15 @@ public abstract class BodyElement extends MovableElement implements Facing, Hit,
                 break;
         }
 
-        if (jumping && !onGround) {
-            moveY += velocityY;
+        if (jumping && onGround) {
+            jumpingVelocity = velocityY;
         }
 
         if (!onGround) {
-            moveY += gravity;
+            jumpingVelocity += gravity;
         }
+
+        moveY = jumpingVelocity;
 
         translate(moveX, moveY);
         //Check if Body is on the ground
@@ -92,6 +95,7 @@ public abstract class BodyElement extends MovableElement implements Facing, Hit,
         if (onGround) {
             setPosition(getX(), level.getLevelGroundHeight());
             jumping = false;
+            jumpingVelocity = 0f;
         }
     }
 
