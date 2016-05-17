@@ -27,7 +27,7 @@ public class GameState {
         movableElements = new Array<>();
 
         //Declare level
-        level = new Level(100f, 10f, 1f, Level.DEFAULT_GRAVITY);
+        level = new Level(100f, 10f, 1f, Level.DEFAULT_GRAVITY, movableElements);
         //Declare player
         player = new Player(Player.PLAYER_START, level.getLevelGroundHeight(), Player.WIDTH_PLAYER,
                 Player.HEIGHT_PLAYER, Player.VELOCITY_X_PLAYER, Player.VELOCITY_Y_PLAYER, level.getLevelGravity());

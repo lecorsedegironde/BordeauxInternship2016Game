@@ -1,7 +1,7 @@
 package fr.internship2016.prototype.gameState.movable.interfaces;
 
-import fr.internship2016.prototype.gameState.weapon.Weapon;
-import fr.internship2016.prototype.gameState.weapon.WeaponType;
+import fr.internship2016.prototype.gameState.weapons.Weapon;
+import fr.internship2016.prototype.gameState.weapons.WeaponType;
 
 /**
  * Created by bastien on 13/05/16.

@@ -1,9 +1,9 @@
-package fr.internship2016.prototype.gameState.weapon.rotating;
+package fr.internship2016.prototype.gameState.weapons.rotating;
 
 import fr.internship2016.prototype.gameState.movable.bodies.BodyElement;
 import fr.internship2016.prototype.gameState.utils.Direction;
-import fr.internship2016.prototype.gameState.weapon.Weapon;
-import fr.internship2016.prototype.gameState.weapon.WeaponType;
+import fr.internship2016.prototype.gameState.weapons.Weapon;
+import fr.internship2016.prototype.gameState.weapons.WeaponType;
 
 /**
  * Created by bastien on 17/05/16.

@@ -1,4 +1,4 @@
-package fr.internship2016.prototype.gameState.weapon;
+package fr.internship2016.prototype.gameState.weapons;
 
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.utils.TimeUtils;

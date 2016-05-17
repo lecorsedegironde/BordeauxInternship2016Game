@@ -10,9 +10,9 @@ import fr.internship2016.prototype.gameState.movable.interfaces.Invisibility;
 import fr.internship2016.prototype.gameState.movable.interfaces.Spelled;
 import fr.internship2016.prototype.gameState.movable.spells.SpellType;
 import fr.internship2016.prototype.gameState.utils.Direction;
-import fr.internship2016.prototype.gameState.weapon.Weapon;
-import fr.internship2016.prototype.gameState.weapon.WeaponType;
-import fr.internship2016.prototype.gameState.weapon.rotating.Sword;
+import fr.internship2016.prototype.gameState.weapons.Weapon;
+import fr.internship2016.prototype.gameState.weapons.WeaponType;
+import fr.internship2016.prototype.gameState.weapons.rotating.Sword;
 
 /**
  * Created by bastien on 13/05/16.

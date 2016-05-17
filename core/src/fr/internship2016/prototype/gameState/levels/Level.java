@@ -1,5 +1,8 @@
 package fr.internship2016.prototype.gameState.levels;
 
+import com.badlogic.gdx.utils.Array;
+import fr.internship2016.prototype.gameState.movable.MovableElement;
+
 /**
  * Created by bastien on 13/05/16.
  * Very simple level
@@ -21,7 +24,8 @@ public class Level {
     //Background
     private String background;
 
-    public Level(float levelWidth, float levelHeight, float levelGroundHeight, float levelGravity) {
+    public Level(float levelWidth, float levelHeight, float levelGroundHeight, float levelGravity,
+                 Array<MovableElement> movableElements) {
         this.levelWidth = levelWidth;
         this.levelHeight = levelHeight;
         this.levelGroundHeight = levelGroundHeight;

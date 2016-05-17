@@ -1,4 +1,4 @@
-package fr.internship2016.prototype.gameState.weapon;
+package fr.internship2016.prototype.gameState.weapons;
 
 /**
  * Created by bastien on 17/05/16.
