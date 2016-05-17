@@ -21,7 +21,7 @@ public class Engine implements Screen {
     private ITLDebugRenderer renderer;
 
     //Input
-    ITLInput input;
+    private ITLInput input;
     private Array<Action> actions;
 
     public Engine() {
@@ -98,10 +98,19 @@ public class Engine implements Screen {
                 case ATTACK:
                     break;
                 case SPELL_ONE:
+                    gameState.fireSpell(Action.SPELL_ONE);
+                    Gdx.app.log("GAME", "Fire spell 1");
+                    actions.removeValue(a, false);
                     break;
                 case SPELL_TWO:
+                    gameState.fireSpell(Action.SPELL_TWO);
+                    Gdx.app.log("GAME", "Fire spell 2");
+                    actions.removeValue(a, false);
                     break;
                 case SPELL_THREE:
+                    gameState.fireSpell(Action.SPELL_THREE);
+                    Gdx.app.log("GAME", "Fire spell 3");
+                    actions.removeValue(a, false);
                     break;
                 case INVENTORY:
                     break;

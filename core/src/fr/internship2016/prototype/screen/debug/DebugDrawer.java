@@ -6,7 +6,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import fr.internship2016.prototype.gameState.levels.Level;
 import fr.internship2016.prototype.gameState.movable.MovableElement;
-import fr.internship2016.prototype.gameState.movable.Player;
+import fr.internship2016.prototype.gameState.movable.bodies.Player;
+import fr.internship2016.prototype.gameState.movable.spells.Spell;
 
 /**
  * Created by bastien on 15/05/16.
@@ -28,8 +29,12 @@ public class DebugDrawer {
             shapeRenderer.setColor(Color.GREEN);
             shapeRenderer.rect(m.getX(), m.getY(), m.getW(), m.getH());
             //TODO WEAPON
+        } else if (m instanceof Spell) {
+            shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
+            shapeRenderer.setColor(((Spell) m).getType().getColor());
+            shapeRenderer.rect(m.getX(), m.getY(), m.getW(), m.getH());
         }
-        //TODO Enemies and Spells
+        //TODO Enemies
     }
 
     public static void drawLevel(Sprite sprite, SpriteBatch batch, ShapeRenderer shapeRenderer, Level l) {

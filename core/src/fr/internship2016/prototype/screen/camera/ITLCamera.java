@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import fr.internship2016.prototype.gameState.movable.BodyElement;
-import fr.internship2016.prototype.gameState.movable.Spell;
+import fr.internship2016.prototype.gameState.movable.bodies.BodyElement;
+import fr.internship2016.prototype.gameState.movable.spells.Spell;
 import fr.internship2016.prototype.gameState.utils.Direction;
 
 import java.util.Observable;

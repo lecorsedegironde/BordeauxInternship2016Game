@@ -1,6 +1,7 @@
-package fr.internship2016.prototype.gameState.movable;
+package fr.internship2016.prototype.gameState.movable.bodies;
 
 import fr.internship2016.prototype.gameState.levels.Level;
+import fr.internship2016.prototype.gameState.movable.MovableElement;
 import fr.internship2016.prototype.gameState.movable.interfaces.Facing;
 import fr.internship2016.prototype.gameState.movable.interfaces.Hit;
 import fr.internship2016.prototype.gameState.movable.interfaces.Jump;
@@ -21,8 +22,7 @@ public abstract class BodyElement extends MovableElement implements Facing, Hit,
     protected Direction facing;
 
 
-    public BodyElement(float x, float y, float width, float height, float velocityX,
-                       float velocityY, float gravity) {
+    public BodyElement(float x, float y, float width, float height, float velocityX, float velocityY, float gravity) {
         super(x, y, width, height, velocityX, velocityY, gravity);
         facing = (velocityX > 0) ? Direction.RIGHT : Direction.LEFT;
         jumpingVelocity = 0f;
@@ -30,7 +30,7 @@ public abstract class BodyElement extends MovableElement implements Facing, Hit,
 
     @Override
     public void update(Level level) {
-        float moveX = 0, moveY = 0;
+        float moveX = 0, moveY;
         switch (direction) {
             case RIGHT:
                 moveX = velocityX;

@@ -6,9 +6,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.utils.Array;
 import fr.internship2016.prototype.gameState.GameState;
-import fr.internship2016.prototype.gameState.movable.Enemy;
 import fr.internship2016.prototype.gameState.movable.MovableElement;
+import fr.internship2016.prototype.gameState.movable.spells.Spell;
 import fr.internship2016.prototype.screen.camera.ITLCamera;
 import fr.internship2016.prototype.screen.interfaces.Render;
 
@@ -41,6 +42,9 @@ public class ITLDebugRenderer implements Render {
 
     @Override
     public void render(GameState gameState) {
+        //First update cam observers
+        updateCam(gameState.getMovableElements());
+
         //Clear screen
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -71,6 +75,20 @@ public class ITLDebugRenderer implements Render {
 
         //TODO Draw interface
         //DO NOT FORGET TO APPLY SPECIFIC VIEWPORT
+    }
+
+    public ITLCamera getCamera() {
+        return camera;
+    }
+
+    private void updateCam(Array<MovableElement> movableElements) {
+        for (MovableElement m : movableElements) {
+            if (m instanceof Spell) {
+                if (m.countObservers() == 0) {
+                    m.addObserver(camera);
+                }
+            }
+        }
     }
 
     @Override

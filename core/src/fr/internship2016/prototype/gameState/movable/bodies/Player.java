@@ -1,10 +1,14 @@
-package fr.internship2016.prototype.gameState.movable;
+package fr.internship2016.prototype.gameState.movable.bodies;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import fr.internship2016.prototype.gameState.levels.Level;
-import fr.internship2016.prototype.gameState.movable.interfaces.*;
+import fr.internship2016.prototype.gameState.movable.interfaces.Armed;
+import fr.internship2016.prototype.gameState.movable.interfaces.Inventory;
+import fr.internship2016.prototype.gameState.movable.interfaces.Invisibility;
+import fr.internship2016.prototype.gameState.movable.interfaces.Spelled;
+import fr.internship2016.prototype.gameState.movable.spells.SpellType;
 import fr.internship2016.prototype.gameState.utils.Direction;
 
 /**
@@ -21,12 +25,16 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
     //Moving forces
     public static final float VELOCITY_X_PLAYER = 0.15f;
     public static final float VELOCITY_Y_PLAYER = 0.45f;
-    //Utils
+    //Invisibility
     private static final int INVISIBILITY_DURATION = 2000;
     private static final int INVISIBILITY_REFILL = 5000;
+
+    //Life, Mana & Utilisation
     private static final int DEFAULT_LIFE = 100;
     private static final int DEFAULT_MANA = 100;
-    private static final double MAGIC_REFILL = 0.25;
+    private static final double MANA_REFILL = 0.25;
+    private static final int SPELL_FIRE_REFILL = 250;
+    private static final int SPELL_MANA_COST = 30;
     //endregion
 
     //region Fields
@@ -38,9 +46,18 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
     private boolean canBeInvisible;
     private long invisibilityTime;
 
-    //Life and Mana
+    //Life, Mana
     private float life;
     private float mana;
+
+    //Spells
+    private long lastFireS1;
+    private SpellType spell1;
+    private long lastFireS2;
+    private SpellType spell2;
+    private long lastFireS3;
+    private SpellType spell3;
+
     //endregion
 
     public Player(float x, float y, float width, float height, float velocityX,
@@ -55,9 +72,17 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
         invisible = false;
         canBeInvisible = true;
 
+        //Default facing
+        facing = Direction.RIGHT;
+
         //Life and mana
         life = DEFAULT_LIFE;
         mana = DEFAULT_MANA;
+
+        //Spells
+        spell1 = SpellType.FIRE_SPELL;
+        spell2 = SpellType.NO_SPELL;
+        spell3 = SpellType.NO_SPELL;
     }
 
     @Override
@@ -144,7 +169,7 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
     }
     //endregion
 
-    //region Modifiers life and mana
+    //region Life, Mana
     public void gainLife(double life) {
         if (life > 0) {
             this.life += life;
@@ -168,9 +193,9 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
     }
 
     private void autoMagicPointRegain() {
-        if (mana <= DEFAULT_MANA - MAGIC_REFILL) {
-            mana += MAGIC_REFILL;
-        } else if (mana > DEFAULT_MANA - MAGIC_REFILL
+        if (mana <= DEFAULT_MANA - MANA_REFILL) {
+            mana += MANA_REFILL;
+        } else if (mana > DEFAULT_MANA - MANA_REFILL
                 && mana < DEFAULT_MANA) {
             mana = DEFAULT_MANA;
         }
@@ -182,6 +207,68 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
 
     public void setMana(float mana) {
         if (mana >= 0) this.mana = mana;
+    }
+    //endregion
+
+    //region Spells
+    public SpellType getSpell1() {
+        return spell1;
+    }
+
+    public void setSpell1(SpellType spell1) {
+        this.spell1 = spell1;
+    }
+
+    @Override
+    public SpellType fireSpell1() {
+        if (spell1 != SpellType.NO_SPELL && TimeUtils.timeSinceMillis(lastFireS1) > SPELL_FIRE_REFILL
+                && mana > SPELL_MANA_COST) {
+            lastFireS1 = TimeUtils.millis();
+            mana -= SPELL_MANA_COST;
+            return spell1;
+        } else {
+            return SpellType.NO_SPELL;
+        }
+    }
+
+    public SpellType getSpell2() {
+        return spell2;
+    }
+
+    public void setSpell2(SpellType spell2) {
+        this.spell2 = spell2;
+    }
+
+    @Override
+    public SpellType fireSpell2() {
+        if (spell2 != SpellType.NO_SPELL && TimeUtils.timeSinceMillis(lastFireS2) > SPELL_FIRE_REFILL
+                && mana > SPELL_MANA_COST) {
+            lastFireS2 = TimeUtils.millis();
+            mana -= SPELL_MANA_COST;
+            return spell2;
+        } else {
+            return SpellType.NO_SPELL;
+        }
+    }
+
+    public SpellType getSpell3() {
+        return spell3;
+    }
+
+    public void setSpell3(SpellType spell3) {
+        this.spell3 = spell3;
+    }
+
+    @Override
+    public SpellType fireSpell3() {
+        if (spell3 != SpellType.NO_SPELL && TimeUtils.timeSinceMillis(lastFireS3) > SPELL_FIRE_REFILL
+                && mana > SPELL_MANA_COST) {
+            lastFireS3 = TimeUtils.millis();
+            mana -= SPELL_MANA_COST;
+            return spell3;
+        } else {
+            return SpellType.NO_SPELL;
+        }
     }
     //endregion
 
@@ -205,7 +292,7 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
     public boolean isInventoryEmpty() {
         return inventory.size == 0;
     }
-//endregion
+    //endregion
 
     //region Knock-back
     @Override

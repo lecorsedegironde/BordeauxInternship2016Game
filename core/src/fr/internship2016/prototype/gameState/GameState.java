@@ -1,10 +1,12 @@
 package fr.internship2016.prototype.gameState;
 
 import com.badlogic.gdx.utils.Array;
+import fr.internship2016.prototype.engine.Action;
 import fr.internship2016.prototype.gameState.levels.Level;
 import fr.internship2016.prototype.gameState.movable.MovableElement;
-import fr.internship2016.prototype.gameState.movable.Player;
-import fr.internship2016.prototype.gameState.utils.Direction;
+import fr.internship2016.prototype.gameState.movable.bodies.Player;
+import fr.internship2016.prototype.gameState.movable.spells.Spell;
+import fr.internship2016.prototype.gameState.movable.spells.SpellType;
 
 /**
  * Created by bastien on 13/05/16.
@@ -17,8 +19,10 @@ public class GameState {
     private Array<MovableElement> movableElements;
     private Level level;
 
-    public GameState() {
+    //Reusable spell object
+    private Spell spell;
 
+    public GameState() {
         //Declare movableElements array
         movableElements = new Array<>();
 
@@ -27,12 +31,18 @@ public class GameState {
         //Declare player
         player = new Player(Player.PLAYER_START, level.getLevelGroundHeight(), Player.WIDTH_PLAYER,
                 Player.HEIGHT_PLAYER, Player.VELOCITY_X_PLAYER, Player.VELOCITY_Y_PLAYER, level.getLevelGravity());
-        movableElements.add(player);
     }
 
     public void update(float delta) {
         //TODO This is the update function
         player.update(level);
+        for (MovableElement m : movableElements) {
+            m.update(level);
+            //Check disappearing
+            if (m instanceof Spell && ((Spell) m).isDisappear()) {
+                movableElements.removeValue(m, false);
+            }
+        }
     }
 
     //region getters
@@ -69,6 +79,26 @@ public class GameState {
 
     public void jump() {
         player.jump();
+    }
+
+    public void fireSpell(Action spellAction) {
+        SpellType spellType = SpellType.NO_SPELL;
+        switch (spellAction) {
+            case SPELL_ONE:
+                spellType = player.fireSpell1();
+                break;
+            case SPELL_TWO:
+                spellType = player.fireSpell2();
+                break;
+            case SPELL_THREE:
+                spellType = player.fireSpell3();
+                break;
+        }
+
+        if (spellType != SpellType.NO_SPELL) {
+            spell = new Spell(player, spellType);
+            movableElements.add(spell);
+        }
     }
 
     public void reset() {
