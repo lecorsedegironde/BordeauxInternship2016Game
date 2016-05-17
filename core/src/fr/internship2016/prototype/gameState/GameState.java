@@ -31,11 +31,11 @@ public class GameState {
         //Declare player
         player = new Player(Player.PLAYER_START, level.getLevelGroundHeight(), Player.WIDTH_PLAYER,
                 Player.HEIGHT_PLAYER, Player.VELOCITY_X_PLAYER, Player.VELOCITY_Y_PLAYER, level.getLevelGravity());
+        movableElements.add(player);
     }
 
     public void update(float delta) {
         //TODO This is the update function
-        player.update(level);
         for (MovableElement m : movableElements) {
             m.update(level);
             //Check disappearing
@@ -45,7 +45,7 @@ public class GameState {
         }
     }
 
-    //region getters
+    //region Getters
 
     public Player getPlayer() {
         return player;

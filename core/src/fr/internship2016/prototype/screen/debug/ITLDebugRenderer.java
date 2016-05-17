@@ -65,8 +65,6 @@ public class ITLDebugRenderer implements Render {
         batch.end();
 
         //Draw the other things on top
-        DebugDrawer.drawMovable(shapeRenderer, gameState.getPlayer());
-
         for (MovableElement m : gameState.getMovableElements()) {
             DebugDrawer.drawMovable(shapeRenderer, m);
         }

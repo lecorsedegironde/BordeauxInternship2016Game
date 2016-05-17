@@ -75,7 +75,7 @@ public class Engine implements Screen {
         //Prevent player from moving if there no key pressed
         gameState.stopMovement();
         for (Action a : actions) {
-            //TODO Complete function
+            //TODO Complete actions
 
             switch (a) {
                 case RIGHT:
@@ -137,7 +137,6 @@ public class Engine implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        //TODO DO not forget
         renderer.resize(width, height);
         Gdx.app.log("SCREEN", "Resize renderer");
     }
