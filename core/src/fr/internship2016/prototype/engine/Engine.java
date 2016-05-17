@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.utils.Array;
+import fr.internship2016.prototype.engine.input.Action;
 import fr.internship2016.prototype.engine.input.ITLInput;
 import fr.internship2016.prototype.gameState.GameState;
 import fr.internship2016.prototype.screen.debug.ITLDebugRenderer;
@@ -75,7 +76,7 @@ public class Engine implements Screen {
         //Prevent player from moving if there no key pressed
         gameState.stopMovement();
         for (Action a : actions) {
-            //TODO Complete actions
+            //COMPLETE actions
 
             switch (a) {
                 case RIGHT:
@@ -96,6 +97,9 @@ public class Engine implements Screen {
                     Gdx.app.log("GAME", "Invisibility");
                     break;
                 case ATTACK:
+                    gameState.attack();
+                    Gdx.app.log("GAME", "Attack with weapon");
+                    actions.removeValue(a, false);
                     break;
                 case SPELL_ONE:
                     gameState.fireSpell(Action.SPELL_ONE);
@@ -113,6 +117,10 @@ public class Engine implements Screen {
                     actions.removeValue(a, false);
                     break;
                 case INVENTORY:
+                    break;
+                case SWITCH_WEAPON_UP:
+                    break;
+                case SWITCH_WEAPON_DOWN:
                     break;
                 case PAUSE:
                     pause = !pause;

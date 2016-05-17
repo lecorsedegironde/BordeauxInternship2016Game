@@ -28,7 +28,10 @@ public class DebugDrawer {
             shapeRenderer.set(ShapeRenderer.ShapeType.Line);
             shapeRenderer.setColor(Color.GREEN);
             shapeRenderer.rect(m.getX(), m.getY(), m.getW(), m.getH());
-            //TODO WEAPON
+            if (((Player) m).hasWeapon()) {
+                shapeRenderer.setColor(Color.BLACK);
+                shapeRenderer.polygon(((Player) m).getWeapon().getElementPolygon().getTransformedVertices());
+            }
         } else if (m instanceof Spell) {
             shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
             shapeRenderer.setColor(((Spell) m).getType().getColor());

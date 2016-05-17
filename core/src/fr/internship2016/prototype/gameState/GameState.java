@@ -1,7 +1,7 @@
 package fr.internship2016.prototype.gameState;
 
 import com.badlogic.gdx.utils.Array;
-import fr.internship2016.prototype.engine.Action;
+import fr.internship2016.prototype.engine.input.Action;
 import fr.internship2016.prototype.gameState.levels.Level;
 import fr.internship2016.prototype.gameState.movable.MovableElement;
 import fr.internship2016.prototype.gameState.movable.bodies.Player;
@@ -75,6 +75,10 @@ public class GameState {
 
     public void invisibility() {
         player.startInvisibility();
+    }
+
+    public void attack() {
+        player.attack();
     }
 
     public void jump() {

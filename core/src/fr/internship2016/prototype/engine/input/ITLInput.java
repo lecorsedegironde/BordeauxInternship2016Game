@@ -1,9 +1,8 @@
 package fr.internship2016.prototype.engine.input;
 
 import com.badlogic.gdx.Input;
-import fr.internship2016.prototype.engine.Action;
 
-import static fr.internship2016.prototype.engine.Action.*;
+import static fr.internship2016.prototype.engine.input.Action.*;
 
 /**
  * Created by bastien on 16/05/16.
@@ -20,6 +19,8 @@ public class ITLInput {
     private int spellTwo;
     private int spellThree;
     private int inventory;
+    private int switchWeaponUp;
+    private int switchWeaponDown;
     private int pause;
     private int reset;
     private int quit;
@@ -42,6 +43,8 @@ public class ITLInput {
         spellTwo = Input.Keys.V;
         spellThree = Input.Keys.B;
         inventory = Input.Keys.E;
+        switchWeaponUp = Input.Keys.UP;
+        switchWeaponDown = Input.Keys.DOWN;
         pause = Input.Keys.P;
         reset = Input.Keys.R;
         quit = Input.Keys.ESCAPE;
@@ -66,6 +69,10 @@ public class ITLInput {
             return SPELL_THREE;
         } else if (keycode == inventory) {
             return INVENTORY;
+        } else if (keycode == switchWeaponUp) {
+            return SWITCH_WEAPON_UP;
+        }else if (keycode == switchWeaponDown) {
+            return SWITCH_WEAPON_DOWN;
         } else if (keycode == pause) {
             return PAUSE;
         } else if (keycode == reset) {

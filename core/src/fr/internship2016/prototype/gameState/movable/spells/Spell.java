@@ -27,7 +27,6 @@ public class Spell extends MovableElement {
     //region Update
     @Override
     public void update(Level level) {
-
         //Direction is fixed
         translate(velocityX, 0);
 

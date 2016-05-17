@@ -10,6 +10,9 @@ import fr.internship2016.prototype.gameState.movable.interfaces.Invisibility;
 import fr.internship2016.prototype.gameState.movable.interfaces.Spelled;
 import fr.internship2016.prototype.gameState.movable.spells.SpellType;
 import fr.internship2016.prototype.gameState.utils.Direction;
+import fr.internship2016.prototype.gameState.weapon.Weapon;
+import fr.internship2016.prototype.gameState.weapon.WeaponType;
+import fr.internship2016.prototype.gameState.weapon.rotating.Sword;
 
 /**
  * Created by bastien on 13/05/16.
@@ -24,7 +27,7 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
     public static final float PLAYER_START = 0.5f;
     //Moving forces
     public static final float VELOCITY_X_PLAYER = 0.15f;
-    public static final float VELOCITY_Y_PLAYER = 0.45f;
+    public static final float VELOCITY_Y_PLAYER = 0.6f;
     //Invisibility
     private static final int INVISIBILITY_DURATION = 2000;
     private static final int INVISIBILITY_REFILL = 5000;
@@ -40,6 +43,7 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
     //region Fields
     //Inventory
     private Array<Object> inventory;
+    private Weapon weapon = null;
 
     //Invisibility
     private boolean invisible;
@@ -66,7 +70,8 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
 
         //Inventory
         inventory = new Array<>();
-        //TODO Weapon
+        //Add weapon (default: Sword)
+        setWeapon(WeaponType.SWORD);
 
         //Invisibility
         invisible = false;
@@ -88,13 +93,11 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
     @Override
     public void update(Level level) {
         //TODO Add management of different level ground height
-        //Do jumping first to prevent conflicts
-        if (jumping && onGround) {
-            translate(0, getY() + velocityY);
-        }
-
         //Update using super
         super.update(level);
+
+        //Do not forget to update weapon too
+        if (hasWeapon()) weapon.update();
 
         //Regain magic points if loosed
         autoMagicPointRegain();
@@ -112,7 +115,9 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
         Gdx.app.log("Player", "Position: (" + getX() + ", " + getY() + ")");
         Gdx.app.log("Player", "Speed: (" + getVelocityX() + ", " + getVelocityY() + ")");
         Gdx.app.log("Player", "Direction: " + direction);
-        Gdx.app.log("Player", "Facing: " + direction);
+        Gdx.app.log("Player", "Facing: " + facing);
+        Gdx.app.log("Player", "Weapon: " + (hasWeapon() ? weapon.getType().getName() : "empty"));
+        if (hasWeapon()) Gdx.app.log("Player", "Is attacking: " + weapon.isAttack());
         Gdx.app.log("Player", "Jump: " + jumping + " On ground: " + onGround);
         Gdx.app.log("Player", "Invisibility: " + invisible);
         Gdx.app.log("Player", "Can be invisible: " + canBeInvisible);
@@ -152,14 +157,17 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
     //endregion
 
     //region Invisibility
+    @Override
     public boolean isInvisible() {
         return invisible;
     }
 
+    @Override
     public boolean canBeInvisible() {
         return canBeInvisible;
     }
 
+    @Override
     public void startInvisibility() {
         if (!invisible && canBeInvisible) {
             invisible = true;
@@ -294,10 +302,58 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
     }
     //endregion
 
+    //region Weapon
+    @Override
+    public boolean hasWeapon() {
+        return weapon != null;
+    }
+
+    @Override
+    public Weapon getWeapon() {
+        return weapon;
+    }
+
+    @Override
+    public void setWeapon(WeaponType type) {
+        //COMPLETE
+        //Need to use new Instance of weapon for inventory
+        Weapon w = null;
+        switch (type) {
+            case SWORD:
+                w = new Sword(this, type);
+                break;
+            case SPEAR:
+                break;
+            default:
+                //Do nothing
+                break;
+        }
+        if (w != null) {
+            inventory.add(w);
+            weapon = w;
+        }
+    }
+
+    @Override
+    public boolean isAttacking() {
+        return hasWeapon() && weapon.isAttack();
+    }
+
+    @Override
+    public void attack() {
+        if (hasWeapon()) weapon.attack();
+    }
+
+    @Override
+    public void stopAttack() {
+        if (hasWeapon()) weapon.stopAttack();
+    }
+    //endregion
+
     //region Knock-back
     @Override
     public void knockBack() {
-        //TODO
+        //COMPLETE
     }
     //endregion
 }
