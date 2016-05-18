@@ -23,7 +23,7 @@ public abstract class Weapon {
     protected boolean hasHit;
     protected boolean attackOver;
     protected long lastAttack;
-
+    protected float refillTime;
 
     public Weapon(MovableElement owner, float width, float height) {
         //Owner
@@ -57,7 +57,7 @@ public abstract class Weapon {
 
     public void attack() {
         long timeSinceAttack = TimeUtils.timeSinceMillis(lastAttack);
-        if (!attack && timeSinceAttack > Constants.SWORD_REFILL_TIME) {
+        if (!attack && timeSinceAttack > refillTime) {
             attack = true;
             attackOver = false;
             hasHit = false;

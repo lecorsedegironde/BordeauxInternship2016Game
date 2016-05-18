@@ -6,8 +6,18 @@ package fr.internship2016.prototype.weapon;
  */
 public enum WeaponStyles {
     //Player weapons
-    SWORD,
-    SPEAR,
+    SWORD("Sword"),
+    SPEAR("Spear"),
     //Enemies weapons
-    CLUB
+    CLUB("Club");
+
+    private String name;
+
+    WeaponStyles(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
 }

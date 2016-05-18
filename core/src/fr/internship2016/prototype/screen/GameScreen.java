@@ -13,6 +13,7 @@ import fr.internship2016.prototype.movable.armed.ArmedElement;
 import fr.internship2016.prototype.movable.armed.Player;
 import fr.internship2016.prototype.movable.armed.Troll;
 import fr.internship2016.prototype.movable.spells.Spell;
+import fr.internship2016.prototype.screen.ui.GameUI;
 import fr.internship2016.prototype.utils.CollisionDetector;
 import fr.internship2016.prototype.utils.EnemiesAI;
 import fr.internship2016.prototype.utils.camera.ITLCamera;
@@ -28,6 +29,8 @@ public class GameScreen implements Screen {
 
     //Camera
     private ITLCamera camera;
+    //UI
+    private final GameUI gameUI;
 
     //Draw
     private SpriteBatch batch;
@@ -54,6 +57,7 @@ public class GameScreen implements Screen {
         //Camera
         camera = new ITLCamera(0f, 0f, WORLD_WIDTH, 0.002, WORLD_WIDTH, WORLD_HEIGHT);
 
+
         //Player, enemies & spells
         enemies = new Array<>();
         spells = new Array<>();
@@ -67,6 +71,10 @@ public class GameScreen implements Screen {
                 VELOCITY_X_TROLL, VELOCITY_Y_TROLL);
         troll.moveLeft();
         enemies.add(troll);
+
+        //UI
+        gameUI = new GameUI(player);
+        Gdx.input.setInputProcessor(gameUI.getStage());
     }
 
     @Override
@@ -75,51 +83,59 @@ public class GameScreen implements Screen {
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        //Player update
-        player.update();
-        player.setCanStopMovement(true);
+        //Update if there is no UI over
+        if (!gameUI.isUiOver()) {
 
-        //Spells update
-        for (Spell s : spells) {
-            //Update spell
-            s.update();
-            //Is the spell still active?
-            if (s.isDisappear()) {
-                spells.removeValue(s, true);
-            }
-        }
+            //Player update
+            player.update();
+            player.setCanStopMovement(true);
 
-        //TODO: Review
-        //Enemies update
-        for (ArmedElement e : enemies) {
-            //enemies IA
-            EnemiesAI.goToPlayer(e, player);
-            EnemiesAI.enemyReaction(e, player);
-            //Update enemy
-            e.update();
-            //Does it collide with player weapon
-            if (player.isAttacking()) {
-                if (CollisionDetector.isCollision(player.getWeapon(), e) && !player.getWeapon().hasHit()) {
-                    e.hitWeapon();
-                    e.knockBack(player.isRightFacing());
-                    player.getWeapon().hit();
+            //Spells update
+            for (Spell s : spells) {
+                //Update spell
+                s.update();
+                //Is the spell still active?
+                if (s.isDisappear()) {
+                    spells.removeValue(s, true);
                 }
             }
-            //Does it collide with a spell
-            if (spells.size > 0) {
-                for (Spell s : spells) {
-                    if (CollisionDetector.isCollision(s, e)) {
-                        e.hitSpell(s.getDmg());
-                        s.hasHit();
+
+            //TODO: Review
+            //Enemies update
+            for (ArmedElement e : enemies) {
+                //enemies IA
+                EnemiesAI.goToPlayer(e, player);
+                EnemiesAI.enemyReaction(e, player);
+                //Update enemy
+                e.update();
+
+                //Does it collide with player weapon
+                if (player.isAttacking()) {
+                    if (CollisionDetector.isCollision(player.getWeapon(), e) && !player.getWeapon().hasHit()) {
+                        e.hitWeapon();
+                        e.knockBack(player.isRightFacing());
+                        player.getWeapon().hit();
                     }
                 }
-            }
-            //Is it still alive?
-            if (e.getLife() <= 0) {
-                enemies.removeValue(e, true);
-            }
 
+                //Does it collide with a spell
+                if (spells.size > 0) {
+                    for (Spell s : spells) {
+                        if (CollisionDetector.isCollision(s, e)) {
+                            e.hitSpell(s.getDmg());
+                            s.hasHit();
+                        }
+                    }
+                }
+
+                //Is it still alive?
+                if (e.getLife() <= 0) {
+                    enemies.removeValue(e, true);
+                }
+            }
         }
+        //Activate cam viewport
+        camera.getViewport().apply();
 
         //Draw background
         batch.setProjectionMatrix(camera.getCameraCombined());
@@ -128,7 +144,7 @@ public class GameScreen implements Screen {
         batch.end();
 
         //Draw elements
-        shapeRenderer.setProjectionMatrix(camera.combined);
+        shapeRenderer.setProjectionMatrix(camera.getCameraCombined());
         shapeRenderer.setAutoShapeType(true);
         shapeRenderer.begin();
 
@@ -148,11 +164,13 @@ public class GameScreen implements Screen {
         shapeRenderer.line(0, GROUND_HEIGHT, WORLD_WIDTH, GROUND_HEIGHT);
         shapeRenderer.end();
 
+        //Draw UI
+        gameUI.update(delta, player);
 
         //Inputs events
         if (Gdx.input.isKeyPressed(RESET)) {
             restart();
-        } else {
+        } else if (!gameUI.isUiOver()){
 
             if (Gdx.input.isKeyPressed(RIGHT)) {
                 player.moveRight();
@@ -215,6 +233,7 @@ public class GameScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         camera.resize(height);
+        gameUI.resize(width, height);
     }
 
     @Override
@@ -234,5 +253,6 @@ public class GameScreen implements Screen {
         sprite.getTexture().dispose();
         batch.dispose();
         shapeRenderer.dispose();
+        gameUI.dispose();
     }
 }

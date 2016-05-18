@@ -1,5 +1,6 @@
 package fr.internship2016.prototype.movable.spells;
 
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import fr.internship2016.prototype.movable.MovableElement;
 
 import static fr.internship2016.prototype.utils.Constants.*;
