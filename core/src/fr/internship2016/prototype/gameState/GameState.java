@@ -4,9 +4,12 @@ import com.badlogic.gdx.utils.Array;
 import fr.internship2016.prototype.engine.input.Action;
 import fr.internship2016.prototype.gameState.levels.Level;
 import fr.internship2016.prototype.gameState.movable.MovableElement;
+import fr.internship2016.prototype.gameState.movable.bodies.BodyElement;
 import fr.internship2016.prototype.gameState.movable.bodies.Player;
+import fr.internship2016.prototype.gameState.movable.bodies.enemies.Enemy;
 import fr.internship2016.prototype.gameState.movable.spells.Spell;
 import fr.internship2016.prototype.gameState.movable.spells.SpellType;
+import fr.internship2016.prototype.gameState.utils.CollisionDetector;
 
 /**
  * Created by bastien on 13/05/16.
@@ -21,10 +24,13 @@ public class GameState {
 
     //Reusable spell object
     private Spell spell;
+    //Spell collection for collisions
+    private Array<Spell> spells;
 
     public GameState() {
-        //Declare movableElements array
+        //Declare movableElements & spells array
         movableElements = new Array<>();
+        spells = new Array<>();
 
         //Declare level
         level = new Level(100f, 10f, 1f, Level.DEFAULT_GRAVITY, movableElements);
@@ -35,11 +41,42 @@ public class GameState {
     }
 
     public void update(float delta) {
-        //TODO This is the update function
         for (MovableElement m : movableElements) {
             m.update(level);
+            //Check collisions
+            //Spells & every BodyElement
+            if (!(m instanceof Spell) && m instanceof BodyElement) {
+                for (Spell s : spells) {
+                    if (CollisionDetector.isCollision(s, m)) {
+                        ((BodyElement) m).hit(s.getDmg());
+                        s.hasHit();
+                    }
+                }
+            }
+
+            //Player weapon & every enemy
+            //If enemy has weapon and player
+            //TODO Add range detection
+            if (m instanceof Enemy) {
+                //If player has weapon
+                if (player.hasWeapon() && player.isAttacking()) {
+                    if (CollisionDetector.isCollision(player.getWeapon(), m)) {
+                        ((Enemy) m).hit(player.getWeapon().getType().getDmg());
+                    }
+                }
+
+                if (((Enemy) m).hasWeapon() && ((Enemy) m).isAttacking()) {
+                    if (CollisionDetector.isCollision(((Enemy) m).getWeapon(), player)) {
+                        player.hit(((Enemy) m).getWeapon().getType().getDmg());
+                    }
+                }
+            }
+
             //Check disappearing
             if (m instanceof Spell && ((Spell) m).isDisappear()) {
+                movableElements.removeValue(m, false);
+                spells.removeValue((Spell) m, false);
+            } else if (m instanceof Enemy && ((Enemy) m).getLife() == 0) {
                 movableElements.removeValue(m, false);
             }
         }
@@ -102,7 +139,12 @@ public class GameState {
         if (spellType != SpellType.NO_SPELL) {
             spell = new Spell(player, spellType);
             movableElements.add(spell);
+            spells.add(spell);
         }
+    }
+
+    public void useInventory(String objectToString) {
+        player.useObject(objectToString);
     }
 
     public void reset() {

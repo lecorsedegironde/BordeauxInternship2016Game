@@ -11,4 +11,5 @@ public interface Inventory {
     void addToInventory(Object o);
     Array<Object> getInventory();
     boolean isInventoryEmpty();
+    void useObject(String objectToString);
 }

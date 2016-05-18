@@ -2,17 +2,19 @@ package fr.internship2016.prototype.engine;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.utils.Array;
 import fr.internship2016.prototype.engine.input.Action;
 import fr.internship2016.prototype.engine.input.ITLInput;
 import fr.internship2016.prototype.gameState.GameState;
 import fr.internship2016.prototype.screen.debug.ITLDebugRenderer;
+import fr.internship2016.prototype.screen.ui.GameUiDebug;
 
 /**
  * Created by bastien on 12/05/16.
  */
-public class Engine implements Screen {
+public class EngineDebug implements Screen {
 
     //GameState
     private GameState gameState;
@@ -21,11 +23,14 @@ public class Engine implements Screen {
     //Renderer
     private ITLDebugRenderer renderer;
 
+    //Ui
+    private GameUiDebug uiDebug;
+
     //Input
     private ITLInput input;
     private Array<Action> actions;
 
-    public Engine() {
+    public EngineDebug() {
         //Declare GameState
         gameState = new GameState();
         Gdx.app.log("GAME", "GameState setup");
@@ -36,11 +41,16 @@ public class Engine implements Screen {
         pause = false;
         Gdx.app.log("GAME", "Pause set on false");
 
+        //Ui
+        uiDebug = new GameUiDebug();
+
         //Input management
         input = new ITLInput(false);
         actions = new Array<>();
 
-        Gdx.input.setInputProcessor(new InputAdapter() {
+        InputMultiplexer multiplexer = new InputMultiplexer();
+        multiplexer.addProcessor(uiDebug.getStage());
+        multiplexer.addProcessor(new InputAdapter() {
             @Override
             public boolean keyDown(int keycode) {
 
@@ -57,19 +67,23 @@ public class Engine implements Screen {
                 return true;
             }
         });
+        Gdx.input.setInputProcessor(multiplexer);
     }
 
     @Override
     public void render(float delta) {
         //Update GameState if not paused
-        if (!pause) {
+        if (!pause && !uiDebug.isUiOpened()) {
             gameState.update(delta);
             Gdx.app.log("GAME", "Update GameState");
         } else {
-            Gdx.app.log("GAME", "Game paused");
+            Gdx.app.log("GAME", "Game paused or UI is opened");
         }
+        //Update ui
+        uiDebug.update(delta, gameState);
+
         //Render GameState
-        renderer.render(gameState);
+        renderer.render(gameState, uiDebug);
         Gdx.app.log("GAME", "Render GameState");
 
         //Process actions
@@ -77,7 +91,6 @@ public class Engine implements Screen {
         gameState.stopMovement();
         for (Action a : actions) {
             //COMPLETE actions
-
             switch (a) {
                 case RIGHT:
                     gameState.moveRight();
@@ -117,14 +130,16 @@ public class Engine implements Screen {
                     actions.removeValue(a, false);
                     break;
                 case INVENTORY:
+                    //UI does this
                     break;
                 case SWITCH_WEAPON_UP:
+                    //LATER
                     break;
                 case SWITCH_WEAPON_DOWN:
+                    //LATER
                     break;
                 case PAUSE:
-                    pause = !pause;
-                    Gdx.app.log("GAME", "Pause set on" + (pause ? "true":"false"));
+                    pauseResumeGame();
                     actions.removeValue(a, false);
                     break;
                 case RESET:
@@ -143,14 +158,21 @@ public class Engine implements Screen {
         }
     }
 
+    private void pauseResumeGame() {
+        pause = !pause;
+        Gdx.app.log("GAME", "Pause set on" + (pause ? "true":"false"));
+    }
+
     @Override
     public void resize(int width, int height) {
         renderer.resize(width, height);
+        uiDebug.resize(width, height);
         Gdx.app.log("SCREEN", "Resize renderer");
     }
 
     @Override
     public void dispose() {
+        uiDebug.dispose();
         renderer.dispose();
         Gdx.app.log("GAME", "Dispose renderer");
     }
@@ -158,22 +180,20 @@ public class Engine implements Screen {
     //region unused libGDX methods
     @Override
     public void show() {
-
     }
 
     @Override
     public void pause() {
-
+        pauseResumeGame();
     }
 
     @Override
     public void resume() {
-
+        pauseResumeGame();
     }
 
     @Override
     public void hide() {
-
     }
     //endregion
 }

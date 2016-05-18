@@ -24,8 +24,6 @@ public class Troll extends Enemy {
     //endregion
 
     //region Fields
-    //Life
-    private float life;
     //Weapon
     private Weapon weapon = null;
     //endregion
@@ -34,6 +32,10 @@ public class Troll extends Enemy {
         super(x, y, WIDTH_TROLL, HEIGHT_TROLL, VELOCITY_X_TROLL, VELOCITY_Y_TROLL, gravity);
         setWeapon(WeaponType.CLUB);
         facing = Direction.LEFT;
+
+        //TEMP
+        life = DEFAULT_HIT;
+
         moveLeft();
     }
 
@@ -87,17 +89,6 @@ public class Troll extends Enemy {
     public void stopAttack() {
         if (hasWeapon()) weapon.stopAttack();
     }
-
-    //region Life & Hit
-    @Override
-    public void hit(float dmg) {
-        life -= dmg;
-    }
-
-    public float getLife() {
-        return life;
-    }
-    //endregion
 
     @Override
     public void knockBack() {

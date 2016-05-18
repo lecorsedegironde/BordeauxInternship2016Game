@@ -10,6 +10,9 @@ import fr.internship2016.prototype.gameState.weapons.Weapon;
  */
 public abstract class Enemy extends BodyElement implements Armed {
 
+    //Life
+    protected double life;
+
     public Enemy(float x, float y, float width, float height, float velocityX, float velocityY, float gravity) {
         super(x, y, width, height, velocityX, velocityY, gravity);
     }
@@ -36,4 +39,16 @@ public abstract class Enemy extends BodyElement implements Armed {
     public boolean isAttacking() {
         return false;
     }
+
+    //region Life & Hit
+    @Override
+    public void hit(double dmg) {
+        life -= dmg;
+        if (life < 0) life = 0;
+    }
+
+    public double getLife() {
+        return life;
+    }
+    //endregion
 }

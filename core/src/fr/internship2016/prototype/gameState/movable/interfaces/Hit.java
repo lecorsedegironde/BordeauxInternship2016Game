@@ -5,5 +5,5 @@ package fr.internship2016.prototype.gameState.movable.interfaces;
  */
 public interface Hit {
 
-    void hit(float dmg);
+    void hit(double dmg);
 }

@@ -126,4 +126,11 @@ public abstract class BodyElement extends MovableElement implements Facing, Hit,
         return facing;
     }
     //endregion
+
+    //region Hit
+    @Override
+    public void hit(double dmg) {
+        //Do nothing
+    }
+    //endregion
 }

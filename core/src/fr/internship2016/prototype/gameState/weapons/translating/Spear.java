@@ -10,7 +10,7 @@ public class Spear extends TranslatingWeapon {
 
     //region Constants
     private static final float MAX_TRANSLATION = 0.5f;
-    private static final float INCREMENT_TRANSLATION = 0.05f;
+    private static final float INCREMENT_TRANSLATION = 0.1f;
     //endregion
 
     public Spear(BodyElement owner, WeaponType type) {
@@ -20,6 +20,7 @@ public class Spear extends TranslatingWeapon {
         translate = defaultTranslateValue;
         maxTranslateValue = MAX_TRANSLATION;
         updateCpt = 0;
-        numberOfUpdates = (int) (MAX_TRANSLATION / INCREMENT_TRANSLATION);
+        float v = MAX_TRANSLATION / INCREMENT_TRANSLATION;
+        numberOfUpdates = (int) v;
     }
 }

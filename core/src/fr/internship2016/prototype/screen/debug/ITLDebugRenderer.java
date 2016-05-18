@@ -12,6 +12,7 @@ import fr.internship2016.prototype.gameState.movable.MovableElement;
 import fr.internship2016.prototype.gameState.movable.spells.Spell;
 import fr.internship2016.prototype.screen.camera.ITLCamera;
 import fr.internship2016.prototype.screen.interfaces.Render;
+import fr.internship2016.prototype.screen.ui.GameUiDebug;
 
 /**
  * Created by bastien on 13/05/16.
@@ -41,7 +42,7 @@ public class ITLDebugRenderer implements Render {
     }
 
     @Override
-    public void render(GameState gameState) {
+    public void render(GameState gameState, GameUiDebug uiDebug) {
         //First update cam observers
         updateCam(gameState.getMovableElements());
 
@@ -71,8 +72,8 @@ public class ITLDebugRenderer implements Render {
         //End SpriteBatch and ShapeRenderer
         shapeRenderer.end();
 
-        //TODO Draw interface
         //DO NOT FORGET TO APPLY SPECIFIC VIEWPORT
+        uiDebug.draw();
     }
 
     public ITLCamera getCamera() {

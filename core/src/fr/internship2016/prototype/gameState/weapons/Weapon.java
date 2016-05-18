@@ -123,4 +123,15 @@ public abstract class Weapon {
         return elementPolygon;
     }
     //endregion
+
+    //region For inventory
+
+    @Override
+    public String toString() {
+        if (type != null) {
+            return type.getName();
+        }
+        return super.toString();
+    }
+    //endregion
 }

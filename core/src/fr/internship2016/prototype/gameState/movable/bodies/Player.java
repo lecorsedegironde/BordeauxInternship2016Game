@@ -52,8 +52,8 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
     private long invisibilityTime;
 
     //Life, Mana
-    private float life;
-    private float mana;
+    private double life;
+    private double mana;
 
     //Spells
     private long lastFireS1;
@@ -70,9 +70,9 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
 
         //Inventory
         inventory = new Array<>();
-        //Add weapon (default: Sword)
-//        setWeapon(WeaponType.SWORD);
+        //Add weapon (default: Sword & Spear in inventory)
         setWeapon(WeaponType.SPEAR);
+        setWeapon(WeaponType.SWORD);
 
         //Invisibility
         invisible = false;
@@ -132,6 +132,8 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
         setFacing(Direction.RIGHT);
         invisible = false;
         canBeInvisible = true;
+        life = DEFAULT_LIFE;
+        mana = DEFAULT_MANA;
         setChanged();
         notifyObservers();
     }
@@ -152,7 +154,7 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
 
     //region Hit
     @Override
-    public void hit(float dmg) {
+    public void hit(double dmg) {
         life -= dmg;
     }
     //endregion
@@ -193,11 +195,11 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
         }
     }
 
-    public float getLife() {
+    public double getLife() {
         return life;
     }
 
-    public void setLife(float life) {
+    public void setLife(double life) {
         if (life >= 0) this.life = life;
     }
 
@@ -210,11 +212,11 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
         }
     }
 
-    public float getMana() {
+    public double getMana() {
         return mana;
     }
 
-    public void setMana(float mana) {
+    public void setMana(double mana) {
         if (mana >= 0) this.mana = mana;
     }
     //endregion
@@ -289,7 +291,7 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
 
     @Override
     public void addToInventory(Object o) {
-        inventory.add(o);
+        if (!isInInventory(o)) inventory.add(o);
     }
 
     @Override
@@ -301,6 +303,20 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
     public boolean isInventoryEmpty() {
         return inventory.size == 0;
     }
+
+    @Override
+    public void useObject(String objectToString) {
+        for (Object o : inventory) {
+            if (o.toString().equals(objectToString)) {
+                //The object to use
+                if (o instanceof Weapon) {
+                    //If this object is a weapon
+                    weapon = (Weapon) o;
+                }
+            }
+        }
+    }
+
     //endregion
 
     //region Weapon
