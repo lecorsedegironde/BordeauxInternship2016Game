@@ -1,6 +1,7 @@
 package fr.internship2016.prototype.weapon.rotate;
 
 import fr.internship2016.prototype.movable.MovableElement;
+import fr.internship2016.prototype.utils.Constants;
 
 import static fr.internship2016.prototype.utils.Constants.CLUB_MAX_ROTATE;
 import static fr.internship2016.prototype.utils.Constants.CLUB_ROTATE_STEP;
@@ -15,6 +16,7 @@ public class Club extends RotatingWeapon {
         super(owner, width, height);
         maxRotateValue = CLUB_MAX_ROTATE;
         rotateAngleValue = CLUB_ROTATE_STEP;
+        refillTime = Constants.CLUB_REFILL_TIME;
     }
 }
 

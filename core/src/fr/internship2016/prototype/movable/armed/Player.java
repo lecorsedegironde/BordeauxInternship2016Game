@@ -2,11 +2,16 @@ package fr.internship2016.prototype.movable.armed;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import fr.internship2016.prototype.movable.spells.FireSpell;
 import fr.internship2016.prototype.movable.spells.Spell;
+import fr.internship2016.prototype.weapon.Spear;
+import fr.internship2016.prototype.weapon.Weapon;
 import fr.internship2016.prototype.weapon.WeaponStyles;
 import fr.internship2016.prototype.weapon.rotate.Sword;
+
+import java.util.ArrayList;
 
 import static fr.internship2016.prototype.utils.Constants.*;
 
@@ -31,14 +36,21 @@ public class Player extends ArmedElement {
 
     private long lastFireS1;
 
+    //Inventory
+    private Array<WeaponStyles> inventory;
+
 
     public Player(float x, float y, float width, float height, float velocityX, float velocityY, boolean createWeapon) {
         super(x, y, width, height, velocityX, velocityY);
         canStopMovement = true;
         rightFacing = true;
 
-        if (createWeapon)
-            setWeapon(WeaponStyles.SWORD);
+        inventory = new Array<>();
+        if (createWeapon) {
+            setWeapon(WeaponStyles.SPEAR);
+            inventory.add(WeaponStyles.SWORD);
+            inventory.add(WeaponStyles.SPEAR);
+        }
 
         invisible = false;
         canBeInvisible = true;
@@ -80,6 +92,9 @@ public class Player extends ArmedElement {
             case SWORD:
                 weapon = new Sword(this, SWORD_WIDTH, SWORD_HEIGHT);
                 break;
+            case SPEAR:
+                weapon = new Spear(this, SPEAR_WIDTH, SPEAR_HEIGHT);
+                break;
             default:
                 weapon = null;
                 break;
@@ -116,10 +131,6 @@ public class Player extends ArmedElement {
             canBeInvisible = false;
             invisibilityTime = TimeUtils.millis();
         }
-    }
-
-    public boolean canBeInvisible() {
-        return canBeInvisible;
     }
 
     public void gainLife(double life) {
@@ -178,13 +189,14 @@ public class Player extends ArmedElement {
     @Override
     public void draw(ShapeRenderer s) {
         s.set(ShapeRenderer.ShapeType.Filled);
-        if (!isInvisible())
-            if (canBeInvisible())
+        if (!isInvisible()) {
+            if (canBeInvisible) {
                 s.setColor(Color.BLUE);
-            else {
+            } else {
                 s.setColor(Color.CYAN);
             }
-        s.rect(getX(), getY(), getW(), getH());
+            s.rect(getX(), getY(), getW(), getH());
+        }
 
         s.set(ShapeRenderer.ShapeType.Line);
         s.setColor(Color.GREEN);
@@ -194,5 +206,17 @@ public class Player extends ArmedElement {
             s.setColor(Color.BLACK);
             s.polygon(getWeapon().getTransformedVertices());
         }
+    }
+
+    public Array<WeaponStyles> getInventory() {
+        return inventory;
+    }
+
+    public void addToInventory(WeaponStyles w) {
+        inventory.add(w);
+    }
+
+    public boolean isAvailable(WeaponStyles w) {
+        return inventory.contains(w, false);
     }
 }

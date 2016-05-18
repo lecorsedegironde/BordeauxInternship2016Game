@@ -13,8 +13,8 @@ public class Constants {
     public static final int SCREEN_HEIGHT = 480;
 
     //World constants : Meters
-    public static final float WORLD_WIDTH = 100;
-    public static final float WORLD_HEIGHT = 10;
+    public static final float WORLD_WIDTH = 100f;
+    public static final float WORLD_HEIGHT = 10f;
     public static final float GROUND_HEIGHT = 1;
 
     //Player
@@ -41,11 +41,20 @@ public class Constants {
     public static final double FIRE_SPELL_DMG = 0.25;
 
     //Weapons
+    //Sword
     public static final float SWORD_WIDTH = 0.1f;
     public static final float SWORD_HEIGHT = 1.75f;
     public static final float SWORD_REFILL_TIME = 750;
     public static final int SWORD_MAX_ROTATE = 90;
     public static final int SWORD_ROTATE_STEP = 5;
+    //Spear
+    public static final float SPEAR_WIDTH = 2f;
+    public static final float SPEAR_HEIGHT = 0.1f;
+    public static final float SPEAR_REFILL_TIME = 750;
+    public static final float SPEAR_MAX_TRANSLATION = 0.5f;
+    public static final float SPEAR_INCREMENT_TRANSLATION = 0.05f;
+
+    //Club
     public static final float CLUB_WIDTH = 0.2f;
     public static final float CLUB_HEIGHT = 2.5f;
     public static final float CLUB_REFILL_TIME = 1000;

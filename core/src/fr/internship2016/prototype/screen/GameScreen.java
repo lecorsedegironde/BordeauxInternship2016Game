@@ -4,21 +4,19 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import fr.internship2016.prototype.movable.armed.ArmedElement;
 import fr.internship2016.prototype.movable.armed.Player;
 import fr.internship2016.prototype.movable.armed.Troll;
 import fr.internship2016.prototype.movable.spells.Spell;
+import fr.internship2016.prototype.screen.ui.GameUI;
 import fr.internship2016.prototype.utils.CollisionDetector;
 import fr.internship2016.prototype.utils.EnemiesAI;
+import fr.internship2016.prototype.utils.camera.ITLCamera;
 
 import static fr.internship2016.prototype.utils.Constants.*;
 
@@ -26,20 +24,21 @@ import static fr.internship2016.prototype.utils.Constants.*;
  * Created by bastien on 21/04/16.
  * The GameScreen
  */
+//TODO
 public class GameScreen implements Screen {
 
-    //Camera & viewport
-    private OrthographicCamera camera;
-    private Viewport viewport;
+    //Camera
+    private ITLCamera camera;
+    //UI
+    private final GameUI gameUI;
 
     //Draw
     private SpriteBatch batch;
     private ShapeRenderer shapeRenderer;
     private Sprite sprite;
 
-    //Player and reusable vector
+    //Player
     private Player player;
-    private Vector2 playerPos;
 
     //Reusable spell container for adding spells to array
     private Spell addSpell;
@@ -49,9 +48,6 @@ public class GameScreen implements Screen {
     private Array<Spell> spells;
 
     public GameScreen() {
-        //Player position
-        playerPos = new Vector2();
-
         //Rendering
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
@@ -59,12 +55,8 @@ public class GameScreen implements Screen {
         sprite.setSize(WORLD_WIDTH, WORLD_HEIGHT);
 
         //Camera
-        float aspectRatio = (float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth();
-        camera = new OrthographicCamera();
-        viewport = new FillViewport(WORLD_WIDTH * aspectRatio, WORLD_HEIGHT, camera);
-        viewport.apply();
-        camera.position.set(0, WORLD_HEIGHT / 2f, 0);
-        camera.update();
+        camera = new ITLCamera(0f, 0f, WORLD_WIDTH, 0.002, WORLD_WIDTH, WORLD_HEIGHT);
+
 
         //Player, enemies & spells
         enemies = new Array<>();
@@ -72,11 +64,17 @@ public class GameScreen implements Screen {
 
         player = new Player(PLAYER_START, GROUND_HEIGHT, WIDTH_PLAYER, HEIGHT_PLAYER,
                 VELOCITY_X_PLAYER, VELOCITY_Y_PLAYER, true);
+        //Add player as observer to move camera
+        player.addObserver(camera);
 
         Troll troll = new Troll(12f, GROUND_HEIGHT, WIDTH_TROLL, HEIGHT_TROLL,
                 VELOCITY_X_TROLL, VELOCITY_Y_TROLL);
         troll.moveLeft();
         enemies.add(troll);
+
+        //UI
+        gameUI = new GameUI(player);
+        Gdx.input.setInputProcessor(gameUI.getStage());
     }
 
     @Override
@@ -85,79 +83,71 @@ public class GameScreen implements Screen {
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        //Update camera pos
-        playerPos.set(player.getX(), player.getY());
-        viewport.project(playerPos);
+        //Update if there is no UI over
+        if (!gameUI.isUiOver()) {
 
-        if (playerPos.x > Gdx.graphics.getWidth() * 0.75f) {
-            camera.translate(VELOCITY_X_PLAYER, 0);
-        } else if (playerPos.x < Gdx.graphics.getWidth() * 0.25f) {
-            camera.translate(-VELOCITY_X_PLAYER, 0);
-        }
+            //Player update
+            player.update();
+            player.setCanStopMovement(true);
 
-        if (camera.position.x > WORLD_WIDTH - WORLD_WIDTH / 12f)
-            camera.position.x = WORLD_WIDTH - WORLD_WIDTH / 12f;
-        else if (camera.position.x < WORLD_WIDTH / 12f)
-            camera.position.x = WORLD_WIDTH / 12f;
-
-        camera.update();
-
-        //Player update
-        player.update();
-        player.setCanStopMovement(true);
-
-        //Spells update
-        for (Spell s : spells) {
-            //Update spell
-            s.update(viewport);
-            //Is the spell still active?
-            if (s.isDisappear()) {
-                spells.removeValue(s, true);
-            }
-        }
-
-        //TODO: Review
-        //Enemies update
-        for (ArmedElement e : enemies) {
-            //enemies IA
-            EnemiesAI.goToPlayer(e, player);
-            EnemiesAI.enemyReaction(e, player);
-            //Update enemy
-            e.update();
-            //Does it collide with player weapon
-            if (player.isAttacking()) {
-                if (CollisionDetector.isCollision(player.getWeapon(), e) && !player.getWeapon().hasHit()) {
-                    e.hitWeapon();
-                    e.knockBack(player.isRightFacing());
-                    player.getWeapon().hit();
+            //Spells update
+            for (Spell s : spells) {
+                //Update spell
+                s.update();
+                //Is the spell still active?
+                if (s.isDisappear()) {
+                    spells.removeValue(s, true);
                 }
             }
-            //Does it collide with a spell
-            if (spells.size > 0) {
-                for (Spell s : spells) {
-                    if (CollisionDetector.isCollision(s, e)) {
-                        e.hitSpell(s.getDmg());
-                        s.hasHit();
+
+            //TODO: Review
+            //Enemies update
+            for (ArmedElement e : enemies) {
+                //enemies IA
+                EnemiesAI.goToPlayer(e, player);
+                EnemiesAI.enemyReaction(e, player);
+                //Update enemy
+                e.update();
+
+                //Does it collide with player weapon
+                if (player.isAttacking()) {
+                    if (CollisionDetector.isCollision(player.getWeapon(), e) && !player.getWeapon().hasHit()) {
+                        e.hitWeapon();
+                        e.knockBack(player.isRightFacing());
+                        player.getWeapon().hit();
                     }
                 }
-            }
-            //Is it still alive?
-            if (e.getLife() <= 0) {
-                enemies.removeValue(e, true);
-            }
 
+                //Does it collide with a spell
+                if (spells.size > 0) {
+                    for (Spell s : spells) {
+                        if (CollisionDetector.isCollision(s, e)) {
+                            e.hitSpell(s.getDmg());
+                            s.hasHit();
+                        }
+                    }
+                }
+
+                //Is it still alive?
+                if (e.getLife() <= 0) {
+                    enemies.removeValue(e, true);
+                }
+            }
         }
+        //Activate cam viewport
+        camera.getViewport().apply();
 
         //Draw background
-        batch.setProjectionMatrix(camera.combined);
+        batch.setProjectionMatrix(camera.getCameraCombined());
         batch.begin();
         sprite.draw(batch);
         batch.end();
 
         //Draw elements
-        shapeRenderer.setProjectionMatrix(camera.combined);
+        shapeRenderer.setProjectionMatrix(camera.getCameraCombined());
         shapeRenderer.setAutoShapeType(true);
         shapeRenderer.begin();
+
         //Player
         player.draw(shapeRenderer);
         //Enemies
@@ -168,16 +158,19 @@ public class GameScreen implements Screen {
         for (Spell s : spells) {
             s.draw(shapeRenderer);
         }
+
         shapeRenderer.set(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(Color.RED);
         shapeRenderer.line(0, GROUND_HEIGHT, WORLD_WIDTH, GROUND_HEIGHT);
         shapeRenderer.end();
 
+        //Draw UI
+        gameUI.update(delta, player);
 
         //Inputs events
         if (Gdx.input.isKeyPressed(RESET)) {
             restart();
-        } else {
+        } else if (!gameUI.isUiOver()){
 
             if (Gdx.input.isKeyPressed(RIGHT)) {
                 player.moveRight();
@@ -200,6 +193,8 @@ public class GameScreen implements Screen {
             if (Gdx.input.isKeyPressed(FIRE_SPELL_1)) {
                 addSpell = player.fireSpell1();
                 if (addSpell != null) {
+                    //Add camera as spells observer to be able to destroy when it is no more visible
+                    addSpell.addObserver(camera);
                     spells.add(addSpell);
                 }
             }
@@ -216,8 +211,10 @@ public class GameScreen implements Screen {
         enemies.clear();
 
         //Regenerate player
+        //As we regenerated it we need to renew addObserver too
         player = new Player(PLAYER_START, GROUND_HEIGHT, WIDTH_PLAYER, HEIGHT_PLAYER,
                 VELOCITY_X_PLAYER, VELOCITY_Y_PLAYER, true);
+        player.addObserver(camera);
 
         //Regenerate troll
         Troll troll = new Troll(12f, GROUND_HEIGHT, WIDTH_TROLL, HEIGHT_TROLL,
@@ -225,6 +222,8 @@ public class GameScreen implements Screen {
         troll.moveLeft();
         enemies.add(troll);
 
+        //Reset camera too
+        camera.reset();
     }
 
     @Override
@@ -233,7 +232,8 @@ public class GameScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height);
+        camera.resize(height);
+        gameUI.resize(width, height);
     }
 
     @Override
@@ -253,5 +253,6 @@ public class GameScreen implements Screen {
         sprite.getTexture().dispose();
         batch.dispose();
         shapeRenderer.dispose();
+        gameUI.dispose();
     }
 }

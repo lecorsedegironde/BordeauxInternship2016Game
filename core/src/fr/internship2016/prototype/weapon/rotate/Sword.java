@@ -1,6 +1,7 @@
 package fr.internship2016.prototype.weapon.rotate;
 
 import fr.internship2016.prototype.movable.MovableElement;
+import fr.internship2016.prototype.utils.Constants;
 
 import static fr.internship2016.prototype.utils.Constants.SWORD_MAX_ROTATE;
 import static fr.internship2016.prototype.utils.Constants.SWORD_ROTATE_STEP;
@@ -15,5 +16,6 @@ public class Sword extends RotatingWeapon {
         super(owner, width, height);
         maxRotateValue = SWORD_MAX_ROTATE;
         rotateAngleValue = SWORD_ROTATE_STEP;
+        refillTime = Constants.SWORD_REFILL_TIME;
     }
 }
