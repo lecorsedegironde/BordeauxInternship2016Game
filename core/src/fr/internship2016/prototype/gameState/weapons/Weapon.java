@@ -13,6 +13,10 @@ public abstract class Weapon {
     protected Polygon elementPolygon;
     protected float xWeapon, yWeapon, widthWeapon, heightWeapon;
 
+    //Anim & stuff
+    protected int updateCpt;
+    protected int numberOfUpdates;
+
     //Owner & desc
     protected BodyElement owner;
     private WeaponType type;
@@ -21,8 +25,8 @@ public abstract class Weapon {
     protected boolean attack;
     protected boolean hasHit;
     protected boolean attackOver;
-    protected long lastAttack;
-    protected float refillTime;
+    private long lastAttack;
+    private float refillTime;
 
     public Weapon(BodyElement owner, WeaponType type) {
         //Owner

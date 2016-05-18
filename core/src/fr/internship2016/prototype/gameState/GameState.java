@@ -106,7 +106,9 @@ public class GameState {
     }
 
     public void reset() {
-        player.reset();
+        level.reset(movableElements);
+        player.reset(level);
+        movableElements.add(player);
     }
     //endregion
 }

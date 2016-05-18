@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import fr.internship2016.prototype.gameState.levels.Level;
 import fr.internship2016.prototype.gameState.movable.MovableElement;
 import fr.internship2016.prototype.gameState.movable.bodies.Player;
+import fr.internship2016.prototype.gameState.movable.bodies.enemies.Enemy;
+import fr.internship2016.prototype.gameState.movable.bodies.enemies.Troll;
 import fr.internship2016.prototype.gameState.movable.spells.Spell;
 
 /**
@@ -36,8 +38,22 @@ public class DebugDrawer {
             shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
             shapeRenderer.setColor(((Spell) m).getType().getColor());
             shapeRenderer.rect(m.getX(), m.getY(), m.getW(), m.getH());
+        } else if (m instanceof Enemy) {
+            if (m instanceof Troll) {
+                shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
+                shapeRenderer.setColor(Color.SCARLET);
+                shapeRenderer.rect(m.getX(), m.getY(), m.getW(), m.getH());
+
+                shapeRenderer.set(ShapeRenderer.ShapeType.Line);
+                shapeRenderer.setColor(Color.GREEN);
+                shapeRenderer.rect(m.getX(), m.getY(), m.getW(), m.getH());
+
+                if (((Troll) m).hasWeapon()) {
+                    shapeRenderer.setColor(Color.BLACK);
+                    shapeRenderer.polygon(((Troll) m).getWeapon().getElementPolygon().getTransformedVertices());
+                }
+            }
         }
-        //TODO Enemies
     }
 
     public static void drawLevel(Sprite sprite, SpriteBatch batch, ShapeRenderer shapeRenderer, Level l) {

@@ -10,7 +10,7 @@ public class Sword extends RotatingWeapon {
 
     //region Constants
     private static final int MAX_ROTATE = 90;
-    private static final int WANTED_ROTATE_ANGLE = 5;
+    private static final int ROTATE_ANGLE = 10;
     //endregion
 
     public Sword(BodyElement owner, WeaponType type) {
@@ -19,6 +19,6 @@ public class Sword extends RotatingWeapon {
         defaultRotation = 0;
         maxRotateValue = MAX_ROTATE;
         updateCpt = 0;
-        numberOfUpdates = MAX_ROTATE / WANTED_ROTATE_ANGLE;
+        numberOfUpdates = MAX_ROTATE / ROTATE_ANGLE;
     }
 }

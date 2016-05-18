@@ -12,8 +12,6 @@ public abstract class RotatingWeapon extends Weapon {
 
     protected int defaultRotation;
     protected int maxRotateValue;
-    protected int updateCpt;
-    protected int numberOfUpdates;
 
     public RotatingWeapon(BodyElement owner, WeaponType type) {
         super(owner, type);

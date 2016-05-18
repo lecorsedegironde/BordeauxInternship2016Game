@@ -2,6 +2,7 @@ package fr.internship2016.prototype.gameState.levels;
 
 import com.badlogic.gdx.utils.Array;
 import fr.internship2016.prototype.gameState.movable.MovableElement;
+import fr.internship2016.prototype.gameState.movable.bodies.enemies.Troll;
 
 /**
  * Created by bastien on 13/05/16.
@@ -31,6 +32,10 @@ public class Level {
         this.levelGroundHeight = levelGroundHeight;
         this.levelGravity = levelGravity;
         background = "laser.jpg";
+
+        //Test Troll
+        Troll t = new Troll(12f, levelGroundHeight, levelGravity);
+        movableElements.add(t);
     }
 
     //region Modifiers
@@ -73,4 +78,12 @@ public class Level {
         return background;
     }
     //endregion
+
+    //If level is restarted
+    public void reset(Array<MovableElement> movableElements) {
+        //COMPLETE
+        movableElements.clear();
+        Troll t = new Troll(12f, levelGroundHeight, levelGravity);
+        movableElements.add(t);
+    }
 }

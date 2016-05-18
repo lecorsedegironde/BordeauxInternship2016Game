@@ -13,6 +13,7 @@ import fr.internship2016.prototype.gameState.utils.Direction;
 import fr.internship2016.prototype.gameState.weapons.Weapon;
 import fr.internship2016.prototype.gameState.weapons.WeaponType;
 import fr.internship2016.prototype.gameState.weapons.rotating.Sword;
+import fr.internship2016.prototype.gameState.weapons.translating.Spear;
 
 /**
  * Created by bastien on 13/05/16.
@@ -61,7 +62,6 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
     private SpellType spell2;
     private long lastFireS3;
     private SpellType spell3;
-
     //endregion
 
     public Player(float x, float y, float width, float height, float velocityX,
@@ -71,7 +71,8 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
         //Inventory
         inventory = new Array<>();
         //Add weapon (default: Sword)
-        setWeapon(WeaponType.SWORD);
+//        setWeapon(WeaponType.SWORD);
+        setWeapon(WeaponType.SPEAR);
 
         //Invisibility
         invisible = false;
@@ -125,9 +126,9 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
 
     }
 
-    public void reset() {
+    public void reset(Level level) {
         stopMovement();
-        setPosition(Player.PLAYER_START, 1f);
+        setPosition(Player.PLAYER_START, level.getLevelGroundHeight());
         setFacing(Direction.RIGHT);
         invisible = false;
         canBeInvisible = true;
@@ -323,6 +324,7 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
                 w = new Sword(this, type);
                 break;
             case SPEAR:
+                w = new Spear(this, type);
                 break;
             default:
                 //Do nothing
