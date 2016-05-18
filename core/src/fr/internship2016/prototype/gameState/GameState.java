@@ -47,7 +47,7 @@ public class GameState {
             //Spells & every BodyElement
             if (!(m instanceof Spell) && m instanceof BodyElement) {
                 for (Spell s : spells) {
-                    if (CollisionDetector.isCollision(s, m)) {
+                    if (m != s.getFire() && CollisionDetector.isCollision(s, m)) {
                         ((BodyElement) m).hit(s.getDmg());
                         s.hasHit();
                     }

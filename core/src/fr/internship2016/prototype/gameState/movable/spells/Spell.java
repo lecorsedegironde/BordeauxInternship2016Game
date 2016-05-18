@@ -14,6 +14,7 @@ public class Spell extends MovableElement {
     //endregion
 
     //region Fields
+    private BodyElement fire;
     private boolean disappear;
     private SpellType type;
     //endregion
@@ -22,6 +23,7 @@ public class Spell extends MovableElement {
         super(fireMe.getX() + fireMe.getW() / 2, fireMe.getY() + fireMe.getH() / 2, SIDE_SPELL, SIDE_SPELL,
                 type.getVelocityX(fireMe.getFacing()), 0f, 0f);
         this.type = type;
+        fire = fireMe;
     }
 
     //region Update
@@ -75,6 +77,12 @@ public class Spell extends MovableElement {
 
     public void setDisappear() {
         disappear = true;
+    }
+    //endregion
+
+    //region Who fires the spell for collisions
+    public BodyElement getFire() {
+        return fire;
     }
     //endregion
 }
