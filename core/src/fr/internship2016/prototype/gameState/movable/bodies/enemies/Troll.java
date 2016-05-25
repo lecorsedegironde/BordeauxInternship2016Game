@@ -20,6 +20,11 @@ public class Troll extends Enemy {
 
     //Life
     private static final int DEFAULT_HIT = 3;
+
+    //Knock-back
+    public static final float KNOCKBACK_X = 0.4f;
+    public static final float KNOCKBACK_Y = 0.1f;
+
     //endregion
 
     //region Fields
@@ -35,6 +40,9 @@ public class Troll extends Enemy {
 
         //TEMP
         life = DEFAULT_HIT;
+
+        knockbackXVelocity = KNOCKBACK_X;
+        knockbackYVelocity = KNOCKBACK_Y;
 
         weaponFactory = new WeaponFactory(this);
         manageWeapon();
@@ -95,10 +103,5 @@ public class Troll extends Enemy {
     @Override
     public void stopAttack() {
         if (hasWeapon()) weapon.stopAttack();
-    }
-
-    @Override
-    public void knockBack() {
-        //COMPLETE
     }
 }

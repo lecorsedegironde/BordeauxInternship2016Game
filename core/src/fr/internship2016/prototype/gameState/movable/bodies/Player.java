@@ -34,7 +34,7 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
     //Life, Mana & Utilisation
     private static final int DEFAULT_LIFE = 100;
     private static final int DEFAULT_MANA = 100;
-    private static final double MANA_REFILL = 0.25;
+    private static final double MANA_REFILL = 0.5;
     private static final int SPELL_FIRE_REFILL = 250;
     private static final int SPELL_MANA_COST = 30;
     //endregion
@@ -113,6 +113,7 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
         }
 
         //Logs
+        //*
         Gdx.app.log("Player", "Position: (" + getX() + ", " + getY() + ")");
         Gdx.app.log("Player", "Speed: (" + getVelocityX() + ", " + getVelocityY() + ")");
         Gdx.app.log("Player", "Direction: " + direction);
@@ -123,7 +124,7 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
         Gdx.app.log("Player", "Invisibility: " + invisible);
         Gdx.app.log("Player", "Can be invisible: " + canBeInvisible);
         Gdx.app.log("Player", "Life: " + life + " Mana: " + mana);
-
+        //*/
     }
 
     public void reset(Level level) {

@@ -7,8 +7,6 @@ import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import fr.internship2016.prototype.gameState.movable.bodies.BodyElement;
 import fr.internship2016.prototype.gameState.movable.bodies.Player;
-import fr.internship2016.prototype.gameState.weapons.rotating.RotatingWeapon;
-import fr.internship2016.prototype.gameState.weapons.translating.TranslatingWeapon;
 
 /**
  * Created by bastien on 24/05/16.

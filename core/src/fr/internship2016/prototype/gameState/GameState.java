@@ -49,6 +49,7 @@ public class GameState {
                 for (Spell s : spells) {
                     if (m != s.getFire() && CollisionDetector.isCollision(s, m)) {
                         ((BodyElement) m).hit(s.getDmg());
+                        ((BodyElement) m).knockBack(s.getDirection());
                         s.hasHit();
                     }
                 }
@@ -62,6 +63,7 @@ public class GameState {
                 if (player.hasWeapon() && player.isAttacking()) {
                     if (CollisionDetector.isCollision(player.getWeapon(), m)) {
                         ((Enemy) m).hit(player.getWeapon().getType().getDmg());
+                        ((Enemy) m).knockBack(player.getFacing());
                     }
                 }
 

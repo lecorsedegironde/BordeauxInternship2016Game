@@ -1,4 +1,4 @@
-package fr.internship2016.prototype.gameState.weapons.translating;
+package fr.internship2016.prototype.gameState.weapons;
 
 import fr.internship2016.prototype.gameState.movable.bodies.BodyElement;
 import fr.internship2016.prototype.gameState.utils.Direction;
@@ -10,9 +10,9 @@ import fr.internship2016.prototype.gameState.weapons.WeaponType;
  */
 public class TranslatingWeapon extends Weapon {
 
-    protected float defaultTranslateValue;
-    protected float translate;
-    protected float maxTranslateValue;
+    private float defaultTranslateValue;
+    private float translate;
+    private float maxTranslateValue;
 
     public TranslatingWeapon(BodyElement owner, WeaponType type) {
         super(owner, type);

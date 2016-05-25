@@ -21,8 +21,10 @@ public abstract class BodyElement extends MovableElement implements Facing, Hit,
 
     //Knockback Management
     protected boolean knockback;
+    protected Direction knockbackDirection;
     protected float knockbackXVelocity;
     protected float knockbackYVelocity;
+    protected float horizontalVelocity;
 
     protected Direction facing;
 
@@ -31,6 +33,8 @@ public abstract class BodyElement extends MovableElement implements Facing, Hit,
         super(x, y, width, height, velocityX, velocityY, gravity);
         facing = (velocityX > 0) ? Direction.RIGHT : Direction.LEFT;
         jumpingVelocity = 0f;
+        horizontalVelocity = 0f;
+        knockbackDirection = Direction.NONE;
         knockbackXVelocity = 0f;
         knockbackYVelocity = 0f;
     }
@@ -59,15 +63,43 @@ public abstract class BodyElement extends MovableElement implements Facing, Hit,
 
         if (knockback) {
             jumpingVelocity = knockbackYVelocity;
+            int directionModifier = 0;
+            switch (knockbackDirection) {
+                case LEFT:
+                    directionModifier = -1;
+                    break;
+                case RIGHT:
+                    directionModifier = 1;
+                    break;
+            }
+
+
+            horizontalVelocity = knockbackXVelocity * directionModifier;
             onGround = false;
             knockback = false;
         }
 
+        if ((moveX > 0f && horizontalVelocity > 0f) || (moveX < 0f && horizontalVelocity < 0f)) {
+            horizontalVelocity -= moveX;
+        }
+
+        moveX += horizontalVelocity;
         moveY = jumpingVelocity;
 
         translate(moveX, moveY);
         //Check if Body is on the ground
         checkOnGround(level);
+
+        //Update horizontalVelocity
+        if (Math.abs(horizontalVelocity) >= velocityX) {
+            if (horizontalVelocity >= velocityX) {
+                horizontalVelocity -= velocityX;
+            } else if (horizontalVelocity <= -velocityX) {
+                horizontalVelocity += velocityX;
+            }
+        } else {
+            horizontalVelocity = 0f;
+        }
 
         //Check if the body is out of bounds
         checkBounds(level);
@@ -149,8 +181,9 @@ public abstract class BodyElement extends MovableElement implements Facing, Hit,
 
     //region Knock-back
     @Override
-    public void knockBack() {
+    public void knockBack(Direction knockbackDirection) {
         knockback = true;
+        this.knockbackDirection = knockbackDirection;
     }
 
     public boolean isKnockback() {

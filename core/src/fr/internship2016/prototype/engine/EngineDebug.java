@@ -75,16 +75,13 @@ public class EngineDebug implements Screen {
         //Update GameState if not paused
         if (!pause && !uiDebug.isUiOpened()) {
             gameState.update(delta);
-            Gdx.app.log("GAME", "Update GameState");
         } else {
-            Gdx.app.log("GAME", "Game paused or UI is opened");
         }
         //Update ui
         uiDebug.update(delta, gameState);
 
         //Render GameState
         renderer.render(gameState, uiDebug);
-        Gdx.app.log("GAME", "Render GameState");
 
         //Process actions
         //Prevent player from moving if there no key pressed
@@ -117,17 +114,14 @@ public class EngineDebug implements Screen {
                 case SPELL_ONE:
                     gameState.fireSpell(Action.SPELL_ONE);
                     Gdx.app.log("GAME", "Fire spell 1");
-                    actions.removeValue(a, false);
                     break;
                 case SPELL_TWO:
                     gameState.fireSpell(Action.SPELL_TWO);
                     Gdx.app.log("GAME", "Fire spell 2");
-                    actions.removeValue(a, false);
                     break;
                 case SPELL_THREE:
                     gameState.fireSpell(Action.SPELL_THREE);
                     Gdx.app.log("GAME", "Fire spell 3");
-                    actions.removeValue(a, false);
                     break;
                 case INVENTORY:
                     //UI does this

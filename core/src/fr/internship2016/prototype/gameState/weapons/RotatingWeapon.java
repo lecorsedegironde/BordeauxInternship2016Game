@@ -1,21 +1,17 @@
-package fr.internship2016.prototype.gameState.weapons.rotating;
+package fr.internship2016.prototype.gameState.weapons;
 
 import fr.internship2016.prototype.gameState.movable.bodies.BodyElement;
 import fr.internship2016.prototype.gameState.utils.Direction;
-import fr.internship2016.prototype.gameState.weapons.Weapon;
-import fr.internship2016.prototype.gameState.weapons.WeaponType;
 
 /**
  * Created by bastien on 17/05/16.
  */
 public class RotatingWeapon extends Weapon {
 
-    protected int defaultRotation;
-    protected int maxRotateValue;
+    private int maxRotateValue;
 
-    public RotatingWeapon(BodyElement owner, WeaponType type) {
+    RotatingWeapon(BodyElement owner, WeaponType type) {
         super(owner, type);
-        defaultRotation = (int) type.getDefaultPos();
         maxRotateValue = (int) type.getMaxPos();
         updateCpt = 0;
         numberOfUpdates = (int) (type.getMaxPos() / type.getIncrements());
@@ -36,18 +32,13 @@ public class RotatingWeapon extends Weapon {
          */
         if (attack) {
             //Get max rotation
-            int rotateModifier = 0;
-            if (owner.getFacing() == Direction.RIGHT) {
-                rotateModifier = -1;
-            } else if (owner.getFacing() == Direction.LEFT) {
-                rotateModifier = 1;
-            }
+            int rotateModifier = getRotateModifier();
 
             //First attack phase
             if (!attackOver) {
                 if (updateCpt <= numberOfUpdates) {
                     //Divide angle by the number of updates dedicated to the animation
-                    int maxRotateValueUpdated = maxRotateValue * rotateModifier;
+                    int maxRotateValueUpdated = (maxRotateValue) * rotateModifier;
                     int rotation = (maxRotateValueUpdated / numberOfUpdates) * updateCpt;
                     elementPolygon.setRotation(rotation);
                     updateCpt++;
@@ -58,7 +49,7 @@ public class RotatingWeapon extends Weapon {
             } else {
                 //Second phase -> back to original position
                 if (updateCpt >= 0) {
-                    int maxRotateValueUpdated = maxRotateValue * rotateModifier;
+                    int maxRotateValueUpdated = (maxRotateValue) * rotateModifier;
                     int rotation = (maxRotateValueUpdated / numberOfUpdates) * updateCpt;
                     elementPolygon.setRotation(rotation);
                     updateCpt--;
@@ -68,6 +59,16 @@ public class RotatingWeapon extends Weapon {
                 }
             }
         }
+    }
+
+    private int getRotateModifier() {
+        int rotateModifier = 0;
+        if (owner.getFacing() == Direction.RIGHT) {
+            rotateModifier = -1;
+        } else if (owner.getFacing() == Direction.LEFT) {
+            rotateModifier = 1;
+        }
+        return rotateModifier;
     }
 
     @Override

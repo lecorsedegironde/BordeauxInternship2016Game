@@ -24,6 +24,7 @@ public class Spell extends MovableElement {
                 type.getVelocityX(fireMe.getFacing()), 0f, 0f);
         this.type = type;
         fire = fireMe;
+        direction = fireMe.getFacing();
     }
 
     //region Update
