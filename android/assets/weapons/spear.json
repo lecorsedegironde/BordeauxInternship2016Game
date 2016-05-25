@@ -1,0 +1,16 @@
+{
+  "name": "Spear",
+  "size": {
+    "w": 2,
+    "h": 0.1
+  },
+  "dmg": 0.75,
+  "refill": 500,
+  "type": {
+    "name": "translate",
+    "dest": "player",
+    "default": 0,
+    "max": 0.5,
+    "increments": 0.1
+  }
+}

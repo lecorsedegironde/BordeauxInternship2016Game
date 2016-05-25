@@ -19,6 +19,11 @@ public abstract class BodyElement extends MovableElement implements Facing, Hit,
     protected boolean jumping;
     protected float jumpingVelocity;
 
+    //Knockback Management
+    protected boolean knockback;
+    protected float knockbackXVelocity;
+    protected float knockbackYVelocity;
+
     protected Direction facing;
 
 
@@ -26,6 +31,8 @@ public abstract class BodyElement extends MovableElement implements Facing, Hit,
         super(x, y, width, height, velocityX, velocityY, gravity);
         facing = (velocityX > 0) ? Direction.RIGHT : Direction.LEFT;
         jumpingVelocity = 0f;
+        knockbackXVelocity = 0f;
+        knockbackYVelocity = 0f;
     }
 
     @Override
@@ -48,6 +55,12 @@ public abstract class BodyElement extends MovableElement implements Facing, Hit,
 
         if (!onGround) {
             jumpingVelocity += gravity;
+        }
+
+        if (knockback) {
+            jumpingVelocity = knockbackYVelocity;
+            onGround = false;
+            knockback = false;
         }
 
         moveY = jumpingVelocity;
@@ -131,6 +144,17 @@ public abstract class BodyElement extends MovableElement implements Facing, Hit,
     @Override
     public void hit(double dmg) {
         //Do nothing
+    }
+    //endregion
+
+    //region Knock-back
+    @Override
+    public void knockBack() {
+        knockback = true;
+    }
+
+    public boolean isKnockback() {
+        return knockback;
     }
     //endregion
 }

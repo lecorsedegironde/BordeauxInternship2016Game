@@ -10,7 +10,8 @@ public interface Armed {
 
     boolean hasWeapon();
     Weapon getWeapon();
-    void setWeapon(WeaponType type);
+    void setWeapon(String weaponName);
+    void manageWeapon();
     boolean isAttacking();
     void attack();
     void stopAttack();

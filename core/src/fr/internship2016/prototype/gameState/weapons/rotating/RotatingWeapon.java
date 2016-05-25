@@ -8,13 +8,17 @@ import fr.internship2016.prototype.gameState.weapons.WeaponType;
 /**
  * Created by bastien on 17/05/16.
  */
-public abstract class RotatingWeapon extends Weapon {
+public class RotatingWeapon extends Weapon {
 
     protected int defaultRotation;
     protected int maxRotateValue;
 
     public RotatingWeapon(BodyElement owner, WeaponType type) {
         super(owner, type);
+        defaultRotation = (int) type.getDefaultPos();
+        maxRotateValue = (int) type.getMaxPos();
+        updateCpt = 0;
+        numberOfUpdates = (int) (type.getMaxPos() / type.getIncrements());
     }
 
     @Override

@@ -41,7 +41,7 @@ public class GameUiDebug {
 
     public GameUiDebug() {
         stage = new Stage(new ScreenViewport());
-        skin = new Skin(Gdx.files.internal("uiskin.json"));
+        skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
         table = new Table();
         table.debug();
         table.setFillParent(true);

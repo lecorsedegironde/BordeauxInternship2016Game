@@ -32,7 +32,7 @@ public class ITLDebugRenderer implements Render {
         //Rendering
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
-        sprite = new Sprite(new Texture(Gdx.files.internal(gameState.getLevel().getBackground())));
+        sprite = new Sprite(new Texture(Gdx.files.internal("textures/" + gameState.getLevel().getBackground())));
         sprite.setSize(gameState.getLevel().getLevelWidth(), gameState.getLevel().getLevelHeight());
 
         //Camera

@@ -11,9 +11,7 @@ import fr.internship2016.prototype.gameState.movable.interfaces.Spelled;
 import fr.internship2016.prototype.gameState.movable.spells.SpellType;
 import fr.internship2016.prototype.gameState.utils.Direction;
 import fr.internship2016.prototype.gameState.weapons.Weapon;
-import fr.internship2016.prototype.gameState.weapons.WeaponType;
-import fr.internship2016.prototype.gameState.weapons.rotating.Sword;
-import fr.internship2016.prototype.gameState.weapons.translating.Spear;
+import fr.internship2016.prototype.gameState.weapons.WeaponFactory;
 
 /**
  * Created by bastien on 13/05/16.
@@ -44,6 +42,7 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
     //region Fields
     //Inventory
     private Array<Object> inventory;
+    private WeaponFactory weaponFactory;
     private Weapon weapon = null;
 
     //Invisibility
@@ -70,9 +69,6 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
 
         //Inventory
         inventory = new Array<>();
-        //Add weapon (default: Sword & Spear in inventory)
-        setWeapon(WeaponType.SPEAR);
-        setWeapon(WeaponType.SWORD);
 
         //Invisibility
         invisible = false;
@@ -89,6 +85,10 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
         spell1 = SpellType.FIRE_SPELL;
         spell2 = SpellType.NO_SPELL;
         spell3 = SpellType.NO_SPELL;
+
+        //Add weapon (default: Sword & Spear in inventory)
+        weaponFactory = new WeaponFactory(this);
+        manageWeapon();
     }
 
     @Override
@@ -331,21 +331,19 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
     }
 
     @Override
-    public void setWeapon(WeaponType type) {
-        //COMPLETE
-        //Need to use new Instance of weapon for inventory
-        Weapon w = null;
-        switch (type) {
-            case SWORD:
-                w = new Sword(this, type);
-                break;
-            case SPEAR:
-                w = new Spear(this, type);
-                break;
-            default:
-                //Do nothing
-                break;
+    public void manageWeapon() {
+        Array<String> weaponAvailable = weaponFactory.getAvailableWeapon();
+
+        for (String weapon : weaponAvailable) {
+            setWeapon(weapon);
         }
+    }
+
+    @Override
+    public void setWeapon(String weaponName) {
+        //Need to use new Instance of weapon for inventory
+        Weapon w = weaponFactory.getWeapon(this, weaponName);
+
         if (w != null) {
             inventory.add(w);
             weapon = w;
@@ -365,13 +363,6 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
     @Override
     public void stopAttack() {
         if (hasWeapon()) weapon.stopAttack();
-    }
-    //endregion
-
-    //region Knock-back
-    @Override
-    public void knockBack() {
-        //COMPLETE
     }
     //endregion
 }

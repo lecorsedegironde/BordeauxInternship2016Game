@@ -8,7 +8,7 @@ import fr.internship2016.prototype.gameState.weapons.WeaponType;
 /**
  * Created by bastien on 18/05/16.
  */
-public abstract class TranslatingWeapon extends Weapon {
+public class TranslatingWeapon extends Weapon {
 
     protected float defaultTranslateValue;
     protected float translate;
@@ -16,6 +16,13 @@ public abstract class TranslatingWeapon extends Weapon {
 
     public TranslatingWeapon(BodyElement owner, WeaponType type) {
         super(owner, type);
+
+        defaultTranslateValue = type.getDefaultPos();
+        translate = defaultTranslateValue;
+        maxTranslateValue = type.getMaxPos();
+        updateCpt = 0;
+        float v = type.getMaxPos() / type.getIncrements();
+        numberOfUpdates = (int) v;
     }
 
     @Override

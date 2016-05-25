@@ -1,0 +1,16 @@
+{
+  "name": "Sword",
+  "size": {
+    "w": 0.1,
+    "h": 1.75
+  },
+  "dmg": 1,
+  "refill": 500,
+  "type": {
+    "name": "rotate",
+    "dest": "player",
+    "default": 0,
+    "max": 90,
+    "increments": 10
+  }
+}

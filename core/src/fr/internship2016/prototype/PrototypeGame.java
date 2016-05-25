@@ -10,6 +10,9 @@ import fr.internship2016.prototype.engine.EngineDebug;
  */
 public class PrototypeGame extends Game {
 
+    public static final int SCREEN_WIDTH = 840;
+    public static final int SCREEN_HEIGHT = 480;
+
     /**
      *
      */

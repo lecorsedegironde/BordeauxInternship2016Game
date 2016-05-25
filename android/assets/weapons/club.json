@@ -1,0 +1,16 @@
+{
+  "name": "Club",
+  "size": {
+    "w": 0.2,
+    "h": 2.5
+  },
+  "dmg": 2,
+  "refill": 1000,
+  "type": {
+    "name": "rotate",
+    "dest": "enemy",
+    "default": 0,
+    "max": 120,
+    "increments": 2
+  }
+}
