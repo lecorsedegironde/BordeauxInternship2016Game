@@ -27,7 +27,7 @@ public abstract class BodyElement extends MovableElement implements Facing, Hit,
     protected float horizontalVelocity;
 
     protected Direction facing;
-
+    protected BodiesStates bodyState;
 
     public BodyElement(float x, float y, float width, float height, float velocityX, float velocityY, float gravity) {
         super(x, y, width, height, velocityX, velocityY, gravity);
@@ -37,6 +37,8 @@ public abstract class BodyElement extends MovableElement implements Facing, Hit,
         knockbackDirection = Direction.NONE;
         knockbackXVelocity = 0f;
         knockbackYVelocity = 0f;
+
+        bodyState = BodiesStates.IDLE;
     }
 
     @Override
@@ -104,6 +106,13 @@ public abstract class BodyElement extends MovableElement implements Facing, Hit,
         //Check if the body is out of bounds
         checkBounds(level);
 
+        //Update bodySate
+        if (moveX != 0f) {
+            bodyState = BodiesStates.RUN;
+        } else {
+            bodyState = BodiesStates.IDLE;
+        }
+
         setChanged();
         notifyObservers();
     }
@@ -129,7 +138,9 @@ public abstract class BodyElement extends MovableElement implements Facing, Hit,
     }
 
     public void stopMovement() {
-        if (onGround) direction = Direction.NONE;
+        if (onGround) {
+            direction = Direction.NONE;
+        }
     }
     //endregion
 
@@ -141,6 +152,7 @@ public abstract class BodyElement extends MovableElement implements Facing, Hit,
             setPosition(getX(), level.getLevelGroundHeight());
             jumping = false;
             jumpingVelocity = 0f;
+            bodyState = BodiesStates.IDLE;
         }
     }
 
@@ -156,11 +168,12 @@ public abstract class BodyElement extends MovableElement implements Facing, Hit,
     public void jump() {
         if (onGround) {
             jumping = true;
+            bodyState = BodiesStates.JUMP;
         }
     }
     //endregion
 
-    //region Facing
+    //region Facing & States
     @Override
     public void setFacing(Direction d) {
         facing = d;
@@ -170,6 +183,15 @@ public abstract class BodyElement extends MovableElement implements Facing, Hit,
     public Direction getFacing() {
         return facing;
     }
+
+    public BodiesStates getBodyState() {
+        return bodyState;
+    }
+
+    public void setBodyState(BodiesStates bodyState) {
+        this.bodyState = bodyState;
+    }
+
     //endregion
 
     //region Hit

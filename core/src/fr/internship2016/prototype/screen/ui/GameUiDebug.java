@@ -28,6 +28,7 @@ public class GameUiDebug {
     private final TextButton inventoryButton;
     private final ProgressBar lifeBar;
     private final ProgressBar manaBar;
+    private Label label;
     //Inventory window components
     private Dialog dialog;
 
@@ -67,12 +68,15 @@ public class GameUiDebug {
         manaBar.setHeight(5);
         manaBar.setColor(new Color(0x448AFFFF));
 
+        label = new Label("fps:"+ Gdx.graphics.getFramesPerSecond(), skin, "default");
+
         VerticalGroup verticalGroup = new VerticalGroup();
         verticalGroup.addActor(lifeBar);
         verticalGroup.addActor(manaBar);
 
         table.add(verticalGroup);
         table.add(inventoryButton).width(inventoryButton.getWidth()).padLeft(10);
+        table.add(label).width(200).padLeft(50);
         table.row();
 
         table.left().bottom();
@@ -87,6 +91,8 @@ public class GameUiDebug {
         //Update UI
         lifeBar.setValue((float) gameState.getPlayer().getLife());
         manaBar.setValue((float) gameState.getPlayer().getMana());
+        label.setText("fps:"+ Gdx.graphics.getFramesPerSecond());
+
         Array<String> tempInventory = new Array<>();
         for (Object o : gameState.getPlayer().getInventory()) {
             tempInventory.add(o.toString());

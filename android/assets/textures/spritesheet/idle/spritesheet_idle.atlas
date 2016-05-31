@@ -1,0 +1,234 @@
+
+spritesheet_idle.png
+size: 1024,1024
+format: RGBA8888
+filter: MipMap,MipMap
+repeat: none
+Idle
+  rotate: false
+  xy: 2, 403
+  size: 230, 399
+  orig: 230, 399
+  offset: 0, 0
+  index: 0
+Idle
+  rotate: false
+  xy: 2, 2
+  size: 230, 399
+  orig: 230, 399
+  offset: 0, 0
+  index: 1
+Idle
+  rotate: false
+  xy: 234, 403
+  size: 230, 399
+  orig: 230, 399
+  offset: 0, 0
+  index: 2
+Idle
+  rotate: false
+  xy: 234, 2
+  size: 230, 399
+  orig: 230, 399
+  offset: 0, 0
+  index: 3
+Idle
+  rotate: false
+  xy: 466, 403
+  size: 230, 399
+  orig: 230, 399
+  offset: 0, 0
+  index: 4
+Idle
+  rotate: false
+  xy: 466, 2
+  size: 230, 399
+  orig: 230, 399
+  offset: 0, 0
+  index: 5
+Idle
+  rotate: false
+  xy: 698, 403
+  size: 230, 399
+  orig: 230, 399
+  offset: 0, 0
+  index: 6
+Idle
+  rotate: false
+  xy: 698, 2
+  size: 230, 399
+  orig: 230, 399
+  offset: 0, 0
+  index: 7
+
+spritesheet_idle2.png
+size: 1024,1024
+format: RGBA8888
+filter: MipMap,MipMap
+repeat: none
+Idle
+  rotate: false
+  xy: 2, 403
+  size: 230, 399
+  orig: 230, 399
+  offset: 0, 0
+  index: 8
+Idle
+  rotate: false
+  xy: 2, 2
+  size: 230, 399
+  orig: 230, 399
+  offset: 0, 0
+  index: 9
+Idle
+  rotate: false
+  xy: 234, 403
+  size: 230, 399
+  orig: 230, 399
+  offset: 0, 0
+  index: 10
+Idle
+  rotate: false
+  xy: 234, 2
+  size: 230, 399
+  orig: 230, 399
+  offset: 0, 0
+  index: 11
+Idle
+  rotate: false
+  xy: 466, 403
+  size: 230, 399
+  orig: 230, 399
+  offset: 0, 0
+  index: 12
+Idle
+  rotate: false
+  xy: 466, 2
+  size: 230, 399
+  orig: 230, 399
+  offset: 0, 0
+  index: 13
+Idle
+  rotate: false
+  xy: 698, 403
+  size: 230, 399
+  orig: 230, 399
+  offset: 0, 0
+  index: 14
+Idle
+  rotate: false
+  xy: 698, 2
+  size: 230, 399
+  orig: 230, 399
+  offset: 0, 0
+  index: 15
+
+spritesheet_idle3.png
+size: 1024,1024
+format: RGBA8888
+filter: MipMap,MipMap
+repeat: none
+Idle
+  rotate: false
+  xy: 2, 403
+  size: 230, 399
+  orig: 230, 399
+  offset: 0, 0
+  index: 16
+Idle
+  rotate: false
+  xy: 2, 2
+  size: 230, 399
+  orig: 230, 399
+  offset: 0, 0
+  index: 17
+Idle
+  rotate: false
+  xy: 234, 403
+  size: 230, 399
+  orig: 230, 399
+  offset: 0, 0
+  index: 18
+Idle
+  rotate: false
+  xy: 234, 2
+  size: 230, 399
+  orig: 230, 399
+  offset: 0, 0
+  index: 19
+Idle
+  rotate: false
+  xy: 466, 403
+  size: 230, 399
+  orig: 230, 399
+  offset: 0, 0
+  index: 20
+Idle
+  rotate: false
+  xy: 466, 2
+  size: 230, 399
+  orig: 230, 399
+  offset: 0, 0
+  index: 21
+Idle
+  rotate: false
+  xy: 698, 403
+  size: 230, 399
+  orig: 230, 399
+  offset: 0, 0
+  index: 22
+Idle
+  rotate: false
+  xy: 698, 2
+  size: 230, 399
+  orig: 230, 399
+  offset: 0, 0
+  index: 23
+
+spritesheet_idle4.png
+size: 1024,1024
+format: RGBA8888
+filter: MipMap,MipMap
+repeat: none
+Idle
+  rotate: false
+  xy: 2, 403
+  size: 230, 399
+  orig: 230, 399
+  offset: 0, 0
+  index: 24
+Idle
+  rotate: false
+  xy: 2, 2
+  size: 230, 399
+  orig: 230, 399
+  offset: 0, 0
+  index: 25
+Idle
+  rotate: false
+  xy: 234, 403
+  size: 230, 399
+  orig: 230, 399
+  offset: 0, 0
+  index: 26
+Idle
+  rotate: false
+  xy: 234, 2
+  size: 230, 399
+  orig: 230, 399
+  offset: 0, 0
+  index: 27
+Idle
+  rotate: false
+  xy: 466, 403
+  size: 230, 399
+  orig: 230, 399
+  offset: 0, 0
+  index: 28
+Idle
+  rotate: false
+  xy: 466, 2
+  size: 230, 399
+  orig: 230, 399
+  offset: 0, 0
+  index: 29

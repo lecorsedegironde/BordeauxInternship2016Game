@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.Array;
 import fr.internship2016.prototype.gameState.GameState;
 import fr.internship2016.prototype.gameState.movable.MovableElement;
 import fr.internship2016.prototype.gameState.movable.spells.Spell;
+import fr.internship2016.prototype.screen.animations.PlayerAnimation;
 import fr.internship2016.prototype.screen.camera.ITLCamera;
 import fr.internship2016.prototype.screen.interfaces.Render;
 import fr.internship2016.prototype.screen.ui.GameUiDebug;
@@ -25,20 +26,26 @@ public class ITLDebugRenderer implements Render {
     //Draw
     private SpriteBatch batch;
     private ShapeRenderer shapeRenderer;
-    private Sprite sprite;
+    private Sprite background;
+    private Sprite player;
+
+    //Animation tests
+    private PlayerAnimation playerAnimation;
 
     public ITLDebugRenderer(GameState gameState) {
 
         //Rendering
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
-        sprite = new Sprite(new Texture(Gdx.files.internal("textures/" + gameState.getLevel().getBackground())));
-        sprite.setSize(gameState.getLevel().getLevelWidth(), gameState.getLevel().getLevelHeight());
+        background = new Sprite(new Texture(Gdx.files.internal("textures/" + gameState.getLevel().getBackground())));
+        background.setSize(gameState.getLevel().getLevelWidth(), gameState.getLevel().getLevelHeight());
 
         //Camera
         camera = new ITLCamera(0f, 0f, gameState.getLevel().getLevelWidth(), 0.002,
                 gameState.getLevel().getLevelWidth(), gameState.getLevel().getLevelHeight());
         gameState.getPlayer().addObserver(camera);
+
+        playerAnimation = new PlayerAnimation(gameState.getPlayer().getBodyState());
     }
 
     @Override
@@ -48,21 +55,20 @@ public class ITLDebugRenderer implements Render {
 
         //Clear screen
         Gdx.gl.glClearColor(1, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
         //Apply Game camera viewport
         camera.getViewport().apply();
         //Prepare SpriteBatch and ShapeRenderer
         batch.setProjectionMatrix(camera.getCameraCombined());
         batch.begin();
-
-        shapeRenderer.setProjectionMatrix(camera.getCameraCombined());
         shapeRenderer.setAutoShapeType(true);
+        shapeRenderer.setProjectionMatrix(camera.getCameraCombined());
         shapeRenderer.begin();
 
         //First draw level
-        DebugDrawer.drawLevel(sprite, batch, shapeRenderer, gameState.getLevel());
-        //End batch here to avoid drawing problems as the only sprite is the background
+        DebugDrawer.drawLevel(background, batch, shapeRenderer, gameState.getLevel());
+        //End batch here to avoid drawing problems as the only background is the background
         batch.end();
 
         //Draw the other things on top
@@ -72,6 +78,12 @@ public class ITLDebugRenderer implements Render {
         //End SpriteBatch and ShapeRenderer
         shapeRenderer.end();
 
+        //Draw player anim on top of shapes
+        batch.begin();
+        playerAnimation.updateAnimation(gameState.getPlayer().getBodyState());
+        player = playerAnimation.getSprite(Gdx.graphics.getDeltaTime(), true, gameState.getPlayer());
+        player.draw(batch);
+        batch.end();
         //DO NOT FORGET TO APPLY SPECIFIC VIEWPORT
         uiDebug.draw();
     }
@@ -97,8 +109,10 @@ public class ITLDebugRenderer implements Render {
 
     @Override
     public void dispose() {
-        sprite.getTexture().dispose();
+        background.getTexture().dispose();
+        player.getTexture().dispose();
         batch.dispose();
         shapeRenderer.dispose();
+        playerAnimation.dispose();
     }
 }

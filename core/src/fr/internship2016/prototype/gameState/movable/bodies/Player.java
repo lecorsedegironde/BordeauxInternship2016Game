@@ -20,7 +20,7 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
 
     //region Constants
     //Size
-    public static final float WIDTH_PLAYER = 1f;
+    public static final float WIDTH_PLAYER = 1.5f;
     public static final float HEIGHT_PLAYER = 2f;
     //Position
     public static final float PLAYER_START = 0.5f;
@@ -131,6 +131,7 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
         stopMovement();
         setPosition(Player.PLAYER_START, level.getLevelGroundHeight());
         setFacing(Direction.RIGHT);
+        setBodyState(BodiesStates.IDLE);
         invisible = false;
         canBeInvisible = true;
         life = DEFAULT_LIFE;
@@ -237,6 +238,7 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
                 && mana > SPELL_MANA_COST) {
             lastFireS1 = TimeUtils.millis();
             mana -= SPELL_MANA_COST;
+            bodyState = BodiesStates.FIRE_SPELL;
             return spell1;
         } else {
             return SpellType.NO_SPELL;
@@ -257,6 +259,7 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
                 && mana > SPELL_MANA_COST) {
             lastFireS2 = TimeUtils.millis();
             mana -= SPELL_MANA_COST;
+            bodyState = BodiesStates.FIRE_SPELL;
             return spell2;
         } else {
             return SpellType.NO_SPELL;
@@ -277,6 +280,7 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
                 && mana > SPELL_MANA_COST) {
             lastFireS3 = TimeUtils.millis();
             mana -= SPELL_MANA_COST;
+            bodyState = BodiesStates.FIRE_SPELL;
             return spell3;
         } else {
             return SpellType.NO_SPELL;
@@ -358,12 +362,19 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
 
     @Override
     public void attack() {
-        if (hasWeapon()) weapon.attack();
+        if (hasWeapon()) {
+            weapon.attack();
+            bodyState = BodiesStates.ATTACK;
+            if (isJumping()) bodyState = BodiesStates.JUMP_ATTACK;
+        }
     }
 
     @Override
     public void stopAttack() {
-        if (hasWeapon()) weapon.stopAttack();
+        if (hasWeapon()) {
+            weapon.stopAttack();
+            bodyState = BodiesStates.IDLE;
+        }
     }
     //endregion
 }
