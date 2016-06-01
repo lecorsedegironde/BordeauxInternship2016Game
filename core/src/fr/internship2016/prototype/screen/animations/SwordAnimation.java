@@ -12,7 +12,7 @@ import fr.internship2016.prototype.gameState.movable.bodies.Player;
 /**
  * Created by bastien on 30/05/16.
  */
-public class PlayerAnimation {
+public class SwordAnimation {
 
     private BodiesStates playerStates;
 
@@ -25,7 +25,7 @@ public class PlayerAnimation {
     //For getting sprite
     private Sprite sprite;
 
-    public PlayerAnimation(BodiesStates playerStates) {
+    public SwordAnimation(BodiesStates playerStates) {
         this.playerStates = playerStates;
         anims = new ArrayMap<>();
         createAnimationFromState();
@@ -36,22 +36,15 @@ public class PlayerAnimation {
         String textureAtlasToLoad;
 
         for (BodiesStates b : BodiesStates.values()) {
-            textureAtlasToLoad = "";
             switch (b) {
                 case IDLE:
-                    textureAtlasToLoad = "textures/spritesheet/idle/idle.atlas";
+                    textureAtlasToLoad = "textures/spritesheet/idleWeapon/idle.atlas";
                     break;
                 case RUN:
-                    textureAtlasToLoad = "textures/spritesheet/run/run.atlas";
+                    textureAtlasToLoad = "textures/spritesheet/runWeapon/run.atlas";
                     break;
-                case JUMP:
-                    textureAtlasToLoad = "textures/spritesheet/jump/jump.atlas";
-                    break;
-                case ATTACK:
-                    textureAtlasToLoad = "textures/spritesheet/attack/attack.atlas";
-                    break;
-                case FIRE_SPELL:
-                    textureAtlasToLoad = "textures/spritesheet/spell/spell.atlas";
+                default:
+                    textureAtlasToLoad = "textures/spritesheet/idleWeapon/idle.atlas";
                     break;
             }
             if (!textureAtlasToLoad.isEmpty()) {
@@ -78,17 +71,27 @@ public class PlayerAnimation {
     }
 
     public Sprite getSprite(float delta, boolean loop, Player player) {
+        if (playerStates == BodiesStates.ATTACK || playerStates == BodiesStates.JUMP) {
+            delta = 0;
+        }
         sprite = new Sprite(getKeyFrame(delta, loop));
-        float spriteWidth = 1.75f;
-        sprite.setSize(spriteWidth, spriteWidth * 1.3f);
+        float spriteWidth = 0.88f;
+        sprite.setSize(spriteWidth, spriteWidth * 1.9f);
+
+        sprite.setRotation(player.getWeapon().getElementPolygon().getRotation());
 
         switch (player.getFacing()) {
             case RIGHT:
-                sprite.setPosition(player.getX() - 0.2f, player.getY());
+                sprite.setPosition(player.getWeapon().getX() - 0.25f,
+                        player.getWeapon().getY() + 0.07f);
+                sprite.setFlip(false, false);
+                sprite.setOrigin(0.27f, 0.19f);
                 break;
             case LEFT:
-                sprite.setPosition(player.getX(), player.getY());
-                sprite.flip(true, false);
+                sprite.setPosition(player.getWeapon().getX() - 0.45f,
+                        player.getWeapon().getY() + 0.07f);
+                sprite.setFlip(true, false);
+                sprite.setOrigin(0.61f, 0.19f);
                 break;
         }
 

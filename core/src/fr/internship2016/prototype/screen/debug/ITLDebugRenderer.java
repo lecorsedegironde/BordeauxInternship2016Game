@@ -11,6 +11,7 @@ import fr.internship2016.prototype.gameState.GameState;
 import fr.internship2016.prototype.gameState.movable.MovableElement;
 import fr.internship2016.prototype.gameState.movable.spells.Spell;
 import fr.internship2016.prototype.screen.animations.PlayerAnimation;
+import fr.internship2016.prototype.screen.animations.SwordAnimation;
 import fr.internship2016.prototype.screen.camera.ITLCamera;
 import fr.internship2016.prototype.screen.interfaces.Render;
 import fr.internship2016.prototype.screen.ui.GameUiDebug;
@@ -32,6 +33,7 @@ public class ITLDebugRenderer implements Render {
 
     //Animation tests
     private PlayerAnimation playerAnimation;
+    private SwordAnimation swordAnimation;
 
     public ITLDebugRenderer(GameState gameState) {
 
@@ -47,13 +49,11 @@ public class ITLDebugRenderer implements Render {
         gameState.getPlayer().addObserver(camera);
 
         playerAnimation = new PlayerAnimation(gameState.getPlayer().getBodyState());
-        sword = new Sprite(new Texture(Gdx.files.internal("textures/sword.png")));
-        sword.setSize(0.88f, 0.88f * 1.9f);
-        sword.setCenter(0.27f, 1.48f);
+        swordAnimation = new SwordAnimation(gameState.getPlayer().getBodyState());
     }
 
     @Override
-    public void render(GameState gameState, GameUiDebug uiDebug) {
+    public void render(GameState gameState, GameUiDebug uiDebug, boolean pause) {
         //First update cam observers
         updateCam(gameState.getMovableElements());
 
@@ -83,13 +83,19 @@ public class ITLDebugRenderer implements Render {
         shapeRenderer.end();
 
         //Draw player anim on top of shapes
-        batch.begin();
-        sword.setPosition(gameState.getPlayer().getWeapon().getX(), gameState.getPlayer().getWeapon().getY());
-        sword.setRotation(gameState.getPlayer().getWeapon().getElementPolygon().getRotation());
-        sword.draw(batch);
 
-        playerAnimation.updateAnimation(gameState.getPlayer().getBodyState());
-        player = playerAnimation.getSprite(Gdx.graphics.getDeltaTime(), true, gameState.getPlayer());
+
+
+        if (!pause) {
+            playerAnimation.updateAnimation(gameState.getPlayer().getBodyState());
+            swordAnimation.updateAnimation(gameState.getPlayer().getBodyState());
+            player = playerAnimation.getSprite(Gdx.graphics.getDeltaTime(), true, gameState.getPlayer());
+            sword = swordAnimation.getSprite(Gdx.graphics.getDeltaTime(), true, gameState.getPlayer());
+        }
+
+
+        batch.begin();
+        sword.draw(batch);
         player.draw(batch);
         batch.end();
         //DO NOT FORGET TO APPLY SPECIFIC VIEWPORT
@@ -122,5 +128,6 @@ public class ITLDebugRenderer implements Render {
         batch.dispose();
         shapeRenderer.dispose();
         playerAnimation.dispose();
+        swordAnimation.dispose();
     }
 }

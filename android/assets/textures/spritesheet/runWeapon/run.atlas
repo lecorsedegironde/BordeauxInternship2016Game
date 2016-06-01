@@ -1,0 +1,62 @@
+
+run.png
+size: 1024,512
+format: RGBA8888
+filter: MipMap,MipMap
+repeat: none
+Run
+  rotate: false
+  xy: 2, 2
+  size: 136, 259
+  orig: 136, 259
+  offset: 0, 0
+  index: 0
+Run
+  rotate: false
+  xy: 140, 2
+  size: 136, 259
+  orig: 136, 259
+  offset: 0, 0
+  index: 1
+Run
+  rotate: false
+  xy: 140, 2
+  size: 136, 259
+  orig: 136, 259
+  offset: 0, 0
+  index: 7
+Run
+  rotate: false
+  xy: 278, 2
+  size: 136, 259
+  orig: 136, 259
+  offset: 0, 0
+  index: 2
+Run
+  rotate: false
+  xy: 278, 2
+  size: 136, 259
+  orig: 136, 259
+  offset: 0, 0
+  index: 6
+Run
+  rotate: false
+  xy: 416, 2
+  size: 136, 259
+  orig: 136, 259
+  offset: 0, 0
+  index: 3
+Run
+  rotate: false
+  xy: 416, 2
+  size: 136, 259
+  orig: 136, 259
+  offset: 0, 0
+  index: 5
+Run
+  rotate: false
+  xy: 554, 2
+  size: 136, 259
+  orig: 136, 259
+  offset: 0, 0
+  index: 4

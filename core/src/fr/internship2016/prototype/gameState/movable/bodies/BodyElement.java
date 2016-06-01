@@ -17,14 +17,14 @@ public abstract class BodyElement extends MovableElement implements Facing, Hit,
     //Jump & ground management
     protected boolean onGround;
     protected boolean jumping;
-    protected float jumpingVelocity;
+    private float jumpingVelocity;
 
     //Knockback Management
-    protected boolean knockback;
-    protected Direction knockbackDirection;
+    private boolean knockback;
+    private Direction knockbackDirection;
     protected float knockbackXVelocity;
     protected float knockbackYVelocity;
-    protected float horizontalVelocity;
+    private float horizontalVelocity;
 
     protected Direction facing;
     protected BodiesStates bodyState;
@@ -151,14 +151,13 @@ public abstract class BodyElement extends MovableElement implements Facing, Hit,
     //endregion
 
     //region Jump & Ground
-    protected void checkOnGround(Level level) {
+    private void checkOnGround(Level level) {
         onGround = getY() <= level.getLevelGroundHeight();
 
         if (onGround) {
             setPosition(getX(), level.getLevelGroundHeight());
             jumping = false;
             jumpingVelocity = 0f;
-            bodyState = BodiesStates.IDLE;
         }
     }
 

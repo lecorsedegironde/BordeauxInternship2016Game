@@ -7,7 +7,7 @@ import fr.internship2016.prototype.screen.ui.GameUiDebug;
  * Created by bastien on 13/05/16.
  */
 public interface Render {
-    void render(GameState gameState, GameUiDebug uiDebug);
+    void render(GameState gameState, GameUiDebug uiDebug, boolean pause);
     void resize(int width, int height);
     void dispose();
 }

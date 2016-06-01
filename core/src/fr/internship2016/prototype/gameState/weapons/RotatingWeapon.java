@@ -81,6 +81,7 @@ public class RotatingWeapon extends Weapon {
         }
         xWeapon = owner.getX() + divide;
         yWeapon = owner.getY() + (owner.getH() / divideFactor);
+        yWeapon -= 0.5f;
         setPosition(xWeapon, yWeapon);
     }
 }

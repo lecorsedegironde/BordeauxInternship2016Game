@@ -55,7 +55,8 @@ public class EngineDebug implements Screen {
             public boolean keyDown(int keycode) {
 
                 Action key = input.getActionFromKey(keycode);
-                if (!actions.contains(key, false) && key != Action.NO_ACTION) {
+                if (!actions.contains(key, false) && key != Action.NO_ACTION
+                        && (!pause || key == Action.PAUSE)) {
                     actions.add(key);
                 }
                 return true;
@@ -75,13 +76,13 @@ public class EngineDebug implements Screen {
         //Update GameState if not paused
         if (!pause && !uiDebug.isUiOpened()) {
             gameState.update(delta);
-        } else {
         }
+
         //Update ui
         uiDebug.update(delta, gameState);
 
         //Render GameState
-        renderer.render(gameState, uiDebug);
+        renderer.render(gameState, uiDebug, pause);
 
         //Process actions
         //Prevent player from moving if there no key pressed
