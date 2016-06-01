@@ -1,0 +1,34 @@
+
+spell.png
+size: 1024,512
+format: RGBA8888
+filter: MipMap,MipMap
+repeat: none
+LaunchSpell
+  rotate: false
+  xy: 2, 2
+  size: 270, 354
+  orig: 270, 354
+  offset: 0, 0
+  index: 0
+LaunchSpell
+  rotate: false
+  xy: 274, 2
+  size: 270, 354
+  orig: 270, 354
+  offset: 0, 0
+  index: 1
+LaunchSpell
+  rotate: false
+  xy: 274, 2
+  size: 270, 354
+  orig: 270, 354
+  offset: 0, 0
+  index: 3
+LaunchSpell
+  rotate: false
+  xy: 546, 2
+  size: 270, 354
+  orig: 270, 354
+  offset: 0, 0
+  index: 2

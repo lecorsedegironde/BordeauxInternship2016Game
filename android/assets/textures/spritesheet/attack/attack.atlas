@@ -1,0 +1,186 @@
+
+attack.png
+size: 1024,1024
+format: RGBA8888
+filter: MipMap,MipMap
+repeat: none
+AttackSword
+  rotate: false
+  xy: 2, 358
+  size: 270, 354
+  orig: 270, 354
+  offset: 0, 0
+  index: 0
+AttackSword
+  rotate: false
+  xy: 2, 2
+  size: 270, 354
+  orig: 270, 354
+  offset: 0, 0
+  index: 1
+AttackSword
+  rotate: false
+  xy: 2, 2
+  size: 270, 354
+  orig: 270, 354
+  offset: 0, 0
+  index: 23
+AttackSword
+  rotate: false
+  xy: 274, 358
+  size: 270, 354
+  orig: 270, 354
+  offset: 0, 0
+  index: 2
+AttackSword
+  rotate: false
+  xy: 274, 358
+  size: 270, 354
+  orig: 270, 354
+  offset: 0, 0
+  index: 22
+AttackSword
+  rotate: false
+  xy: 274, 2
+  size: 270, 354
+  orig: 270, 354
+  offset: 0, 0
+  index: 3
+AttackSword
+  rotate: false
+  xy: 274, 2
+  size: 270, 354
+  orig: 270, 354
+  offset: 0, 0
+  index: 21
+AttackSword
+  rotate: false
+  xy: 546, 358
+  size: 270, 354
+  orig: 270, 354
+  offset: 0, 0
+  index: 4
+AttackSword
+  rotate: false
+  xy: 546, 358
+  size: 270, 354
+  orig: 270, 354
+  offset: 0, 0
+  index: 20
+AttackSword
+  rotate: false
+  xy: 546, 2
+  size: 270, 354
+  orig: 270, 354
+  offset: 0, 0
+  index: 5
+AttackSword
+  rotate: false
+  xy: 546, 2
+  size: 270, 354
+  orig: 270, 354
+  offset: 0, 0
+  index: 19
+
+attack2.png
+size: 1024,1024
+format: RGBA8888
+filter: MipMap,MipMap
+repeat: none
+AttackSword
+  rotate: false
+  xy: 2, 358
+  size: 270, 354
+  orig: 270, 354
+  offset: 0, 0
+  index: 6
+AttackSword
+  rotate: false
+  xy: 2, 358
+  size: 270, 354
+  orig: 270, 354
+  offset: 0, 0
+  index: 18
+AttackSword
+  rotate: false
+  xy: 2, 2
+  size: 270, 354
+  orig: 270, 354
+  offset: 0, 0
+  index: 7
+AttackSword
+  rotate: false
+  xy: 2, 2
+  size: 270, 354
+  orig: 270, 354
+  offset: 0, 0
+  index: 17
+AttackSword
+  rotate: false
+  xy: 274, 358
+  size: 270, 354
+  orig: 270, 354
+  offset: 0, 0
+  index: 8
+AttackSword
+  rotate: false
+  xy: 274, 358
+  size: 270, 354
+  orig: 270, 354
+  offset: 0, 0
+  index: 16
+AttackSword
+  rotate: false
+  xy: 274, 2
+  size: 270, 354
+  orig: 270, 354
+  offset: 0, 0
+  index: 9
+AttackSword
+  rotate: false
+  xy: 274, 2
+  size: 270, 354
+  orig: 270, 354
+  offset: 0, 0
+  index: 15
+AttackSword
+  rotate: false
+  xy: 546, 358
+  size: 270, 354
+  orig: 270, 354
+  offset: 0, 0
+  index: 10
+AttackSword
+  rotate: false
+  xy: 546, 358
+  size: 270, 354
+  orig: 270, 354
+  offset: 0, 0
+  index: 14
+AttackSword
+  rotate: false
+  xy: 546, 2
+  size: 270, 354
+  orig: 270, 354
+  offset: 0, 0
+  index: 11
+AttackSword
+  rotate: false
+  xy: 546, 2
+  size: 270, 354
+  orig: 270, 354
+  offset: 0, 0
+  index: 13
+
+attack3.png
+size: 512,512
+format: RGBA8888
+filter: MipMap,MipMap
+repeat: none
+AttackSword
+  rotate: false
+  xy: 2, 2
+  size: 270, 354
+  orig: 270, 354
+  offset: 0, 0
+  index: 12

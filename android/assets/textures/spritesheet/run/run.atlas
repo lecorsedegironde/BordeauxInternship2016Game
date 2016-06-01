@@ -1,0 +1,68 @@
+
+run.png
+size: 1024,1024
+format: RGBA8888
+filter: MipMap,MipMap
+repeat: none
+Run
+  rotate: false
+  xy: 2, 358
+  size: 270, 354
+  orig: 270, 354
+  offset: 0, 0
+  index: 0
+Run
+  rotate: false
+  xy: 2, 2
+  size: 270, 354
+  orig: 270, 354
+  offset: 0, 0
+  index: 1
+Run
+  rotate: false
+  xy: 274, 358
+  size: 270, 354
+  orig: 270, 354
+  offset: 0, 0
+  index: 2
+Run
+  rotate: false
+  xy: 274, 2
+  size: 270, 354
+  orig: 270, 354
+  offset: 0, 0
+  index: 3
+Run
+  rotate: false
+  xy: 546, 358
+  size: 270, 354
+  orig: 270, 354
+  offset: 0, 0
+  index: 4
+Run
+  rotate: false
+  xy: 546, 2
+  size: 270, 354
+  orig: 270, 354
+  offset: 0, 0
+  index: 5
+
+run2.png
+size: 1024,512
+format: RGBA8888
+filter: MipMap,MipMap
+repeat: none
+Run
+  rotate: false
+  xy: 2, 2
+  size: 270, 354
+  orig: 270, 354
+  offset: 0, 0
+  index: 6
+Run
+  rotate: false
+  xy: 274, 2
+  size: 270, 354
+  orig: 270, 354
+  offset: 0, 0
+  index: 7

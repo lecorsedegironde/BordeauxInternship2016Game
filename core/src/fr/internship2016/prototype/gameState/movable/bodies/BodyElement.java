@@ -107,14 +107,20 @@ public abstract class BodyElement extends MovableElement implements Facing, Hit,
         checkBounds(level);
 
         //Update bodySate
-        if (moveX != 0f) {
-            bodyState = BodiesStates.RUN;
-        } else {
-            bodyState = BodiesStates.IDLE;
-        }
+        updateBodySate(moveX);
 
         setChanged();
         notifyObservers();
+    }
+
+    protected void updateBodySate(float moveX) {
+        //Set default : idle
+        bodyState = BodiesStates.IDLE;
+
+        //If the element moves
+        if (moveX != 0f) {
+            bodyState = BodiesStates.RUN;
+        }
     }
 
     //region Movement
@@ -168,7 +174,6 @@ public abstract class BodyElement extends MovableElement implements Facing, Hit,
     public void jump() {
         if (onGround) {
             jumping = true;
-            bodyState = BodiesStates.JUMP;
         }
     }
     //endregion

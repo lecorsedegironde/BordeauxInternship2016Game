@@ -9,6 +9,5 @@ public enum BodiesStates {
     RUN,
     JUMP,
     ATTACK,
-    JUMP_ATTACK,
     FIRE_SPELL
 }

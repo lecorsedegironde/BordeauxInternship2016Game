@@ -28,6 +28,7 @@ public class ITLDebugRenderer implements Render {
     private ShapeRenderer shapeRenderer;
     private Sprite background;
     private Sprite player;
+    private Sprite sword;
 
     //Animation tests
     private PlayerAnimation playerAnimation;
@@ -46,6 +47,9 @@ public class ITLDebugRenderer implements Render {
         gameState.getPlayer().addObserver(camera);
 
         playerAnimation = new PlayerAnimation(gameState.getPlayer().getBodyState());
+        sword = new Sprite(new Texture(Gdx.files.internal("textures/sword.png")));
+        sword.setSize(0.88f, 0.88f * 1.9f);
+        sword.setCenter(0.27f, 1.48f);
     }
 
     @Override
@@ -80,6 +84,10 @@ public class ITLDebugRenderer implements Render {
 
         //Draw player anim on top of shapes
         batch.begin();
+        sword.setPosition(gameState.getPlayer().getWeapon().getX(), gameState.getPlayer().getWeapon().getY());
+        sword.setRotation(gameState.getPlayer().getWeapon().getElementPolygon().getRotation());
+        sword.draw(batch);
+
         playerAnimation.updateAnimation(gameState.getPlayer().getBodyState());
         player = playerAnimation.getSprite(Gdx.graphics.getDeltaTime(), true, gameState.getPlayer());
         player.draw(batch);

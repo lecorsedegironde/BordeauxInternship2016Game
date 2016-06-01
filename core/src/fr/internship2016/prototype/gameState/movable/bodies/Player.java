@@ -127,6 +127,21 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
         //*/
     }
 
+    @Override
+    protected void updateBodySate(float moveX) {
+        super.updateBodySate(moveX);
+
+        //If the player attack
+        if (isAttacking()) {
+            bodyState = BodiesStates.ATTACK;
+        }
+
+        //If the player jump
+        if (isJumping()) {
+            bodyState = BodiesStates.JUMP;
+        }
+    }
+
     public void reset(Level level) {
         stopMovement();
         setPosition(Player.PLAYER_START, level.getLevelGroundHeight());
@@ -364,8 +379,6 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
     public void attack() {
         if (hasWeapon()) {
             weapon.attack();
-            bodyState = BodiesStates.ATTACK;
-            if (isJumping()) bodyState = BodiesStates.JUMP_ATTACK;
         }
     }
 
@@ -373,7 +386,6 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
     public void stopAttack() {
         if (hasWeapon()) {
             weapon.stopAttack();
-            bodyState = BodiesStates.IDLE;
         }
     }
     //endregion
