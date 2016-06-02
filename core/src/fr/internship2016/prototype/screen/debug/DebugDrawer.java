@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import fr.internship2016.prototype.gameState.levels.Level;
 import fr.internship2016.prototype.gameState.movable.MovableElement;
 import fr.internship2016.prototype.gameState.movable.bodies.Player;
@@ -43,7 +44,6 @@ public class DebugDrawer {
                 shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
                 shapeRenderer.setColor(Color.SCARLET);
                 shapeRenderer.rect(m.getX(), m.getY(), m.getW(), m.getH());
-
                 shapeRenderer.set(ShapeRenderer.ShapeType.Line);
                 shapeRenderer.setColor(Color.GREEN);
                 shapeRenderer.rect(m.getX(), m.getY(), m.getW(), m.getH());
@@ -58,8 +58,16 @@ public class DebugDrawer {
 
     public static void drawLevel(Sprite sprite, SpriteBatch batch, ShapeRenderer shapeRenderer, Level l) {
         sprite.draw(batch);
-        shapeRenderer.set(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(Color.RED);
-        shapeRenderer.line(0, l.getLevelGroundHeight(), l.getLevelWidth(), l.getLevelGroundHeight());
+        shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.setColor(Color.BROWN);
+        for (Rectangle b: l.getAllLevelBoxes()) {
+            shapeRenderer.rect(b.getX(),b.getY(),b.getWidth(),b.getHeight());
+        }
+        shapeRenderer.setColor(Color.GREEN);
+        for (Rectangle r:l.getAllBoxesTop()
+             ) {
+            shapeRenderer.rect(r.getX(),r.getY(),r.getWidth(),r.getHeight());
+        }
+
     }
 }

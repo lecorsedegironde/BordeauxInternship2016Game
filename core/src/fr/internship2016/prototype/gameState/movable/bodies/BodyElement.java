@@ -1,5 +1,7 @@
 package fr.internship2016.prototype.gameState.movable.bodies;
 
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Rectangle;
 import fr.internship2016.prototype.gameState.levels.Level;
 import fr.internship2016.prototype.gameState.movable.MovableElement;
 import fr.internship2016.prototype.gameState.movable.interfaces.Facing;
@@ -25,7 +27,6 @@ public abstract class BodyElement extends MovableElement implements Facing, Hit,
     protected float knockbackXVelocity;
     protected float knockbackYVelocity;
     protected float horizontalVelocity;
-
     protected Direction facing;
 
 
@@ -118,6 +119,18 @@ public abstract class BodyElement extends MovableElement implements Facing, Hit,
             stopMovement();
             setPosition(level.getLevelWidth() - getW(), getY());
         }
+
+        for (Rectangle r : level.getAllLevelBoxes()) {
+
+            if (Intersector.overlaps(elementRect, r) && elementRect.getX() + elementRect.getWidth() < r.getX() + 0.5 * r.getWidth()) {
+                setPosition(r.getX() - getW(), getY());
+                stopMovement();
+            } else if (Intersector.overlaps(elementRect, r) && elementRect.getX() > r.getX() + 0.5 * r.getWidth()) {
+                setPosition(r.getX() + r.getWidth(), getY());
+                stopMovement();
+            }
+
+        }
     }
 
     public void moveRight() {
@@ -135,12 +148,23 @@ public abstract class BodyElement extends MovableElement implements Facing, Hit,
 
     //region Jump & Ground
     protected void checkOnGround(Level level) {
-        onGround = getY() <= level.getLevelGroundHeight();
+        int cpt = 0;
+        for (Rectangle r : level.getAllBoxesTop()
+                ) {
 
-        if (onGround) {
-            setPosition(getX(), level.getLevelGroundHeight());
-            jumping = false;
-            jumpingVelocity = 0f;
+            if (Intersector.overlaps(this.elementRect, r)) {
+
+                setPosition(getX(), r.getY() + r.getHeight());
+                jumping = false;
+                jumpingVelocity = 0f;
+                cpt++;
+            }
+
+            if (cpt > 0) {
+                onGround = true;
+            } else {
+                onGround = false;
+            }
         }
     }
 

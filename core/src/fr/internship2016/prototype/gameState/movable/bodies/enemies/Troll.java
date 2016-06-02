@@ -1,5 +1,7 @@
 package fr.internship2016.prototype.gameState.movable.bodies.enemies;
 
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Rectangle;
 import fr.internship2016.prototype.gameState.levels.Level;
 import fr.internship2016.prototype.gameState.utils.Direction;
 import fr.internship2016.prototype.gameState.weapons.Weapon;
@@ -46,7 +48,7 @@ public class Troll extends Enemy {
 
         weaponFactory = new WeaponFactory(this);
         manageWeapon();
-        moveLeft();
+        moveRight();
     }
 
     @Override
@@ -62,6 +64,16 @@ public class Troll extends Enemy {
             moveRight();
         } else if (elementRect.getX() >= level.getLevelWidth() - getW()) {
             moveLeft();
+        }
+
+        for (Rectangle r : level.getAllLevelBoxes()) {
+
+            if (Intersector.overlaps(elementRect, r) && elementRect.getX() + elementRect.getWidth() < r.getX() + 0.5 * r.getWidth()) {
+                moveLeft();
+            } else if (Intersector.overlaps(elementRect, r) && elementRect.getX() > r.getX() + 0.5 * r.getWidth()) {
+                moveRight();
+            }
+
         }
     }
 

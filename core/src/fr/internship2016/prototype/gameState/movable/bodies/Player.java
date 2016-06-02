@@ -129,7 +129,7 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
 
     public void reset(Level level) {
         stopMovement();
-        setPosition(Player.PLAYER_START, level.getLevelGroundHeight());
+        setPosition(Player.PLAYER_START, level.getAllLevelBoxes().first().getY());
         setFacing(Direction.RIGHT);
         invisible = false;
         canBeInvisible = true;
