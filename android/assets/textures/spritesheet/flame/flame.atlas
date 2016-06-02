@@ -1,0 +1,174 @@
+
+flame.png
+size: 1024,512
+format: RGBA8888
+filter: MipMap,MipMap
+repeat: none
+Fire
+  rotate: false
+  xy: 2, 353
+  size: 115, 115
+  orig: 115, 115
+  offset: 0, 0
+  index: 0
+Fire
+  rotate: false
+  xy: 2, 236
+  size: 115, 115
+  orig: 115, 115
+  offset: 0, 0
+  index: 1
+Fire
+  rotate: false
+  xy: 119, 353
+  size: 115, 115
+  orig: 115, 115
+  offset: 0, 0
+  index: 2
+Fire
+  rotate: false
+  xy: 2, 119
+  size: 115, 115
+  orig: 115, 115
+  offset: 0, 0
+  index: 3
+Fire
+  rotate: false
+  xy: 119, 236
+  size: 115, 115
+  orig: 115, 115
+  offset: 0, 0
+  index: 4
+Fire
+  rotate: false
+  xy: 236, 353
+  size: 115, 115
+  orig: 115, 115
+  offset: 0, 0
+  index: 5
+Fire
+  rotate: false
+  xy: 2, 2
+  size: 115, 115
+  orig: 115, 115
+  offset: 0, 0
+  index: 6
+Fire
+  rotate: false
+  xy: 119, 119
+  size: 115, 115
+  orig: 115, 115
+  offset: 0, 0
+  index: 7
+Fire
+  rotate: false
+  xy: 236, 236
+  size: 115, 115
+  orig: 115, 115
+  offset: 0, 0
+  index: 8
+Fire
+  rotate: false
+  xy: 353, 353
+  size: 115, 115
+  orig: 115, 115
+  offset: 0, 0
+  index: 9
+Fire
+  rotate: false
+  xy: 119, 2
+  size: 115, 115
+  orig: 115, 115
+  offset: 0, 0
+  index: 10
+Fire
+  rotate: false
+  xy: 236, 119
+  size: 115, 115
+  orig: 115, 115
+  offset: 0, 0
+  index: 11
+Fire
+  rotate: false
+  xy: 353, 236
+  size: 115, 115
+  orig: 115, 115
+  offset: 0, 0
+  index: 12
+Fire
+  rotate: false
+  xy: 470, 353
+  size: 115, 115
+  orig: 115, 115
+  offset: 0, 0
+  index: 13
+Fire
+  rotate: false
+  xy: 236, 2
+  size: 115, 115
+  orig: 115, 115
+  offset: 0, 0
+  index: 14
+Fire
+  rotate: false
+  xy: 353, 119
+  size: 115, 115
+  orig: 115, 115
+  offset: 0, 0
+  index: 15
+Fire
+  rotate: false
+  xy: 470, 236
+  size: 115, 115
+  orig: 115, 115
+  offset: 0, 0
+  index: 16
+Fire
+  rotate: false
+  xy: 587, 353
+  size: 115, 115
+  orig: 115, 115
+  offset: 0, 0
+  index: 17
+Fire
+  rotate: false
+  xy: 353, 2
+  size: 115, 115
+  orig: 115, 115
+  offset: 0, 0
+  index: 18
+Fire
+  rotate: false
+  xy: 470, 119
+  size: 115, 115
+  orig: 115, 115
+  offset: 0, 0
+  index: 19
+Fire
+  rotate: false
+  xy: 587, 236
+  size: 115, 115
+  orig: 115, 115
+  offset: 0, 0
+  index: 20
+Fire
+  rotate: false
+  xy: 704, 353
+  size: 115, 115
+  orig: 115, 115
+  offset: 0, 0
+  index: 21
+Fire
+  rotate: false
+  xy: 470, 2
+  size: 115, 115
+  orig: 115, 115
+  offset: 0, 0
+  index: 22
+Fire
+  rotate: false
+  xy: 587, 119
+  size: 115, 115
+  orig: 115, 115
+  offset: 0, 0
+  index: 23

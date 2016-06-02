@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.Array;
 import fr.internship2016.prototype.engine.input.Action;
 import fr.internship2016.prototype.engine.input.ITLInput;
 import fr.internship2016.prototype.gameState.GameState;
-import fr.internship2016.prototype.screen.debug.ITLDebugRenderer;
+import fr.internship2016.prototype.screen.ITLDebugRenderer;
 import fr.internship2016.prototype.screen.ui.GameUiDebug;
 
 /**
