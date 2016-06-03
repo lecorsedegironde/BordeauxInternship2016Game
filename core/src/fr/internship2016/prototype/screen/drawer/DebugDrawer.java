@@ -17,9 +17,9 @@ public class DebugDrawer {
 
     public static void drawMovable(ShapeRenderer shapeRenderer, MovableElement m) {
         if (m instanceof Spell) {
-            shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
-            shapeRenderer.setColor(((Spell) m).getType().getColor());
-            shapeRenderer.rect(m.getX(), m.getY(), m.getW(), m.getH());
+//            shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
+//            shapeRenderer.setColor(((Spell) m).getType().getColor());
+//            shapeRenderer.rect(m.getX(), m.getY(), m.getW(), m.getH());
         } else if (m instanceof Enemy) {
             if (m instanceof Troll) {
                 shapeRenderer.set(ShapeRenderer.ShapeType.Filled);

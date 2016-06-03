@@ -12,27 +12,19 @@ import fr.internship2016.prototype.gameState.movable.bodies.Player;
 /**
  * Created by bastien on 30/05/16.
  */
-public class PlayerAnimation {
+public class PlayerAnimation extends ITLAnimation {
 
     private BodiesStates playerStates;
 
-    private ArrayMap<BodiesStates, Animation> anims;
-
-    private TextureAtlas textureAtlas;
-    private Animation currentAnimation;
-    private float elapsedTime = 0f;
-
-    //For getting sprite
-    private Sprite sprite;
-
     public PlayerAnimation(BodiesStates playerStates) {
+        super();
         this.playerStates = playerStates;
-        anims = new ArrayMap<>();
         createAnimationFromState();
         updateAnimation(playerStates);
     }
 
-    private void createAnimationFromState() {
+    @Override
+    protected void createAnimationFromState() {
         String textureAtlasToLoad;
 
         for (BodiesStates b : BodiesStates.values()) {
@@ -60,8 +52,6 @@ public class PlayerAnimation {
                 anims.put(b, anim);
             }
         }
-
-
     }
 
     public void updateAnimation(BodiesStates bodyState) {
@@ -97,9 +87,5 @@ public class PlayerAnimation {
         }
 
         return sprite;
-    }
-
-    public void dispose() {
-        textureAtlas.dispose();
     }
 }

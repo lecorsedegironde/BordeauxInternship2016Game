@@ -65,7 +65,7 @@ public class ITLCamera implements Observer {
         } else if (observable instanceof BodyElement) {
             //Get the observable element position
             float observablePosition = ((BodyElement) observable).getX();
-            float moveCameraWidth = ((BodyElement) observable).getW() * 2;
+            float moveCameraWidth = ((BodyElement) observable).getW() * 2f;
 
             //Determination if a camera movement is needed
             //width * 2 is needed because of observablePosition not centered on the body
@@ -95,10 +95,10 @@ public class ITLCamera implements Observer {
 
         if (moveCam) {
             if (currentPosition != 0) {
-                double distance = Math.sqrt(Math.pow(Math.abs(targetPosition - currentPosition), 2));
-                if (distance > maximumDistance || distance < -maximumDistance) {
-                    currentPosition = targetPosition;
-                }
+//                double distance = Math.sqrt(Math.pow(Math.abs(targetPosition - currentPosition), 2));
+//                if (distance > maximumDistance || distance < -maximumDistance) {
+                currentPosition = targetPosition;
+//                }
             } else {
                 if (targetPosition > maximumDistance) currentPosition = targetPosition;
             }

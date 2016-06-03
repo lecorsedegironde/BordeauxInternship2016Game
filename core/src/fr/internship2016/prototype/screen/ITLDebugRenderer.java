@@ -11,11 +11,12 @@ import fr.internship2016.prototype.gameState.GameState;
 import fr.internship2016.prototype.gameState.movable.MovableElement;
 import fr.internship2016.prototype.gameState.movable.spells.Spell;
 import fr.internship2016.prototype.screen.animations.PlayerAnimation;
+import fr.internship2016.prototype.screen.animations.SpellAnimation;
 import fr.internship2016.prototype.screen.animations.SwordAnimation;
 import fr.internship2016.prototype.screen.camera.ITLCamera;
+import fr.internship2016.prototype.screen.drawer.DebugDrawer;
 import fr.internship2016.prototype.screen.drawer.SpriteDrawer;
 import fr.internship2016.prototype.screen.interfaces.Render;
-import fr.internship2016.prototype.screen.drawer.DebugDrawer;
 import fr.internship2016.prototype.screen.ui.GameUiDebug;
 
 /**
@@ -28,14 +29,16 @@ public class ITLDebugRenderer implements Render {
 
     //Draw
     private SpriteDrawer spriteDrawer;
+    private SpriteBatch batch;
     private ShapeRenderer shapeRenderer;
     private Sprite background;
     private Sprite player;
     private Sprite sword;
 
-    //Animation tests
+    //ITLAnimation tests
     private PlayerAnimation playerAnimation;
     private SwordAnimation swordAnimation;
+    private SpellAnimation spellAnimation;
 
     public ITLDebugRenderer(GameState gameState) {
 
@@ -45,10 +48,10 @@ public class ITLDebugRenderer implements Render {
         gameState.getPlayer().addObserver(camera);
 
         //Rendering
-        spriteDrawer = new SpriteDrawer(camera);
+        batch = new SpriteBatch();
+        spriteDrawer = new SpriteDrawer();
 
         shapeRenderer = new ShapeRenderer();
-        shapeRenderer.setProjectionMatrix(camera.getCameraCombined());
 
         //Sprites & anims
         background = new Sprite(new Texture(Gdx.files.internal("textures/" + gameState.getLevel().getBackground())));
@@ -56,6 +59,7 @@ public class ITLDebugRenderer implements Render {
 
         playerAnimation = new PlayerAnimation(gameState.getPlayer().getBodyState());
         swordAnimation = new SwordAnimation(gameState.getPlayer().getBodyState());
+        spellAnimation = new SpellAnimation();
     }
 
     @Override
@@ -71,23 +75,35 @@ public class ITLDebugRenderer implements Render {
         camera.getViewport().apply();
 
         //Update animations
+        float spellDelta;
         if (!pause) {
             playerAnimation.updateAnimation(gameState.getPlayer().getBodyState());
             swordAnimation.updateAnimation(gameState.getPlayer().getBodyState());
             player = playerAnimation.getSprite(Gdx.graphics.getDeltaTime(), true, gameState.getPlayer());
             sword = swordAnimation.getSprite(Gdx.graphics.getDeltaTime(), true, gameState.getPlayer());
+            spellDelta = Gdx.graphics.getDeltaTime();
+        } else {
+            spellDelta = 0;
         }
 
         spriteDrawer.add(background);
         spriteDrawer.add(sword);
         spriteDrawer.add(player);
 
+        for (MovableElement m : gameState.getMovableElements()) {
+            if (m instanceof Spell) {
+                spriteDrawer.add(spellAnimation.getSprite(spellDelta, true, (Spell) m));
+            }
+        }
+
         //Prepare ShapeRenderer
+        shapeRenderer.setProjectionMatrix(camera.getCameraCombined());
         shapeRenderer.setAutoShapeType(true);
         shapeRenderer.begin();
 
         //Draw sprites
-        spriteDrawer.draw();
+        batch.setProjectionMatrix(camera.getCameraCombined());
+        spriteDrawer.draw(batch);
 
         //First draw level
         DebugDrawer.drawLevel(shapeRenderer, gameState.getLevel());
@@ -127,7 +143,7 @@ public class ITLDebugRenderer implements Render {
     public void dispose() {
         background.getTexture().dispose();
         player.getTexture().dispose();
-        spriteDrawer.dispose();
+        batch.dispose();
         shapeRenderer.dispose();
         playerAnimation.dispose();
         swordAnimation.dispose();

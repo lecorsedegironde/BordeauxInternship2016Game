@@ -10,12 +10,9 @@ import fr.internship2016.prototype.screen.camera.ITLCamera;
  */
 public class SpriteDrawer {
 
-    private SpriteBatch batch;
     private Array<Sprite> sprites;
 
-    public SpriteDrawer(final ITLCamera camera) {
-        batch = new SpriteBatch();
-        batch.setProjectionMatrix(camera.getCameraCombined());
+    public SpriteDrawer() {
         sprites = new Array<>();
     }
 
@@ -23,7 +20,7 @@ public class SpriteDrawer {
         sprites.add(s);
     }
 
-    public void draw() {
+    public void draw(SpriteBatch batch) {
         batch.begin();
         for (Sprite s : sprites) {
             s.draw(batch);
@@ -32,9 +29,5 @@ public class SpriteDrawer {
 
         //Clear array for next render
         sprites.clear();
-    }
-
-    public void dispose() {
-        batch.dispose();
     }
 }
