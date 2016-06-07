@@ -86,13 +86,14 @@ public class ITLDebugRenderer implements Render {
             spellDelta = 0;
         }
 
-        spriteDrawer.add(background);
-        spriteDrawer.add(sword);
-        spriteDrawer.add(player);
+        spriteDrawer.add(background, 0, SpriteDrawer.Level.REPLACE);
+        spriteDrawer.add(sword, 1, SpriteDrawer.Level.INSERT);
+        spriteDrawer.add(player, 2, SpriteDrawer.Level.INSERT);
 
         for (MovableElement m : gameState.getMovableElements()) {
             if (m instanceof Spell) {
-                spriteDrawer.add(spellAnimation.getSprite(spellDelta, true, (Spell) m));
+                spriteDrawer.add(spellAnimation.getSprite(spellDelta, true, (Spell) m), 4,
+                        SpriteDrawer.Level.FIRST_AVAILABLE);
             }
         }
 

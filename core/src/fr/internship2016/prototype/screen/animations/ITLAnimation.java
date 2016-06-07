@@ -4,13 +4,14 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.ArrayMap;
+import com.badlogic.gdx.utils.ObjectMap;
 
 /**
  * Created by bastien on 02/06/16.
  */
 public abstract class ITLAnimation {
 
-    protected ArrayMap<Object, Animation> anims;
+    protected ObjectMap<Object, Animation> anims;
 
     protected TextureAtlas textureAtlas;
     protected Animation currentAnimation;
@@ -20,7 +21,7 @@ public abstract class ITLAnimation {
     protected Sprite sprite;
 
     public ITLAnimation() {
-        anims = new ArrayMap<>();
+        anims = new ObjectMap<>();
     }
 
     protected abstract void createAnimationFromState();
