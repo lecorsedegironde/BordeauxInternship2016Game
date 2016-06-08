@@ -36,7 +36,7 @@ public class GameState {
         level = new Level(100f, 10f, 1f, Level.DEFAULT_GRAVITY, movableElements);
         //Declare player
         player = new Player(Player.PLAYER_START, level.getAllLevelBoxes().first().getY() + level.getAllLevelBoxes().first().getHeight(), Player.WIDTH_PLAYER,
-                Player.HEIGHT_PLAYER, Player.VELOCITY_X_PLAYER, Player.VELOCITY_Y_PLAYER, level.getLevelGravity());
+                Player.HEIGHT_PLAYER,Player.FOOT_HEIGHT_PLAYER, Player.VELOCITY_X_PLAYER, Player.VELOCITY_Y_PLAYER, level.getLevelGravity());
         movableElements.add(player);
     }
 

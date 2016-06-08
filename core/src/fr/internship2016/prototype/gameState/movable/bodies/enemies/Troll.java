@@ -16,6 +16,8 @@ public class Troll extends Enemy {
     //Size
     public static final float WIDTH_TROLL = 1.5f;
     public static final float HEIGHT_TROLL = 3f;
+    //foot
+    public static final float FOOT_HEIGHT_TROLL=0.4f;
     //Moving forces
     public static final float VELOCITY_X_TROLL = 0.05f;
     public static final float VELOCITY_Y_TROLL = 0f;
@@ -36,7 +38,7 @@ public class Troll extends Enemy {
     //endregion
 
     public Troll(float x, float y, float gravity) {
-        super(x, y, WIDTH_TROLL, HEIGHT_TROLL, VELOCITY_X_TROLL, VELOCITY_Y_TROLL, gravity);
+        super(x, y, WIDTH_TROLL, HEIGHT_TROLL,FOOT_HEIGHT_TROLL, VELOCITY_X_TROLL, VELOCITY_Y_TROLL, gravity);
 //        setWeapon(WeaponType.CLUB);
         facing = Direction.LEFT;
 

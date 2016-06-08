@@ -13,8 +13,8 @@ public abstract class Enemy extends BodyElement implements Armed {
     //Life
     protected double life;
 
-    public Enemy(float x, float y, float width, float height, float velocityX, float velocityY, float gravity) {
-        super(x, y, width, height, velocityX, velocityY, gravity);
+    public Enemy(float x, float y, float width, float height, float footHeight, float velocityX, float velocityY, float gravity) {
+        super(x, y, width, height, footHeight, velocityX, velocityY, gravity);
     }
 
     protected abstract void enemyIA(Level level);

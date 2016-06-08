@@ -22,6 +22,8 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
     //Size
     public static final float WIDTH_PLAYER = 1f;
     public static final float HEIGHT_PLAYER = 2f;
+    //foot
+    public static final float FOOT_HEIGHT_PLAYER = 0.2f;
     //Position
     public static final float PLAYER_START = 0.5f;
     //Moving forces
@@ -63,9 +65,9 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
     private SpellType spell3;
     //endregion
 
-    public Player(float x, float y, float width, float height, float velocityX,
+    public Player(float x, float y, float width, float height, float footHeight, float velocityX,
                   float velocityY, float gravity) {
-        super(x, y, width, height, velocityX, velocityY, gravity);
+        super(x, y, width, height, footHeight, velocityX, velocityY, gravity);
 
         //Inventory
         inventory = new Array<>();
@@ -115,16 +117,16 @@ public class Player extends BodyElement implements Armed, Spelled, Inventory, In
         //Logs
         //*
         Gdx.app.log("Player", "Position: (" + getX() + ", " + getY() + ")");
-        Gdx.app.log("Player", "Speed: (" + getVelocityX() + ", " + getVelocityY() + ")");
-        Gdx.app.log("Player", "Direction: " + direction);
-        Gdx.app.log("Player", "Facing: " + facing);
-        Gdx.app.log("Player", "Weapon: " + (hasWeapon() ? weapon.getType().getName() : "empty"));
-        if (hasWeapon()) Gdx.app.log("Player", "Is attacking: " + weapon.isAttack());
+//        Gdx.app.log("Player", "Speed: (" + getVelocityX() + ", " + getVelocityY() + ")");
+//        Gdx.app.log("Player", "Direction: " + direction);
+//        Gdx.app.log("Player", "Facing: " + facing);
+//        Gdx.app.log("Player", "Weapon: " + (hasWeapon() ? weapon.getType().getName() : "empty"));
+//        if (hasWeapon()) Gdx.app.log("Player", "Is attacking: " + weapon.isAttack());
         Gdx.app.log("Player", "Jump: " + jumping + " On ground: " + onGround);
-        Gdx.app.log("Player", "Invisibility: " + invisible);
-        Gdx.app.log("Player", "Can be invisible: " + canBeInvisible);
-        Gdx.app.log("Player", "Life: " + life + " Mana: " + mana);
-        //*/
+//        Gdx.app.log("Player", "Invisibility: " + invisible);
+//        Gdx.app.log("Player", "Can be invisible: " + canBeInvisible);
+//        Gdx.app.log("Player", "Life: " + life + " Mana: " + mana);
+//        */
     }
 
     public void reset(Level level) {

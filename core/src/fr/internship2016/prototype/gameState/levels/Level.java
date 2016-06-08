@@ -45,7 +45,7 @@ public class Level {
         Rectangle r = new Rectangle(0, 0, this.levelWidth, levelGroundHeight);
         levelBoxes.add(r);
 
-        Rectangle r2 = new Rectangle(15f, levelGroundHeight, 10f, 4f);
+        Rectangle r2 = new Rectangle(15f, levelGroundHeight, 10f, 0.5f);
         levelBoxes.add(r2);
 
         createTopBox();
@@ -110,7 +110,7 @@ public class Level {
             Rectangle r = new Rectangle(b.getX(), b.getY() + b.getHeight() - 0.1f, b.getWidth(), 0.1f);
             boxesTop.add(r);
         }
-
-
     }
+
+
 }

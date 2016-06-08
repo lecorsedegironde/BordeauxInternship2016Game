@@ -1,5 +1,6 @@
 package fr.internship2016.prototype.gameState.movable.bodies;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import fr.internship2016.prototype.gameState.levels.Level;
@@ -16,6 +17,8 @@ import fr.internship2016.prototype.gameState.utils.Direction;
  */
 public abstract class BodyElement extends MovableElement implements Facing, Hit, KnockBack, Jump {
 
+    //
+
     //Jump & ground management
     protected boolean onGround;
     protected boolean jumping;
@@ -28,9 +31,10 @@ public abstract class BodyElement extends MovableElement implements Facing, Hit,
     protected float knockbackYVelocity;
     protected float horizontalVelocity;
     protected Direction facing;
+    protected Rectangle foot;
 
 
-    public BodyElement(float x, float y, float width, float height, float velocityX, float velocityY, float gravity) {
+    public BodyElement(float x, float y, float width, float height,float footHeight, float velocityX, float velocityY, float gravity) {
         super(x, y, width, height, velocityX, velocityY, gravity);
         facing = (velocityX > 0) ? Direction.RIGHT : Direction.LEFT;
         jumpingVelocity = 0f;
@@ -38,6 +42,7 @@ public abstract class BodyElement extends MovableElement implements Facing, Hit,
         knockbackDirection = Direction.NONE;
         knockbackXVelocity = 0f;
         knockbackYVelocity = 0f;
+        foot=new Rectangle(x,y,width,footHeight);
     }
 
     @Override
@@ -88,6 +93,7 @@ public abstract class BodyElement extends MovableElement implements Facing, Hit,
         moveY = jumpingVelocity;
 
         translate(moveX, moveY);
+        foot.setPosition(getX(),getY());
         //Check if Body is on the ground
         checkOnGround(level);
 
@@ -148,24 +154,24 @@ public abstract class BodyElement extends MovableElement implements Facing, Hit,
 
     //region Jump & Ground
     protected void checkOnGround(Level level) {
-        int cpt = 0;
+        boolean overlap=false;
         for (Rectangle r : level.getAllBoxesTop()
                 ) {
-
-            if (Intersector.overlaps(this.elementRect, r)) {
-
-                setPosition(getX(), r.getY() + r.getHeight());
+            if (Intersector.overlaps(foot,r)) {
+                setPosition(getX(), r.getY()+r.getHeight());
                 jumping = false;
                 jumpingVelocity = 0f;
-                cpt++;
+                overlap=true;
             }
 
-            if (cpt > 0) {
-                onGround = true;
-            } else {
-                onGround = false;
-            }
         }
+
+        if(overlap) {onGround=true;}
+
+        else{ onGround=false;}
+
+
+
     }
 
     public boolean isOnGround() {
