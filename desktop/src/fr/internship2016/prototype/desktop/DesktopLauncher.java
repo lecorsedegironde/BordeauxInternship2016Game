@@ -7,7 +7,7 @@ import fr.internship2016.prototype.PrototypeGame;
 public class DesktopLauncher {
     public static void main(String[] arg) {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-        config.title = "Into the Legend - Prototype";
+        config.title = "Into the Legend";
         config.width = PrototypeGame.SCREEN_WIDTH;
         config.height = PrototypeGame.SCREEN_HEIGHT;
         new LwjglApplication(new PrototypeGame(), config);

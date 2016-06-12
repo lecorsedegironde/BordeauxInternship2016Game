@@ -139,6 +139,7 @@ public class EngineDebug implements Screen {
                     break;
                 case RESET:
                     gameState.reset();
+                    renderer.reset(gameState);
                     Gdx.app.log("GAME", "Reset");
                     actions.removeValue(a, false);
                     break;

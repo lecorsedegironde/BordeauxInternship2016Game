@@ -7,12 +7,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ObjectMap;
 import fr.internship2016.prototype.gameState.GameState;
 import fr.internship2016.prototype.gameState.movable.MovableElement;
+import fr.internship2016.prototype.gameState.movable.bodies.enemies.Troll;
 import fr.internship2016.prototype.gameState.movable.spells.Spell;
-import fr.internship2016.prototype.screen.animations.PlayerAnimation;
-import fr.internship2016.prototype.screen.animations.SpellAnimation;
-import fr.internship2016.prototype.screen.animations.SwordAnimation;
+import fr.internship2016.prototype.screen.animations.*;
 import fr.internship2016.prototype.screen.camera.ITLCamera;
 import fr.internship2016.prototype.screen.drawer.DebugDrawer;
 import fr.internship2016.prototype.screen.drawer.SpriteDrawer;
@@ -38,6 +38,7 @@ public class ITLDebugRenderer implements Render {
     //ITLAnimation tests
     private PlayerAnimation playerAnimation;
     private SwordAnimation swordAnimation;
+    private ObjectMap<String, Array<ITLAnimation>> trollAnimations;
     private SpellAnimation spellAnimation;
 
     public ITLDebugRenderer(GameState gameState) {
@@ -54,12 +55,7 @@ public class ITLDebugRenderer implements Render {
         shapeRenderer = new ShapeRenderer();
 
         //Sprites & anims
-        background = new Sprite(new Texture(Gdx.files.internal("textures/" + gameState.getLevel().getBackground())));
-        background.setSize(gameState.getLevel().getLevelWidth(), gameState.getLevel().getLevelHeight());
-
-        playerAnimation = new PlayerAnimation(gameState.getPlayer().getBodyState());
-        swordAnimation = new SwordAnimation(gameState.getPlayer().getBodyState());
-        spellAnimation = new SpellAnimation();
+        createSprites(gameState);
     }
 
     @Override
@@ -75,27 +71,45 @@ public class ITLDebugRenderer implements Render {
         camera.getViewport().apply();
 
         //Update animations
-        float spellDelta;
+        float spellDelta, trollDelta;
         if (!pause) {
             playerAnimation.updateAnimation(gameState.getPlayer().getBodyState());
             swordAnimation.updateAnimation(gameState.getPlayer().getBodyState());
             player = playerAnimation.getSprite(Gdx.graphics.getDeltaTime(), true, gameState.getPlayer());
             sword = swordAnimation.getSprite(Gdx.graphics.getDeltaTime(), true, gameState.getPlayer());
             spellDelta = Gdx.graphics.getDeltaTime();
+            trollDelta = Gdx.graphics.getDeltaTime();
+            for (MovableElement m : gameState.getMovableElements()) {
+                if (m instanceof Troll) {
+                    ((TrollAnimation) trollAnimations.get(m.toString()).get(0))
+                            .updateAnimation(((Troll) m).getBodyState());
+                    ((ClubAnimation) trollAnimations.get(m.toString()).get(1))
+                            .updateAnimation(((Troll) m).getBodyState());
+                }
+            }
         } else {
             spellDelta = 0;
+            trollDelta = 0;
         }
 
         spriteDrawer.add(background, 0, SpriteDrawer.Level.REPLACE);
-        spriteDrawer.add(sword, 1, SpriteDrawer.Level.INSERT);
-        spriteDrawer.add(player, 2, SpriteDrawer.Level.INSERT);
 
         for (MovableElement m : gameState.getMovableElements()) {
             if (m instanceof Spell) {
                 spriteDrawer.add(spellAnimation.getSprite(spellDelta, true, (Spell) m), 4,
                         SpriteDrawer.Level.FIRST_AVAILABLE);
+            } else if (m instanceof Troll) {
+                //TODO Change to insert and 1
+                spriteDrawer.add(((ClubAnimation) trollAnimations.get(m.toString()).get(1))
+                        .getSprite(trollDelta, true, (Troll) m), 1, SpriteDrawer.Level.FIRST_AVAILABLE);
+                spriteDrawer.add(((TrollAnimation) trollAnimations.get(m.toString()).get(0))
+                        .getSprite(trollDelta, true, (Troll) m), 2, SpriteDrawer.Level.FIRST_AVAILABLE);
+
             }
         }
+
+        spriteDrawer.add(sword, 1, SpriteDrawer.Level.FIRST_AVAILABLE);
+        spriteDrawer.add(player, 2, SpriteDrawer.Level.FIRST_AVAILABLE);
 
         //Prepare ShapeRenderer
         shapeRenderer.setProjectionMatrix(camera.getCameraCombined());
@@ -108,12 +122,13 @@ public class ITLDebugRenderer implements Render {
 
         //First draw level
         DebugDrawer.drawLevel(shapeRenderer, gameState.getLevel());
-        //End batch here to avoid drawing problems as the only background is the background
 
         //Draw the other things on top
-        for (MovableElement m : gameState.getMovableElements()) {
-            DebugDrawer.drawMovable(shapeRenderer, m);
-        }
+//        for (MovableElement m : gameState.getMovableElements()) {
+//            DebugDrawer.drawMovable(shapeRenderer, m);
+//        }
+
+
         //End SpriteBatch and ShapeRenderer
         shapeRenderer.end();
 
@@ -133,6 +148,31 @@ public class ITLDebugRenderer implements Render {
                 }
             }
         }
+    }
+
+    private void createSprites(GameState gameState) {
+        background = new Sprite(new Texture(Gdx.files.internal("textures/" + gameState.getLevel().getBackground())));
+        background.setSize(gameState.getLevel().getLevelWidth(), gameState.getLevel().getLevelHeight());
+
+        playerAnimation = new PlayerAnimation(gameState.getPlayer().getBodyState());
+        swordAnimation = new SwordAnimation(gameState.getPlayer().getBodyState());
+        spellAnimation = new SpellAnimation();
+        trollAnimations = new ObjectMap<>();
+
+        for (MovableElement m : gameState.getMovableElements()) {
+            if (m instanceof Troll) {
+                TrollAnimation t = new TrollAnimation(((Troll) m).getBodyState());
+                ClubAnimation c = new ClubAnimation(((Troll) m).getBodyState());
+                Array<ITLAnimation> array = new Array<>();
+                array.add(t);
+                array.add(c);
+                trollAnimations.put(m.toString(), array);
+            }
+        }
+    }
+
+    public void reset(GameState gameState) {
+        createSprites(gameState);
     }
 
     @Override

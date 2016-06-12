@@ -1,0 +1,118 @@
+
+clubWalk.png
+size: 1024,1024
+format: RGBA8888
+filter: MipMap,MipMap
+repeat: none
+Walk
+  rotate: false
+  xy: 2, 620
+  size: 176, 307
+  orig: 176, 307
+  offset: 0, 0
+  index: 0
+Walk
+  rotate: false
+  xy: 2, 311
+  size: 176, 307
+  orig: 176, 307
+  offset: 0, 0
+  index: 1
+Walk
+  rotate: false
+  xy: 2, 311
+  size: 176, 307
+  orig: 176, 307
+  offset: 0, 0
+  index: 15
+Walk
+  rotate: false
+  xy: 180, 620
+  size: 176, 307
+  orig: 176, 307
+  offset: 0, 0
+  index: 2
+Walk
+  rotate: false
+  xy: 180, 620
+  size: 176, 307
+  orig: 176, 307
+  offset: 0, 0
+  index: 14
+Walk
+  rotate: false
+  xy: 2, 2
+  size: 176, 307
+  orig: 176, 307
+  offset: 0, 0
+  index: 3
+Walk
+  rotate: false
+  xy: 2, 2
+  size: 176, 307
+  orig: 176, 307
+  offset: 0, 0
+  index: 13
+Walk
+  rotate: false
+  xy: 180, 311
+  size: 176, 307
+  orig: 176, 307
+  offset: 0, 0
+  index: 4
+Walk
+  rotate: false
+  xy: 180, 311
+  size: 176, 307
+  orig: 176, 307
+  offset: 0, 0
+  index: 12
+Walk
+  rotate: false
+  xy: 358, 620
+  size: 176, 307
+  orig: 176, 307
+  offset: 0, 0
+  index: 5
+Walk
+  rotate: false
+  xy: 358, 620
+  size: 176, 307
+  orig: 176, 307
+  offset: 0, 0
+  index: 11
+Walk
+  rotate: false
+  xy: 180, 2
+  size: 176, 307
+  orig: 176, 307
+  offset: 0, 0
+  index: 6
+Walk
+  rotate: false
+  xy: 180, 2
+  size: 176, 307
+  orig: 176, 307
+  offset: 0, 0
+  index: 10
+Walk
+  rotate: false
+  xy: 358, 311
+  size: 176, 307
+  orig: 176, 307
+  offset: 0, 0
+  index: 7
+Walk
+  rotate: false
+  xy: 358, 311
+  size: 176, 307
+  orig: 176, 307
+  offset: 0, 0
+  index: 9
+Walk
+  rotate: false
+  xy: 536, 620
+  size: 176, 307
+  orig: 176, 307
+  offset: 0, 0
+  index: 8

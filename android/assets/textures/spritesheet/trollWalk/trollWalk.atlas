@@ -1,0 +1,124 @@
+
+trollWalk.png
+size: 1024,1024
+format: RGBA8888
+filter: MipMap,MipMap
+repeat: none
+Walk
+  rotate: false
+  xy: 2, 676
+  size: 263, 335
+  orig: 263, 335
+  offset: 0, 0
+  index: 0
+Walk
+  rotate: false
+  xy: 2, 339
+  size: 263, 335
+  orig: 263, 335
+  offset: 0, 0
+  index: 1
+Walk
+  rotate: false
+  xy: 267, 676
+  size: 263, 335
+  orig: 263, 335
+  offset: 0, 0
+  index: 2
+Walk
+  rotate: false
+  xy: 2, 2
+  size: 263, 335
+  orig: 263, 335
+  offset: 0, 0
+  index: 3
+Walk
+  rotate: false
+  xy: 267, 339
+  size: 263, 335
+  orig: 263, 335
+  offset: 0, 0
+  index: 4
+Walk
+  rotate: false
+  xy: 532, 676
+  size: 263, 335
+  orig: 263, 335
+  offset: 0, 0
+  index: 5
+Walk
+  rotate: false
+  xy: 267, 2
+  size: 263, 335
+  orig: 263, 335
+  offset: 0, 0
+  index: 6
+Walk
+  rotate: false
+  xy: 532, 339
+  size: 263, 335
+  orig: 263, 335
+  offset: 0, 0
+  index: 7
+Walk
+  rotate: false
+  xy: 532, 2
+  size: 263, 335
+  orig: 263, 335
+  offset: 0, 0
+  index: 8
+
+trollWalk2.png
+size: 1024,1024
+format: RGBA8888
+filter: MipMap,MipMap
+repeat: none
+Walk
+  rotate: false
+  xy: 2, 676
+  size: 263, 335
+  orig: 263, 335
+  offset: 0, 0
+  index: 9
+Walk
+  rotate: false
+  xy: 2, 339
+  size: 263, 335
+  orig: 263, 335
+  offset: 0, 0
+  index: 10
+Walk
+  rotate: false
+  xy: 267, 676
+  size: 263, 335
+  orig: 263, 335
+  offset: 0, 0
+  index: 11
+Walk
+  rotate: false
+  xy: 2, 2
+  size: 263, 335
+  orig: 263, 335
+  offset: 0, 0
+  index: 12
+Walk
+  rotate: false
+  xy: 267, 339
+  size: 263, 335
+  orig: 263, 335
+  offset: 0, 0
+  index: 13
+Walk
+  rotate: false
+  xy: 532, 676
+  size: 263, 335
+  orig: 263, 335
+  offset: 0, 0
+  index: 14
+Walk
+  rotate: false
+  xy: 267, 2
+  size: 263, 335
+  orig: 263, 335
+  offset: 0, 0
+  index: 15

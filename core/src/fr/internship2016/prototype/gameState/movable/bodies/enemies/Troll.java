@@ -1,6 +1,7 @@
 package fr.internship2016.prototype.gameState.movable.bodies.enemies;
 
 import fr.internship2016.prototype.gameState.levels.Level;
+import fr.internship2016.prototype.gameState.movable.bodies.BodiesStates;
 import fr.internship2016.prototype.gameState.utils.Direction;
 import fr.internship2016.prototype.gameState.weapons.Weapon;
 import fr.internship2016.prototype.gameState.weapons.WeaponFactory;
@@ -66,8 +67,25 @@ public class Troll extends Enemy {
     }
 
     @Override
+    protected void updateBodySate(float moveX) {
+        //Set default : idle
+        bodyState = BodiesStates.IDLE;
+
+        //If the troll moves
+        if (moveX != 0f) {
+            bodyState = BodiesStates.WALK;
+        }
+
+        //If the troll attack
+        if (isAttacking()) {
+            bodyState = BodiesStates.ATTACK;
+        }
+    }
+
+    @Override
     protected void enemyIA(Level level) {
         //COMPLETE
+//        attack();
     }
 
     @Override

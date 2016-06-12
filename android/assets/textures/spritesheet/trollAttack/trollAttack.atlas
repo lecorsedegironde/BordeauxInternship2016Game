@@ -1,0 +1,62 @@
+
+trollAttack.png
+size: 1024,1024
+format: RGBA8888
+filter: MipMap,MipMap
+repeat: none
+Attack
+  rotate: false
+  xy: 2, 676
+  size: 263, 335
+  orig: 263, 335
+  offset: 0, 0
+  index: 0
+Attack
+  rotate: false
+  xy: 2, 339
+  size: 263, 335
+  orig: 263, 335
+  offset: 0, 0
+  index: 1
+Attack
+  rotate: false
+  xy: 2, 339
+  size: 263, 335
+  orig: 263, 335
+  offset: 0, 0
+  index: 7
+Attack
+  rotate: false
+  xy: 267, 676
+  size: 263, 335
+  orig: 263, 335
+  offset: 0, 0
+  index: 2
+Attack
+  rotate: false
+  xy: 267, 676
+  size: 263, 335
+  orig: 263, 335
+  offset: 0, 0
+  index: 6
+Attack
+  rotate: false
+  xy: 2, 2
+  size: 263, 335
+  orig: 263, 335
+  offset: 0, 0
+  index: 3
+Attack
+  rotate: false
+  xy: 2, 2
+  size: 263, 335
+  orig: 263, 335
+  offset: 0, 0
+  index: 5
+Attack
+  rotate: false
+  xy: 267, 339
+  size: 263, 335
+  orig: 263, 335
+  offset: 0, 0
+  index: 4
